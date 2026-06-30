@@ -23,9 +23,26 @@ const sections = [
   { id: 'ekonomie', ...railMeta.ekonomie },
 ];
 
+// Source numbering: currency anchor facts take [1..N], the hardcoded IBM
+// citation is [N+1], and any example-level sources follow as [N+2..]. We map
+// each example object to its ref number so the [n] and the "Zdroje" entry stay
+// in sync no matter how many examples carry a source.
+const exSourceRefs = new Map<unknown, number>();
+const exampleSources: { ref: number; label: string; url?: string }[] = [];
+let nextRef = currencies.length + 2;
+for (const c of currencies) {
+  for (const ex of c.data.examples) {
+    if (ex.source) {
+      exSourceRefs.set(ex, nextRef);
+      exampleSources.push({ ref: nextRef, ...ex.source });
+      nextRef += 1;
+    }
+  }
+}
+
 const title = 'Oběd zdarma neexistuje';
 const description =
-  'Všechno má svou cenu. A jakou cenu má „zdarma“? Soukromí, efektivita, životní prostředí, inflace — čím doopravdy platíte.';
+  'Všechno má svou cenu. A kolik stojí „zdarma“? Soukromí, efektivita, životní prostředí, inflace — čím doopravdy platíš.';
 ---
 
 <!doctype html>
@@ -84,7 +101,6 @@ const description =
           <span>Celkem</span>
           <span class="r-sum">∞</span>
         </p>
-        <p class="r-foot">Zboží nelze vrátit</p>
         <div class="r-barcode" aria-hidden="true" />
       </div>
     </nav>
@@ -100,7 +116,7 @@ const description =
             Všechno má<br />svou cenu.
           </h1>
           <p class="hero-sub display">
-            A jakou cenu má <span class="mark">„zdarma“</span>?
+            A kolik stojí <span class="mark">„zdarma“</span>?
           </p>
         </div>
       </header>
@@ -121,7 +137,7 @@ const description =
           </p>
           <p class="lead">
             Pointa je prostá: <span class="acid">nic není zadarmo</span>. Když
-            za něco neplatíte penězi, platíte jinak. Jen to méně vidíte.
+            za něco neplatíš penězi, platíš jinak. Jen je to míň vidět.
           </p>
         </div>
       </section>
@@ -129,7 +145,7 @@ const description =
       <!-- 3. THE CURRENCIES -->
       <section class="currencies">
         <div class="wrap">
-          <h2 class="section-head display">Čím platíte?</h2>
+          <h2 class="section-head display">Čím platíš?</h2>
         </div>
         {
           currencies.map((c, i) => (
@@ -155,7 +171,19 @@ const description =
                   {c.data.examples.map((ex) => (
                     <li>
                       <span class="ex-name">{ex.name}</span>
-                      {ex.note && <span class="ex-note">{ex.note}</span>}
+                      {ex.note && (
+                        <span class="ex-note">
+                          {ex.note}
+                          {ex.source && (
+                            <a
+                              class="src-ref"
+                              href={`#zdroj-${exSourceRefs.get(ex)}`}
+                              aria-label={`Zdroj ${exSourceRefs.get(ex)}`}>
+                              [{exSourceRefs.get(ex)}]
+                            </a>
+                          )}
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -172,32 +200,32 @@ const description =
           <p class="lead">
             Někdy je „zdarma“ promyšlený tah — ne podvod, ale investice. Kdo
             rozdává, počítá s&nbsp;tím, že se mu to vrátí. Otázka není
-            <em>jestli</em>, ale <em>kudy</em>.
+            <em>jestli</em>, ale <em>kdy</em>.
           </p>
 
           <ol class="mechanisms">
             <li>
               <h3 class="mech-title display">Loss leader</h3>
               <p class="mech-body">
-                Něco se nabízí pod cenou nebo zdarma, aby vás to přivedlo
-                dovnitř. Vydělá se na tom, co dokoupíte — na levný rohlík
-                nalákají, zaplatíte celý nákup.
+                Nabídnou ti něco pod cenou nebo zdarma, aby tě nalákali
+                dovnitř. Pak ale vydělají na tom, co dokoupíš — přivede tě
+                levný rohlík, ale odneseš si celý nákup.
               </p>
             </li>
             <li>
               <h3 class="mech-title display">Freemium</h3>
               <p class="mech-body">
-                Základ zdarma, platí menšina. Pár procent předplatitelů dotuje
-                všechny ostatní — a ti ostatní zase svou přítomností dělají
-                službu cennou pro ty platící.
+                Základ je zadarmo, zisky tvoří platící menšina. Pár procent
+                předplatitelů dotuje ostatní, a ti zase přináší službě takovou
+                hodnotu, za kterou předplatitelé platí.
               </p>
             </li>
             <li>
               <h3 class="mech-title display">Doplněk zdarma</h3>
               <p class="mech-body">
-                Rozdej zadarmo to, co zvyšuje poptávku po tom, co prodáváš. Když
-                je software zdarma, roste hodnota hardwaru, cloudu a podpory
-                kolem něj.
+                Rozdávají zadarmo to, co pak zvýší poptávku po tom, co prodávají.
+                Software je sice zadarmo, ale o to je hardware, cloud a podpora
+                kolem něj dražší.
               </p>
             </li>
           </ol>
@@ -210,9 +238,9 @@ const description =
           </p>
 
           <p class="lead economics-closer">
-            Ať je logika jakákoli, platí jedno:
-            <span class="acid">zadarmo se nedává nic</span>. Mění se jen to, kdo,
-            kdy a&nbsp;čím zaplatí.
+            Ať je konkrétní situace jakákoliv,
+            <span class="acid">oběd zdarma v ní nenajdeš</span>. Jen se mění to,
+            kdo, kdy a&nbsp;čím ten oběd zaplatí.
           </p>
         </div>
       </section>
@@ -221,8 +249,8 @@ const description =
       <section class="closer">
         <div class="wrap">
           <p class="closer-line display">
-            Příště, až uvidíte <span class="mark">„zdarma“</span>,<br />
-            zeptejte se: <span class="acid">čím platím?</span>
+            Příště, až uvidíš <span class="mark">„zdarma“</span>,<br />
+            zeptej se: <span class="acid">čím platím?</span>
           </p>
         </div>
       </section>
@@ -253,6 +281,19 @@ const description =
                 (2019)
               </a>
             </li>
+            {
+              exampleSources.map((s) => (
+                <li id={`zdroj-${s.ref}`}>
+                  {s.url ? (
+                    <a href={s.url} target="_blank" rel="noopener noreferrer">
+                      {s.label}
+                    </a>
+                  ) : (
+                    s.label
+                  )}
+                </li>
+              ))
+            }
           </ol>
         </div>
       </section>
@@ -627,13 +668,6 @@ const description =
         letter-spacing: 0.08em;
       }
       .r-sum { font-size: 1rem; }
-      .r-foot {
-        margin: 1.05rem 0 0;
-        text-align: center;
-        font-size: 0.54rem;
-        letter-spacing: 0.2em;
-        color: #6b685f;
-      }
       .r-barcode {
         height: 1.5rem;
         margin-top: 0.9rem;

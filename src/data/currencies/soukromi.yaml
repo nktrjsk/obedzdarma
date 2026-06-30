@@ -1,17 +1,17 @@
 order: 1
 icon: "🔒"
 title: "Soukromím"
-claim: "Když je produkt zdarma, produktem jste vy."
+claim: "Pokud neplatíš za produkt, produktem jsi ty."
 fact: "Kolem 98 % příjmů firmy Meta pochází z reklamy cílené podle dat o uživatelích."
 source:
   label: "Meta Platforms — výroční zpráva (Form 10-K), 2023"
   url: "https://investor.atmeta.com/financials/"
 examples:
   - name: "Sociální sítě"
-    note: "Pozornost a data o vás se prodávají inzerentům."
+    note: "Tvoje pozornost a data se prodávají inzerentům, a jejich vlastní zájem se nemusí shodovat s tím tvým."
   - name: "Věrnostní kluby"
-    note: "Slevu platíte kompletním záznamem o tom, co nakupujete."
+    note: "Slevu můžeš dostat jen proto, že obchodu přenecháváš svou historii nákupů."
   - name: "Proprietární software"
-    note: "„Zdarma\" verze sbírá telemetrii a zamyká vás do ekosystému."
+    note: "„Bezplatné“ programy odesílají telemetrii a často slouží jako lákadlo do uzavřeného ekosystému."
   - name: "Free-to-play hry"
-    note: "Návykové smyčky navržené tak, aby z vás nakonec peníze dostaly."
+    note: "Návykové smyčky navržené tak, aby z tebe nakonec peníze dostaly."

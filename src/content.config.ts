@@ -24,6 +24,14 @@ const currencies = defineCollection({
       z.object({
         name: z.string(),
         note: z.string().optional(),
+        // Optional citation for a specific figure cited in the note, listed
+        // in "Zdroje" after the section anchor sources.
+        source: z
+          .object({
+            label: z.string(),
+            url: z.string().url().optional(),
+          })
+          .optional(),
       }),
     ),
   }),
