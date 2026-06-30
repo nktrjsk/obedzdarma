@@ -1,0 +1,13 @@
+order: 4
+icon: "💸"
+title: "Inflací"
+claim: "Peníze zdarma neexistují — jen znehodnocené."
+fact: "Když banka poskytne úvěr, nepůjčuje cizí vklady — vytváří nové peníze."
+source:
+  label: "Bank of England — Money creation in the modern economy (2014)"
+  url: "https://www.bankofengland.co.uk/quarterly-bulletin/2014/q1/money-creation-in-the-modern-economy"
+examples:
+  - name: "Levné peníze"
+    note: "Expanze úvěru zvyšuje množství peněz. Když roste rychleji než ekonomika, ceny stoupají."
+  - name: "Inflační daň"
+    note: "Znehodnocení nedopadne na nikoho konkrétního — ukrajuje reálnou hodnotu úspor a hotovosti všem."

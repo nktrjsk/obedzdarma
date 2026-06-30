@@ -1,0 +1,13 @@
+order: 3
+icon: "🌍"
+title: "Životním prostředím"
+claim: "Nízká cena dnes je půjčka od planety zítřka."
+fact: "Každý Evropan ročně vyhodí v průměru kolem 11 kg textilu."
+source:
+  label: "Evropský parlament — Dopady výroby a odpadu z textilu na životní prostředí"
+  url: "https://www.europarl.europa.eu/topics/cs/article/20201208STO93327/"
+examples:
+  - name: "Fast fashion"
+    note: "Levné tričko platí hory textilního odpadu a znečištěná řeka."
+  - name: "Fosilní paliva"
+    note: "Laciná energie, jejíž skutečná cena se účtuje v klimatu."

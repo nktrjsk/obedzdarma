@@ -1,0 +1,348 @@
+---
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+
+const currencies = (await getCollection('currencies')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const title = 'Oběd zdarma neexistuje';
+const description =
+  'Všechno má svou cenu. A jakou cenu má „zdarma“? Soukromí, efektivita, životní prostředí, inflace — čím doopravdy platíte.';
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://obedzdarma.cz" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <main>
+      <!-- 1. HERO -->
+      <header class="hero">
+        <div class="wrap">
+          <p class="kicker">Bez práce nejsou koláče</p>
+          <h1 class="display hero-title">
+            Všechno má<br />svou cenu.
+          </h1>
+          <p class="hero-sub display">
+            A jakou cenu má <span class="mark">„zdarma“</span>?
+          </p>
+        </div>
+      </header>
+
+      <!-- 2. SETUP -->
+      <section id="setup" class="setup">
+        <div class="wrap">
+          <p class="lead">
+            Myšlenku <strong>„obědu zdarma“</strong> proslavil ekonom
+            <strong>Milton Friedman</strong>. Ještě před ním ji ale rozšířil
+            spisovatel <strong>Robert A. Heinlein</strong> v románu
+            <em>Měsíc je drsná milenka</em>.
+          </p>
+          <p class="lead">
+            Ani jeden ji ale nevymyslel — pochází z&nbsp;amerických barů, které
+            k&nbsp;pití lákaly na „oběd zdarma“. I&nbsp;ten byl ovšem zaplacený
+            v&nbsp;ceně pití.
+          </p>
+          <p class="lead">
+            Pointa je prostá: <span class="acid">nic není zadarmo</span>. Když
+            za něco neplatíte penězi, platíte jinak. Jen to méně vidíte.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3. THE CURRENCIES -->
+      <section class="currencies">
+        <div class="wrap">
+          <h2 class="section-head display">Čím platíte?</h2>
+        </div>
+        {
+          currencies.map((c, i) => (
+            <article class="currency" id={c.id}>
+              <div class="wrap currency-inner">
+                <div class="currency-head">
+                  <span class="currency-no">0{i + 1}</span>
+                  <span class="currency-icon" aria-hidden="true">
+                    {c.data.icon}
+                  </span>
+                  <h3 class="currency-title display">{c.data.title}</h3>
+                </div>
+                <p class="currency-claim display">{c.data.claim}</p>
+                <p class="currency-fact">
+                  {c.data.fact}
+                  <a
+                    class="src-ref"
+                    href={`#zdroj-${i + 1}`}
+                    aria-label={`Zdroj ${i + 1}`}>[{i + 1}]</a
+                  >
+                </p>
+                <ul class="examples">
+                  {c.data.examples.map((ex) => (
+                    <li>
+                      <span class="ex-name">{ex.name}</span>
+                      {ex.note && <span class="ex-note">{ex.note}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))
+        }
+      </section>
+
+      <!-- 4. ECONOMICS (placeholder — content TBD) -->
+      <section class="economics">
+        <div class="wrap">
+          <h2 class="section-head display">Ekonomie za „obědem zdarma“</h2>
+          <p class="lead">
+            Proč „zdarma“ funguje jako tah? Promo akce, open-source software a
+            další případy, kdy má rozdávání svou vlastní logiku.
+          </p>
+          <p class="todo">Tato sekce se teprve píše.</p>
+        </div>
+      </section>
+
+      <!-- 5. CLOSER -->
+      <section class="closer">
+        <div class="wrap">
+          <p class="closer-line display">
+            Příště, až uvidíte <span class="mark">„zdarma“</span>,<br />
+            zeptejte se: <span class="acid">čím platím?</span>
+          </p>
+        </div>
+      </section>
+      <!-- 6. SOURCES (quiet, end of page) -->
+      <section class="sources" id="zdroje">
+        <div class="wrap">
+          <h2 class="sources-head">Zdroje</h2>
+          <ol class="sources-list">
+            {
+              currencies.map((c, i) => (
+                <li id={`zdroj-${i + 1}`}>
+                  {c.data.source.url ? (
+                    <a href={c.data.source.url} target="_blank" rel="noopener noreferrer">
+                      {c.data.source.label}
+                    </a>
+                  ) : (
+                    c.data.source.label
+                  )}
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <span>obedzdarma.cz</span>
+      </div>
+    </footer>
+
+    <style>
+      /* ---- HERO ---- */
+      /* Hero deliberately stops short of full height so the opening of the
+         next section peeks above the fold — the layout itself invites the
+         scroll. No arrow, no JS, native scrolling only. */
+      .hero {
+        min-height: 88svh;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+      }
+      .kicker {
+        font-size: 0.8rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0 0 2.5rem;
+      }
+      .hero-title {
+        font-size: clamp(3rem, 12vw, 8rem);
+      }
+      .hero-sub {
+        font-size: clamp(1.4rem, 4vw, 2.75rem);
+        margin-top: clamp(2.5rem, 6vw, 4.5rem);
+        text-transform: none;
+        letter-spacing: -0.01em;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+      }
+
+      /* ---- SETUP ---- */
+      /* Tight top padding so the first line lands just below the fold and
+         peeks into the hero viewport; generous bottom padding keeps the air. */
+      .setup {
+        padding-top: clamp(2rem, 5vw, 3.5rem);
+        padding-bottom: clamp(6rem, 18vw, 13rem);
+      }
+      .lead {
+        font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+        font-weight: 300;
+        line-height: 1.6;
+        max-width: 26ch;
+        margin: 0 0 2rem;
+      }
+      .lead:last-child { margin-bottom: 0; }
+      .lead strong { font-weight: 700; }
+
+      /* ---- SECTION HEADS ---- */
+      .section-head {
+        font-size: clamp(1.75rem, 5.5vw, 3.75rem);
+        margin-bottom: clamp(3rem, 8vw, 5.5rem);
+      }
+
+      /* ---- CURRENCIES ---- */
+      .currency {
+        border-top: 1px solid var(--line);
+        padding-block: clamp(4.5rem, 13vw, 9rem);
+      }
+      .currency-head {
+        display: flex;
+        align-items: baseline;
+        gap: clamp(0.75rem, 2vw, 1.5rem);
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .currency-no {
+        font-family: var(--font-display);
+        color: var(--acid);
+        font-size: clamp(1.25rem, 3vw, 2rem);
+      }
+      .currency-icon { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
+      .currency-title { font-size: clamp(1.75rem, 5.5vw, 3.5rem); }
+      .currency-claim {
+        font-size: clamp(1.3rem, 2.8vw, 2.1rem);
+        text-transform: none;
+        max-width: 20ch;
+        margin-bottom: clamp(1.5rem, 3vw, 2rem);
+        line-height: 1.15;
+      }
+      /* The verifiable anchor fact the claim rests on — quieter, factual,
+         set off by an acid rule. */
+      .currency-fact {
+        font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+        font-weight: 300;
+        line-height: 1.55;
+        max-width: 48ch;
+        margin: 0 0 clamp(2.5rem, 6vw, 4rem);
+        padding-left: 1rem;
+        border-left: 2px solid var(--acid);
+        color: var(--paper);
+      }
+      .src-ref {
+        color: var(--acid);
+        text-decoration: none;
+        font-size: 0.75em;
+        vertical-align: super;
+        margin-left: 0.15em;
+      }
+      .src-ref:hover { text-decoration: underline; }
+      .examples {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: clamp(1.75rem, 4vw, 3rem) clamp(2rem, 5vw, 4rem);
+      }
+      .examples li {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--line);
+      }
+      .ex-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+      .ex-note {
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 300;
+        line-height: 1.6;
+      }
+      @media (min-width: 640px) {
+        .examples { grid-template-columns: repeat(2, 1fr); }
+      }
+
+      /* ---- ECONOMICS ---- */
+      .economics {
+        border-top: 1px solid var(--line);
+        padding-block: clamp(6rem, 18vw, 13rem);
+      }
+      .todo {
+        display: inline-block;
+        margin-top: 1.5rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        border: 1px dashed var(--line);
+        padding: 0.5rem 0.9rem;
+      }
+
+      /* ---- CLOSER ---- */
+      .closer {
+        background: var(--acid);
+        color: var(--ink);
+        padding-block: clamp(7rem, 20vw, 15rem);
+      }
+      .closer .mark { background: var(--ink); color: var(--acid); }
+      .closer .acid { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.12em; }
+      .closer-line {
+        font-size: clamp(1.6rem, 5vw, 3.5rem);
+        text-transform: none;
+        line-height: 1.2;
+      }
+
+      /* ---- SOURCES ---- */
+      .sources {
+        border-top: 1px solid var(--line);
+        padding-block: clamp(3rem, 8vw, 5rem);
+        color: var(--muted);
+      }
+      .sources-head {
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin: 0 0 1.75rem;
+      }
+      .sources-list {
+        margin: 0;
+        padding-left: 1.4rem;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        display: grid;
+        gap: 0.75rem;
+        max-width: 60ch;
+      }
+      .sources-list a {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .sources-list li { scroll-margin-top: 2rem; }
+
+      /* ---- FOOTER ---- */
+      .footer {
+        padding-block: 2.5rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+    </style>
+  </body>
+</html>

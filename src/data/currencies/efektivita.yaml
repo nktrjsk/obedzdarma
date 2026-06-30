@@ -1,0 +1,19 @@
+order: 2
+icon: "⚙️"
+title: "Efektivitou"
+claim: "Někdo to platí — a obvykle dráž, než kdyby se to nechalo trhu."
+fact: "Veřejné výdaje v Česku se dlouhodobě pohybují kolem 45 % HDP."
+source:
+  label: "Eurostat — General government expenditure (% HDP)"
+  url: "https://ec.europa.eu/eurostat/databrowser/view/gov_10a_main/default/table"
+examples:
+  - name: "Dotace"
+    note: "Daně přerozdělené tak, že vznikají výrobky, které by jinak na trhu neobstály."
+  - name: "Cla"
+    note: "Chrání domácí výrobce a zdražují zboží všem ostatním."
+  - name: "Bezplatné zdravotnictví"
+    note: "Hradí se z daní. Tvrdíme, že cenou je čekání a omezený výběr — méně viditelné než účet u pokladny."
+  - name: "Důchod"
+    note: "Mezigenerační slib financovaný těmi, kdo pracují právě teď."
+  - name: "Bezplatné školství"
+    note: "Hradí ho společnost. Tvrdíme, že s penězi přichází i vliv na to, co a jak se učí."

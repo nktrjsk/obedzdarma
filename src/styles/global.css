@@ -1,0 +1,77 @@
+/* Fonts — bundled, no external requests (on-brand: no hidden costs). */
+@import '@fontsource-variable/archivo';
+@import '@fontsource/archivo-black';
+
+:root {
+  --ink: #0b0b0c;          /* near-black background */
+  --paper: #f4f1ea;        /* warm off-white text */
+  --muted: #8f8c83;        /* secondary text */
+  --acid: #e8ff2a;         /* aggressive accent — the "price tag" */
+  --line: #26262a;         /* hairline dividers */
+
+  --font-display: 'Archivo Black', system-ui, sans-serif;
+  --font-body: 'Archivo Variable', system-ui, sans-serif;
+
+  --maxw: 1100px;
+  --pad: clamp(1.5rem, 6vw, 5rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.75;
+  font-weight: 300;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+a {
+  color: inherit;
+}
+
+/* Display type — oversized, tight, loud. */
+.display {
+  font-family: var(--font-display);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.mark {
+  background: var(--acid);
+  color: var(--ink);
+  padding: 0 0.12em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.acid {
+  color: var(--acid);
+}
