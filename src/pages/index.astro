@@ -132,6 +132,23 @@ const description =
     <button class="receipt-reopen" type="button" aria-label="Zobrazit účtenku">
       Účtenka
     </button>
+    <!-- Bottom "register tape" — the receipt's progress, adapted for screens
+         too narrow for the corner slip. A paper strip pinned to the bottom edge
+         that rings up the page as you scroll: an acid fill grows left→right as
+         sections are "paid", the current line item named on the left, the ∞
+         total on the right. Read-only reflection of scroll position (no
+         scroll-hijack). aria-hidden — the heading structure already gives
+         assistive tech the canonical wayfinding, so this stays a purely visual
+         enhancement and never announces on every scroll. -->
+    <div class="tape" aria-hidden="true">
+      <div class="tape-track"><span class="tape-fill"></span></div>
+      <div class="tape-inner">
+        <span class="tape-mark">∗</span>
+        <span class="tape-name">Oběd zdarma</span>
+        <span class="tape-leader"></span>
+        <span class="tape-sum">∞</span>
+      </div>
+    </div>
     <main>
       <!-- 1. HERO -->
       <header class="hero">
@@ -701,12 +718,17 @@ const description =
         display: none;
       }
       .receipt-reopen { display: none; }
-      @media (min-width: 1536px) {
+      /* Below the slip's breakpoint the bottom tape is the wayfinding; the
+         corner receipt only takes over once the side gutter is wide enough to
+         clear the centered content column. */
+      @media (min-width: 1400px) {
         .receipt { display: block; }
-        /* When dismissed: hide the slip, offer a compact button to bring it back. */
         html.receipt-hidden .receipt { display: none; }
-        html.receipt-hidden .receipt-reopen { display: inline-flex; }
       }
+      /* One shared dismiss state across both affordances, recoverable at any
+         width via the reopen button. */
+      html.receipt-hidden .tape { display: none; }
+      html.receipt-hidden .receipt-reopen { display: inline-flex; }
       .r-paper {
         --tooth: 8px;
         position: relative;
@@ -804,7 +826,9 @@ const description =
         padding: 0.22rem 0.3rem;
         margin: 0 -0.3rem;
         text-decoration: none;
-        color: rgba(11, 11, 12, 0.45);
+        /* 0.6 alpha on paper ≈ 5:1 — clears WCAG AA for this small mono text
+           (was 0.45 ≈ 3.1:1, which failed). */
+        color: rgba(11, 11, 12, 0.6);
         transition: color 0.2s ease, background 0.2s ease;
       }
       .r-name { white-space: nowrap; }
@@ -848,6 +872,86 @@ const description =
       }
       @media (prefers-reduced-motion: reduce) {
         .r-item { transition: none; }
+        .tape-fill { transition: none; }
+      }
+
+      /* ---- BOTTOM REGISTER TAPE ---- */
+      /* The wayfinding receipt, adapted to a horizontal paper strip for every
+         viewport too narrow for the corner slip. Full-bleed so it never fights
+         the centered text column. */
+      .tape {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+        text-transform: uppercase;
+        /* Paper-lift: blur is allowed here — the tape is a literal paper object,
+           not a content surface. */
+        box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.45);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      /* Hand off to the corner slip once the gutter clears the content column.
+         Placed after the base rule so it wins over `.tape { display: flex }`. */
+      @media (min-width: 1400px) {
+        .tape { display: none; }
+      }
+      .tape-track {
+        height: 3px;
+        background: rgba(11, 11, 12, 0.14);
+      }
+      /* The "paid" portion of the bill, rung up left→right as you scroll. */
+      .tape-fill {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: var(--acid);
+        transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .tape-inner {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        height: 2.4rem;
+        max-width: var(--maxw);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: clamp(1rem, 4vw, 1.5rem);
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+      }
+      .tape-mark {
+        color: var(--ink);
+        opacity: 0.65;
+      }
+      .tape-name {
+        flex: 0 1 auto;
+        min-width: 0;
+        max-width: 62%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+      .tape-leader {
+        flex: 1;
+        border-bottom: 1px dotted rgba(11, 11, 12, 0.4);
+        transform: translateY(-0.18em);
+      }
+      .tape-sum {
+        font-weight: 700;
+        font-size: 0.95rem;
+        letter-spacing: 0.04em;
+      }
+      /* Keep the footer clear of the fixed tape (only while the tape is shown). */
+      @media (max-width: 1399.98px) {
+        html:not(.receipt-hidden) body { padding-bottom: 3.4rem; }
       }
 
       /* ---- FOOTER ---- */
@@ -868,6 +972,14 @@ const description =
         document.querySelectorAll<HTMLAnchorElement>('.receipt a'),
       );
       const order = links.map((l) => l.dataset.target);
+      // Section labels for the bottom tape, read straight from the receipt
+      // markup so the two affordances never drift out of sync.
+      const meta = links.map((l) => ({
+        name: l.querySelector('.r-name')?.textContent?.trim() ?? '',
+        cost: l.querySelector('.r-cost')?.textContent?.trim() ?? '',
+      }));
+      const tapeName = document.querySelector<HTMLElement>('.tape-name');
+      const tapeFill = document.querySelector<HTMLElement>('.tape-fill');
       const visible = new Set<string>();
       let lastIdx = -1;
 
@@ -880,6 +992,16 @@ const description =
           l.classList.toggle('is-active', i === lastIdx);
           l.classList.toggle('is-past', lastIdx > -1 && i < lastIdx);
         });
+        // Ring up the bottom tape: name the current line, fill the "paid"
+        // proportion. Before the first section, rest on the store name at 0%.
+        if (tapeFill)
+          tapeFill.style.width = `${
+            lastIdx > -1 ? ((lastIdx + 1) / meta.length) * 100 : 0
+          }%`;
+        if (tapeName && lastIdx > -1) {
+          const m = meta[lastIdx];
+          tapeName.textContent = m.cost ? `${m.name} · ${m.cost}` : m.name;
+        }
       };
 
       const obs = new IntersectionObserver(
