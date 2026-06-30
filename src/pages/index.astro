@@ -173,7 +173,7 @@ const description =
                 src={saloon}
                 alt="Interiér amerického baru kolem roku 1900"
                 widths={[460, 900, 1400]}
-                sizes="(max-width: 900px) 86vw, 30vw"
+                sizes="(max-width: 900px) 76vw, 31rem"
               />
               <figcaption>saloon · 19. stol. · <span class="acid">původ</span></figcaption>
             </div>
@@ -182,7 +182,7 @@ const description =
                 src={friedman}
                 alt="Portrét ekonoma Miltona Friedmana"
                 widths={[300, 560, 840]}
-                sizes="(max-width: 900px) 44vw, 17vw"
+                sizes="(max-width: 900px) 50vw, 22rem"
               />
               <figcaption>Friedman · <span class="acid">proslavil</span></figcaption>
             </div>
@@ -191,7 +191,7 @@ const description =
                 src={heinlein}
                 alt="Portrét spisovatele Roberta A. Heinleina"
                 widths={[280, 520, 760]}
-                sizes="(max-width: 900px) 40vw, 15vw"
+                sizes="(max-width: 900px) 44vw, 19rem"
               />
               <figcaption>Heinlein · <span class="acid">rozšířil</span></figcaption>
             </div>
@@ -441,14 +441,14 @@ const description =
         position: relative;
         margin: 0;
         width: 100%;
-        max-width: 30rem;
-        aspect-ratio: 5 / 4;
+        max-width: 24rem;
+        aspect-ratio: 4 / 5;
       }
       .oc-card {
         position: absolute;
         background: var(--ink);
         border: 1px solid rgba(244, 241, 234, 0.16);
-        box-shadow: 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.55);
+        box-shadow: 0.7rem 0.7rem 0 rgba(0, 0, 0, 0.6);
       }
       .oc-card :global(img) {
         display: block;
@@ -463,15 +463,29 @@ const description =
         background: var(--ink);
         color: var(--paper);
         font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 0.6rem;
+        font-size: 0.66rem;
         letter-spacing: 0.04em;
         text-transform: uppercase;
-        padding: 0.3rem 0.5rem;
+        padding: 0.35rem 0.6rem;
         white-space: nowrap;
       }
-      .oc-saloon {
-        width: 60%;
+      /* Vertical cascade: Friedman top, Heinlein mid-right, saloon anchored
+         large at the bottom — sized big to dominate the right of the section. */
+      .oc-friedman {
+        width: 54%;
+        left: 3%;
+        top: 0;
+        z-index: 3;
+      }
+      .oc-heinlein {
+        width: 47%;
         right: 0;
+        top: 27%;
+        z-index: 2;
+      }
+      .oc-saloon {
+        width: 76%;
+        left: 0;
         bottom: 0;
         z-index: 1;
       }
@@ -479,26 +493,14 @@ const description =
         left: auto;
         right: 0;
       }
-      .oc-friedman {
-        width: 41%;
-        left: 0;
-        top: 12%;
-        z-index: 3;
-      }
-      .oc-heinlein {
-        width: 31%;
-        left: 28%;
-        bottom: 6%;
-        z-index: 2;
-      }
       @media (min-width: 900px) {
         .setup-inner {
-          grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+          grid-template-columns: minmax(0, 23rem) minmax(0, 1fr);
           align-items: center;
         }
         .origin-collage {
           justify-self: end;
-          max-width: 34rem;
+          max-width: 40rem;
         }
       }
       @media (prefers-reduced-motion: no-preference) {
@@ -699,7 +701,7 @@ const description =
         display: none;
       }
       .receipt-reopen { display: none; }
-      @media (min-width: 1440px) {
+      @media (min-width: 1536px) {
         .receipt { display: block; }
         /* When dismissed: hide the slip, offer a compact button to bring it back. */
         html.receipt-hidden .receipt { display: none; }
