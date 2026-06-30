@@ -418,7 +418,39 @@ const canonical = new URL('/', Astro.site).href;
 
     <footer class="footer">
       <div class="wrap">
-        <span>obedzdarma.cz</span>
+        <p class="footer-why">
+          Otevřený, neplacený web o tom, že nic není zadarmo. Kód i texty si
+          můžeš přečíst, ověřit a&nbsp;šířit dál.
+        </p>
+
+        <div class="footer-read">
+          <p class="footer-lead">Čti dál</p>
+          <ul>
+            <li>
+              <span class="fr-author">Adam Smith</span> — Bohatství národů
+              <span class="fr-note">dělba práce: společně vyrobíme víc než každý sám</span>
+            </li>
+            <li>
+              <span class="fr-author">Frédéric Bastiat</span> — Co je vidět a co není vidět
+              <span class="fr-note">skrytá cena: i to, co nevidíš, platíš</span>
+            </li>
+            <li>
+              <span class="fr-author">Milton Friedman</span> — Svoboda volby
+              <span class="fr-note">dobrovolná směna: obchod s&nbsp;kladným součtem</span>
+            </li>
+          </ul>
+        </div>
+
+        <p class="footer-open">
+          <a href="https://github.com/nktrjsk/obedzdarma" target="_blank" rel="noopener noreferrer">
+            Otevřený zdroj na GitHubu →
+          </a>
+        </p>
+        <p class="footer-license">
+          Kód: MIT · Texty: CC&nbsp;BY&nbsp;4.0 — šiř dál, jen uveď zdroj.
+        </p>
+
+        <p class="footer-mark">obedzdarma.cz</p>
       </div>
     </footer>
 
@@ -1031,11 +1063,79 @@ const canonical = new URL('/', Astro.site).href;
 
       /* ---- FOOTER ---- */
       .footer {
-        padding-block: 2.5rem;
+        margin-top: clamp(4rem, 10vw, 7rem);
+        padding-block: clamp(2.5rem, 5vw, 4rem);
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .footer-why {
+        max-width: 46ch;
+        margin: 0 0 clamp(2rem, 4vw, 3rem);
+        color: var(--paper);
+        font-weight: 300;
+        text-wrap: pretty;
+      }
+      .footer-lead {
+        margin: 0 0 1rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .footer-read ul {
+        list-style: none;
+        margin: 0 0 clamp(2rem, 4vw, 3rem);
+        padding: 0;
+        display: grid;
+        gap: 1.1rem;
+        max-width: 44ch;
+      }
+      .footer-read li {
+        color: var(--paper);
+      }
+      .fr-author {
+        font-weight: 600;
+      }
+      .fr-note {
+        display: block;
+        margin-top: 0.15rem;
         color: var(--muted);
         font-size: 0.85rem;
+      }
+      .footer-open {
+        margin: 0;
+      }
+      .footer-open a {
+        color: var(--paper);
+        text-decoration: none;
+        border-bottom: 1px solid var(--muted);
+        padding-bottom: 2px;
+        transition:
+          color 160ms ease,
+          border-color 160ms ease;
+      }
+      .footer-open a:hover,
+      .footer-open a:focus-visible {
+        color: var(--acid);
+        border-color: var(--acid);
+      }
+      .footer-license {
+        margin: 0.75rem 0 0;
+        font-size: 0.85rem;
+      }
+      .footer-mark {
+        margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+        font-size: 0.8rem;
         letter-spacing: 0.1em;
         text-transform: uppercase;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .footer-open a {
+          transition: none;
+        }
       }
     </style>
 
