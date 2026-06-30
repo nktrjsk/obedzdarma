@@ -164,6 +164,10 @@ const description =
           <p class="hero-sub display">
             A kolik stojí <span class="mark">„zdarma“</span>?
           </p>
+          <p class="hero-stand">
+            Appka zdarma. Doprava zdarma. Účet zdarma. Penězi za ně neplatíš.
+            Platíš jinak.
+          </p>
         </div>
       </header>
 
@@ -178,7 +182,7 @@ const description =
               <em>Měsíc je drsná milenka</em>.
             </p>
             <p class="lead">
-              Ani jeden ji ale nevymyslel — pochází z&nbsp;amerických barů, které
+              Ani jeden ji ale nevymyslel: pochází z&nbsp;amerických barů, které
               k&nbsp;pití lákaly na „oběd zdarma“. I&nbsp;ten byl ovšem zaplacený
               v&nbsp;ceně pití.
             </p>
@@ -286,7 +290,7 @@ const description =
               <h3 class="mech-title display">Loss leader</h3>
               <p class="mech-body">
                 Nabídnou ti něco pod cenou nebo zdarma, aby tě nalákali
-                dovnitř. Pak ale vydělají na tom, co dokoupíš — přivede tě
+                dovnitř. Pak ale vydělají na tom, co dokoupíš. Přivede tě
                 levný rohlík, ale odneseš si celý nákup.
               </p>
             </li>
@@ -451,6 +455,19 @@ const description =
         margin-top: clamp(2.5rem, 6vw, 4.5rem);
         text-transform: none;
         letter-spacing: -0.01em;
+      }
+      /* Grounds the metaphor before the historical origin story runs: names the
+         modern "free" things the page is actually about, so the literal
+         free-lunch reading never takes hold above the fold. The three "X zdarma"
+         beats prime the closing "platíš jinak" → the "Čím platíš?" section. */
+      .hero-stand {
+        margin-top: clamp(1.5rem, 3.5vw, 2.5rem);
+        max-width: 34ch;
+        font-size: clamp(1rem, 1.8vw, 1.25rem);
+        line-height: 1.6;
+        font-weight: 300;
+        color: var(--paper);
+        text-wrap: pretty;
       }
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
