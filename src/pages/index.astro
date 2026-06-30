@@ -6,6 +6,23 @@ const currencies = (await getCollection('currencies')).sort(
   (a, b) => a.data.order - b.data.order,
 );
 
+// Wayfinding "receipt": the page spine as line items. Clean nominative labels
+// (the currency titles are in the instrumental case — "Soukromím" — which reads
+// oddly in a nav) plus the "currency" each section is paid in.
+const railMeta: Record<string, { label: string; cost?: string }> = {
+  setup: { label: 'Úvod' },
+  soukromi: { label: 'Soukromí', cost: 'data' },
+  efektivita: { label: 'Efektivita', cost: 'daně' },
+  prostredi: { label: 'Prostředí', cost: 'CO₂' },
+  inflace: { label: 'Inflace', cost: '%' },
+  ekonomie: { label: 'Ekonomie' },
+};
+const sections = [
+  { id: 'setup', ...railMeta.setup },
+  ...currencies.map((c) => ({ id: c.id, ...(railMeta[c.id] ?? { label: c.data.title }) })),
+  { id: 'ekonomie', ...railMeta.ekonomie },
+];
+
 const title = 'Oběd zdarma neexistuje';
 const description =
   'Všechno má svou cenu. A jakou cenu má „zdarma“? Soukromí, efektivita, životní prostředí, inflace — čím doopravdy platíte.';
@@ -24,8 +41,56 @@ const description =
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://obedzdarma.cz" />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- Restore the user's receipt visibility choice before paint (no flash). -->
+    <script is:inline>
+      try {
+        if (localStorage.getItem('receiptHidden') === '1')
+          document.documentElement.classList.add('receipt-hidden');
+      } catch (e) {}
+    </script>
   </head>
   <body>
+    <!-- Wayfinding "receipt" — the page rings up sections like line items on a
+         bill: passed = paid (filled), current = being scanned (acid), upcoming
+         = pending. Reflects scroll position (read-only, no scroll-hijack);
+         clicking is a native anchor jump. Shown only where the side gutter is
+         wide enough to clear the text column. -->
+    <nav class="receipt" aria-label="Obsah stránky">
+      <div class="r-paper">
+        <button class="r-close" type="button" aria-label="Skrýt účtenku">×</button>
+        <p class="r-store">Oběd zdarma</p>
+        <p class="r-meta">∗ účtenka ∗<br />obedzdarma.cz</p>
+        <ol>
+          {
+            sections.map((s) => (
+              <li>
+                <a
+                  href={`#${s.id}`}
+                  data-target={s.id}
+                  class={s.cost ? 'r-item' : 'r-item r-item--note'}>
+                  <span class="r-name">{s.label}</span>
+                  {s.cost && (
+                    <>
+                      <span class="r-leader" aria-hidden="true" />
+                      <span class="r-cost">{s.cost}</span>
+                    </>
+                  )}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="r-total">
+          <span>Celkem</span>
+          <span class="r-sum">∞</span>
+        </p>
+        <p class="r-foot">Zboží nelze vrátit</p>
+        <div class="r-barcode" aria-hidden="true" />
+      </div>
+    </nav>
+    <button class="receipt-reopen" type="button" aria-label="Zobrazit účtenku">
+      Účtenka
+    </button>
     <main>
       <!-- 1. HERO -->
       <header class="hero">
@@ -41,7 +106,7 @@ const description =
       </header>
 
       <!-- 2. SETUP -->
-      <section id="setup" class="setup">
+      <section id="setup" class="setup" data-rail>
         <div class="wrap">
           <p class="lead">
             Myšlenku <strong>„obědu zdarma“</strong> proslavil ekonom
@@ -68,7 +133,7 @@ const description =
         </div>
         {
           currencies.map((c, i) => (
-            <article class="currency" id={c.id}>
+            <article class="currency" id={c.id} data-rail>
               <div class="wrap currency-inner">
                 <div class="currency-head">
                   <span class="currency-no">0{i + 1}</span>
@@ -100,15 +165,55 @@ const description =
         }
       </section>
 
-      <!-- 4. ECONOMICS (placeholder — content TBD) -->
-      <section class="economics">
+      <!-- 4. ECONOMICS -->
+      <section class="economics" id="ekonomie" data-rail>
         <div class="wrap">
           <h2 class="section-head display">Ekonomie za „obědem zdarma“</h2>
           <p class="lead">
-            Proč „zdarma“ funguje jako tah? Promo akce, open-source software a
-            další případy, kdy má rozdávání svou vlastní logiku.
+            Někdy je „zdarma“ promyšlený tah — ne podvod, ale investice. Kdo
+            rozdává, počítá s&nbsp;tím, že se mu to vrátí. Otázka není
+            <em>jestli</em>, ale <em>kudy</em>.
           </p>
-          <p class="todo">Tato sekce se teprve píše.</p>
+
+          <ol class="mechanisms">
+            <li>
+              <h3 class="mech-title display">Loss leader</h3>
+              <p class="mech-body">
+                Něco se nabízí pod cenou nebo zdarma, aby vás to přivedlo
+                dovnitř. Vydělá se na tom, co dokoupíte — na levný rohlík
+                nalákají, zaplatíte celý nákup.
+              </p>
+            </li>
+            <li>
+              <h3 class="mech-title display">Freemium</h3>
+              <p class="mech-body">
+                Základ zdarma, platí menšina. Pár procent předplatitelů dotuje
+                všechny ostatní — a ti ostatní zase svou přítomností dělají
+                službu cennou pro ty platící.
+              </p>
+            </li>
+            <li>
+              <h3 class="mech-title display">Doplněk zdarma</h3>
+              <p class="mech-body">
+                Rozdej zadarmo to, co zvyšuje poptávku po tom, co prodáváš. Když
+                je software zdarma, roste hodnota hardwaru, cloudu a podpory
+                kolem něj.
+              </p>
+            </li>
+          </ol>
+
+          <p class="currency-fact economics-fact">
+            Red Hat postavil miliardový byznys na softwaru, který je zdarma
+            a&nbsp;otevřený. V&nbsp;roce 2019 ho IBM koupilo za 34&nbsp;miliard
+            dolarů.
+            <a class="src-ref" href="#zdroj-5" aria-label="Zdroj 5">[5]</a>
+          </p>
+
+          <p class="lead economics-closer">
+            Ať je logika jakákoli, platí jedno:
+            <span class="acid">zadarmo se nedává nic</span>. Mění se jen to, kdo,
+            kdy a&nbsp;čím zaplatí.
+          </p>
         </div>
       </section>
 
@@ -139,6 +244,15 @@ const description =
                 </li>
               ))
             }
+            <li id="zdroj-5">
+              <a
+                href="https://newsroom.ibm.com/2019-07-09-IBM-Closes-Landmark-Acquisition-of-Red-Hat-for-34-Billion-Defines-Open-Hybrid-Cloud-Future"
+                target="_blank"
+                rel="noopener noreferrer">
+                IBM — IBM Closes Landmark Acquisition of Red Hat for $34 Billion
+                (2019)
+              </a>
+            </li>
           </ol>
         </div>
       </section>
@@ -283,15 +397,47 @@ const description =
         border-top: 1px solid var(--line);
         padding-block: clamp(6rem, 18vw, 13rem);
       }
-      .todo {
-        display: inline-block;
-        margin-top: 1.5rem;
-        font-size: 0.8rem;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--muted);
-        border: 1px dashed var(--line);
-        padding: 0.5rem 0.9rem;
+      .mechanisms {
+        list-style: none;
+        margin: clamp(3rem, 7vw, 5rem) 0 clamp(2.5rem, 6vw, 4rem);
+        padding: 0;
+        display: grid;
+        gap: clamp(2rem, 4vw, 2.75rem);
+        counter-reset: mech;
+      }
+      .mechanisms li {
+        counter-increment: mech;
+        border-top: 1px solid var(--line);
+        padding-top: clamp(1.5rem, 3vw, 2rem);
+      }
+      .mech-title {
+        font-size: clamp(1.3rem, 3vw, 2rem);
+        text-transform: none;
+        margin: 0 0 0.85rem;
+      }
+      .mech-title::before {
+        content: "0" counter(mech);
+        color: var(--acid);
+        margin-right: 0.6em;
+        font-size: 0.7em;
+        vertical-align: 0.1em;
+      }
+      .mech-body {
+        font-weight: 300;
+        font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+        line-height: 1.6;
+        max-width: 42ch;
+        margin: 0;
+        color: var(--paper);
+      }
+      .economics-fact { margin-top: 0; }
+      .economics-closer {
+        margin-top: clamp(2.5rem, 6vw, 4rem);
+        max-width: 28ch;
+      }
+      @media (min-width: 760px) {
+        .mechanisms { grid-template-columns: repeat(3, 1fr); }
+        .mechanisms li { padding-right: clamp(0.5rem, 1.5vw, 1rem); }
       }
 
       /* ---- CLOSER ---- */
@@ -335,6 +481,174 @@ const description =
       }
       .sources-list li { scroll-margin-top: 2rem; }
 
+      /* ---- WAYFINDING RECEIPT ---- */
+      /* A literal paper bill dropped in the bottom-right corner. Reflects scroll
+         position (read-only, no scroll-hijack); clicking is a native anchor jump.
+         Hidden where the gutter can't clear the centered text column. */
+      .receipt {
+        position: fixed;
+        right: clamp(0.75rem, 1.4vw, 1.5rem);
+        bottom: clamp(0.75rem, 1.4vw, 1.5rem);
+        z-index: 20;
+        display: none;
+      }
+      .receipt-reopen { display: none; }
+      @media (min-width: 1440px) {
+        .receipt { display: block; }
+        /* When dismissed: hide the slip, offer a compact button to bring it back. */
+        html.receipt-hidden .receipt { display: none; }
+        html.receipt-hidden .receipt-reopen { display: inline-flex; }
+      }
+      .r-paper {
+        --tooth: 8px;
+        position: relative;
+        width: 11.5rem;
+        padding: 1.6rem 1.4rem 1.5rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+        font-size: 0.66rem;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.5));
+        /* Torn zigzag top & bottom edges. */
+        -webkit-mask:
+          conic-gradient(from -45deg at top, #0000 25%, #000 0) 0 0 / 16px var(--tooth) repeat-x,
+          conic-gradient(from 135deg at bottom, #0000 25%, #000 0) 0 100% / 16px var(--tooth) repeat-x,
+          linear-gradient(#000 0 0) 50% / 100% calc(100% - 2 * var(--tooth)) no-repeat;
+        mask:
+          conic-gradient(from -45deg at top, #0000 25%, #000 0) 0 0 / 16px var(--tooth) repeat-x,
+          conic-gradient(from 135deg at bottom, #0000 25%, #000 0) 0 100% / 16px var(--tooth) repeat-x,
+          linear-gradient(#000 0 0) 50% / 100% calc(100% - 2 * var(--tooth)) no-repeat;
+      }
+      .r-close {
+        position: absolute;
+        top: 0.55rem;
+        right: 0.55rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        display: grid;
+        place-items: center;
+        padding: 0;
+        border: 0;
+        background: none;
+        color: #b9b4a6;
+        font-family: inherit;
+        font-size: 1rem;
+        line-height: 1;
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+      .r-close:hover { color: var(--ink); }
+      .r-store {
+        margin: 0;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+      }
+      /* Compact reopen button — shares the paper look. */
+      .receipt-reopen {
+        position: fixed;
+        right: clamp(0.75rem, 1.4vw, 1.5rem);
+        bottom: clamp(0.75rem, 1.4vw, 1.5rem);
+        z-index: 20;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.6rem 0.85rem;
+        border: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        cursor: pointer;
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5));
+        transition: transform 0.15s ease;
+      }
+      .receipt-reopen::before {
+        content: '∗';
+        color: var(--ink);
+      }
+      .receipt-reopen:hover { transform: translateY(-2px); }
+      .r-meta {
+        margin: 0.5rem 0 1.05rem;
+        padding-bottom: 1.05rem;
+        text-align: center;
+        font-size: 0.56rem;
+        letter-spacing: 0.16em;
+        color: #6b685f;
+        border-bottom: 1px dashed #b9b4a6;
+      }
+      .receipt ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.55rem;
+      }
+      .r-item {
+        display: flex;
+        align-items: baseline;
+        gap: 0.35rem;
+        padding: 0.22rem 0.3rem;
+        margin: 0 -0.3rem;
+        text-decoration: none;
+        color: rgba(11, 11, 12, 0.45);
+        transition: color 0.2s ease, background 0.2s ease;
+      }
+      .r-name { white-space: nowrap; }
+      .r-leader {
+        flex: 1;
+        border-bottom: 1px dotted currentColor;
+        transform: translateY(-0.28em);
+        opacity: 0.5;
+      }
+      .r-cost { white-space: nowrap; }
+      .r-item:hover { color: var(--ink); }
+      /* paid */
+      .r-item.is-past { color: var(--ink); }
+      /* being scanned — highlighter swipe */
+      .r-item.is-active {
+        color: var(--ink);
+        background: var(--acid);
+        font-weight: 700;
+      }
+      .r-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin: 1.05rem 0 0;
+        padding-top: 1rem;
+        border-top: 1px dashed #b9b4a6;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+      .r-sum { font-size: 1rem; }
+      .r-foot {
+        margin: 1.05rem 0 0;
+        text-align: center;
+        font-size: 0.54rem;
+        letter-spacing: 0.2em;
+        color: #6b685f;
+      }
+      .r-barcode {
+        height: 1.5rem;
+        margin-top: 0.9rem;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--ink) 0 1px, #0000 1px 3px,
+          var(--ink) 3px 5px, #0000 5px 6px,
+          var(--ink) 6px 7px, #0000 7px 10px,
+          var(--ink) 10px 12px, #0000 12px 13px
+        );
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .r-item { transition: none; }
+      }
+
       /* ---- FOOTER ---- */
       .footer {
         padding-block: 2.5rem;
@@ -344,5 +658,60 @@ const description =
         text-transform: uppercase;
       }
     </style>
+
+    <script>
+      // Reflect the section crossing the viewport's vertical center into the
+      // receipt: the current line is "active", everything above it is "paid"
+      // (is-past). Read-only: observes position, never alters scroll.
+      const links = Array.from(
+        document.querySelectorAll<HTMLAnchorElement>('.receipt a'),
+      );
+      const order = links.map((l) => l.dataset.target);
+      const visible = new Set<string>();
+      let lastIdx = -1;
+
+      const setActive = () => {
+        const idx = order.findIndex((id) => id && visible.has(id));
+        // Keep the last reached line lit when scrolled past the final section
+        // (into closer / sources), so the bill stays fully rung up.
+        if (idx !== -1) lastIdx = idx;
+        links.forEach((l, i) => {
+          l.classList.toggle('is-active', i === lastIdx);
+          l.classList.toggle('is-past', lastIdx > -1 && i < lastIdx);
+        });
+      };
+
+      const obs = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            const id = (e.target as HTMLElement).id;
+            if (e.isIntersecting) visible.add(id);
+            else visible.delete(id);
+          }
+          setActive();
+        },
+        // A 1px-tall band at the viewport's middle: exactly one full-width
+        // section occupies it at a time.
+        { rootMargin: '-50% 0px -50% 0px' },
+      );
+
+      document.querySelectorAll('[data-rail]').forEach((s) => obs.observe(s));
+
+      // Hide / restore the receipt, remembering the choice.
+      const root = document.documentElement;
+      const KEY = 'receiptHidden';
+      const setHidden = (hidden: boolean) => {
+        root.classList.toggle('receipt-hidden', hidden);
+        try {
+          localStorage.setItem(KEY, hidden ? '1' : '0');
+        } catch (e) {}
+      };
+      document
+        .querySelector('.r-close')
+        ?.addEventListener('click', () => setHidden(true));
+      document
+        .querySelector('.receipt-reopen')
+        ?.addEventListener('click', () => setHidden(false));
+    </script>
   </body>
 </html>
