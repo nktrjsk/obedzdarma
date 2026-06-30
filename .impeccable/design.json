@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-30T00:00:00Z",
+  "title": "Design System: Oběd zdarma",
+  "extensions": {
+    "colorMeta": {
+      "acid": {
+        "role": "primary",
+        "displayName": "Acid Price-Tag Yellow",
+        "canonical": "#e8ff2a",
+        "tonalRamp": ["#1f2206", "#3b410b", "#586012", "#7d8a18", "#a4b620", "#c8de26", "#e8ff2a", "#f2ff7e", "#f9ffc2"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#0b0b0c",
+        "tonalRamp": ["#0b0b0c", "#161618", "#26262a", "#3a3a40", "#54545c", "#76767f", "#9a9aa2", "#c4c4c9", "#e8e8eb"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#f4f1ea",
+        "tonalRamp": ["#2b2a25", "#46443c", "#646155", "#857f6f", "#a7a292", "#c8c3b6", "#e0dccf", "#f4f1ea", "#fbfaf5"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "#8f8c83"
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#26262a"
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero shout only — 'Všechno má svou cenu.'" },
+      "headline": { "displayName": "Headline", "purpose": "Section heads and currency titles." },
+      "title": { "displayName": "Title", "purpose": "Currency claims and mechanism titles — display font, mixed case." },
+      "body": { "displayName": "Body", "purpose": "Leads and prose, weight 300, narrow columns." },
+      "label": { "displayName": "Label / Mono", "purpose": "Receipt line items and photo captions — machine print." }
+    },
+    "shadows": [
+      { "name": "pasted-print", "value": "0.7rem 0.7rem 0 rgba(0,0,0,0.6)", "purpose": "Hard zero-blur offset on origin-collage cards — pasted-archive look, not Material elevation." },
+      { "name": "paper-lift", "value": "drop-shadow(0 10px 22px rgba(0,0,0,0.5))", "purpose": "The only blurred shadow — lifts the literal paper objects (receipt, reopen button) off the dark page." }
+    ],
+    "motion": [
+      { "name": "card-nudge", "value": "transform 0.25s ease", "purpose": "Origin collage nudges on hover; suppressed under reduced-motion." },
+      { "name": "receipt-state", "value": "color 0.2s ease, background 0.2s ease", "purpose": "Receipt line dormant→active→past transitions." }
+    ],
+    "breakpoints": [
+      { "name": "examples", "value": "640px" },
+      { "name": "mechanisms", "value": "760px" },
+      { "name": "collage", "value": "900px" },
+      { "name": "receipt", "value": "1536px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Highlighted Phrase (mark)",
+      "kind": "custom",
+      "refersTo": "mark",
+      "description": "Acid price-tag applied to a key word in running text.",
+      "html": "<p style=\"font-family:'Archivo Variable',system-ui,sans-serif;color:#f4f1ea;font-size:1.4rem\">A kolik stojí <span class=\"ds-mark\">„zdarma“</span>?</p>",
+      "css": ".ds-mark { background:#e8ff2a; color:#0b0b0c; padding:0 0.12em; border-radius:0; box-decoration-break:clone; -webkit-box-decoration-break:clone; }"
+    },
+    {
+      "name": "Source Reference",
+      "kind": "custom",
+      "refersTo": "src-ref",
+      "description": "Inline citation rendered as part of the prose; jumps to the numbered source list.",
+      "html": "<p style=\"font-family:'Archivo Variable',system-ui,sans-serif;color:#f4f1ea\">Každý Evropan ročně vyhodí kolem 11 kg textilu.<a class=\"ds-src-ref\" href=\"#\">[3]</a></p>",
+      "css": ".ds-src-ref { color:#e8ff2a; text-decoration:none; font-size:0.75em; vertical-align:super; margin-left:0.15em; } .ds-src-ref:hover { text-decoration:underline; }"
+    },
+    {
+      "name": "Currency Claim + Fact",
+      "kind": "custom",
+      "refersTo": "fact-block",
+      "description": "The provocative proposition (claim) above its quiet, acid-ruled verifiable anchor (fact).",
+      "html": "<div><p class=\"ds-claim\">Nízká cena dnes je vykoupená znečištěnou planetou zítřka.</p><p class=\"ds-fact\">Každý Evropan ročně vyhodí v průměru kolem 11 kg textilu.<a class=\"ds-src-ref\" href=\"#\">[3]</a></p></div>",
+      "css": ".ds-claim { font-family:'Archivo Black',system-ui,sans-serif; text-transform:none; letter-spacing:-0.015em; line-height:1.15; font-size:clamp(1.3rem,2.8vw,2.1rem); color:#f4f1ea; max-width:20ch; margin:0 0 1.5rem; } .ds-fact { font-family:'Archivo Variable',system-ui,sans-serif; font-weight:300; font-size:1.05rem; line-height:1.55; max-width:48ch; color:#f4f1ea; margin:0; padding-left:1rem; border-left:2px solid #e8ff2a; } .ds-src-ref { color:#e8ff2a; text-decoration:none; font-size:0.75em; vertical-align:super; margin-left:0.15em; }"
+    },
+    {
+      "name": "Wayfinding Receipt Line",
+      "kind": "nav",
+      "refersTo": "receipt-item",
+      "description": "A single line item in the fixed torn-paper receipt nav, shown in dormant / active (highlighter) / past states.",
+      "html": "<div class=\"ds-receipt\"><a class=\"ds-r-item\"><span>Úvod</span></a><a class=\"ds-r-item is-active\"><span>Soukromí</span><span class=\"ds-r-leader\"></span><span>data</span></a><a class=\"ds-r-item is-past\"><span>Efektivita</span><span class=\"ds-r-leader\"></span><span>daně</span></a></div>",
+      "css": ".ds-receipt { background:#f4f1ea; color:#0b0b0c; padding:1.2rem 1rem; width:11.5rem; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.02em; filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5)); display:grid; gap:0.55rem; } .ds-r-item { display:flex; align-items:baseline; gap:0.35rem; padding:0.22rem 0.3rem; text-decoration:none; color:rgba(11,11,12,0.45); transition:color 0.2s ease, background 0.2s ease; } .ds-r-leader { flex:1; border-bottom:1px dotted currentColor; transform:translateY(-0.28em); opacity:0.5; } .ds-r-item:hover { color:#0b0b0c; } .ds-r-item.is-past { color:#0b0b0c; } .ds-r-item.is-active { color:#0b0b0c; background:#e8ff2a; font-weight:700; }"
+    },
+    {
+      "name": "Closer Panel",
+      "kind": "custom",
+      "refersTo": "closer-panel",
+      "description": "Full-bleed surface flip to acid — the 'you've paid' beat, used once at the end.",
+      "html": "<div class=\"ds-closer\"><p class=\"ds-closer-line\">Příště, až uvidíš <span class=\"ds-closer-mark\">„zdarma“</span>, zeptej se: <span class=\"ds-closer-acid\">čím platím?</span></p></div>",
+      "css": ".ds-closer { background:#e8ff2a; color:#0b0b0c; padding:clamp(3rem,8vw,5rem); } .ds-closer-line { font-family:'Archivo Black',system-ui,sans-serif; text-transform:none; letter-spacing:-0.015em; line-height:1.2; font-size:clamp(1.6rem,5vw,3.5rem); margin:0; } .ds-closer-mark { background:#0b0b0c; color:#e8ff2a; padding:0 0.12em; } .ds-closer-acid { color:#0b0b0c; text-decoration:underline; text-decoration-thickness:0.12em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Itemized Bill",
+    "overview": "The page is a receipt. It rings up the hidden costs of 'free' the way a till rings up groceries — one line item at a time, each currency a charge on the bill, the total an acid-yellow ∞. Near-black ink on warm paper, oversized Archivo Black display type, and one violently bright accent used as a price tag — confident, provocative, and sourced, never decorative. An argument rendered as a layout, not a brochure: native scroll only, fully readable without JavaScript, with motion and the live receipt layered on top as enhancements.",
+    "keyCharacteristics": [
+      "Two-color foundation (ink + paper) with a single weaponized accent (acid yellow).",
+      "Hard edges everywhere — zero border-radius is a deliberate rule.",
+      "Oversized fluid display type carries the persuasion; body copy stays quiet and narrow.",
+      "Numbered sources are part of the visual system, not a footnote afterthought.",
+      "One signature object: the torn-paper wayfinding receipt."
+    ],
+    "rules": [
+      { "name": "The Price-Tag Rule", "body": "Acid yellow marks cost, emphasis, or current position — nothing else. If it is being used to make a section 'pop' rather than to mark a charge, remove it. Its scarcity is the point.", "section": "colors" },
+      { "name": "The Two-Weight Rule", "body": "Display weight (Archivo Black) and body weight (300) only — never reach for intermediate weights to create hierarchy. Size and the black/light contrast carry it. Display letter-spacing never goes below -0.015em.", "section": "typography" },
+      { "name": "The No-Blur-On-UI Rule", "body": "Content surfaces are flat. Blur appears only on the literal paper objects (receipt, reopen button). If a shadow is soft and it's not a piece of paper, it's wrong.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep acid yellow (#e8ff2a) scarce — marks for cost, emphasis, or current position only.",
+      "Do keep every surface hard-edged: border-radius: 0 is the system.",
+      "Do carry hierarchy with size and the Archivo-Black-vs-300 weight jump, never intermediate weights.",
+      "Do keep body columns narrow (leads ~20–28ch, facts ≤48ch) so the argument reads as declarative lines.",
+      "Do anchor every strong claim to a real numbered source rendered in the prose.",
+      "Do keep all motion native-scroll-safe and reversible under prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't build the generic SaaS landing — no gradient hero, no feature-card grid, no rounded icons, no tracked-uppercase eyebrow on every section.",
+      "Don't drift into the cream / editorial-magazine lane — no display-serif italics, drop caps, or broadsheet grid.",
+      "Don't go corporate / neutral — the page commits to its position.",
+      "Don't let it read as conspiracy / clickbait — every provocative claim stays sourced and credible.",
+      "Don't use acid as a background for body text, or as decoration.",
+      "Don't add soft/ambient shadows or glassmorphism to content surfaces.",
+      "Don't introduce border-radius, gradient text, or color beyond ink / paper / acid / muted / hairline."
+    ]
+  }
+}
