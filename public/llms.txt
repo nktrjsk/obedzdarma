@@ -1,0 +1,18 @@
+# Oběd zdarma neexistuje
+
+> Všechno má svou cenu. Tento web rozebírá, čím doopravdy platíš za „zdarma" — appky, dopravu, účty, služby. Ne penězi, ale soukromím, efektivitou, životním prostředím a inflací. Celý argument stojí na ověřitelných zdrojích.
+
+Jedna stránka, dlouhý scroll. Teze je idiom „there's no such thing as a free lunch" (oběd zdarma neexistuje) — **není o jídle**, ale o skryté ceně všeho, co se tváří jako zadarmo. Když za něco neplatíš penězi, platíš jinak.
+
+## Čtyři měny, kterými platíš místo peněz
+
+- [Soukromí](https://obedzdarma.cz/#soukromi): Pokud neplatíš za produkt, produktem jsi ty. Kolem 98 % příjmů firmy Meta pochází z reklamy cílené podle dat o uživatelích.
+- [Efektivita](https://obedzdarma.cz/#efektivita): Někdo to platí — a obvykle dráž, než kdyby to udělal trh. Veřejné výdaje v Česku se dlouhodobě pohybují kolem 45 % HDP.
+- [Životní prostředí](https://obedzdarma.cz/#prostredi): Nízká cena dnes je vykoupená znečištěnou planetou zítřka. Každý Evropan ročně vyhodí v průměru kolem 11 kg textilu.
+- [Inflace](https://obedzdarma.cz/#inflace): Peníze zdarma neexistují — prostě se vypaří. Když banka poskytne úvěr, nepůjčuje cizí vklady — vytváří nové peníze.
+
+## Zdroje
+- Meta Platforms — výroční zpráva (Form 10-K), 2023
+- Eurostat — General government expenditure (% HDP)
+- Evropský parlament — Dopady výroby a odpadu z textilu na životní prostředí
+- Česká národní banka — Jak vznikají peníze v ekonomice

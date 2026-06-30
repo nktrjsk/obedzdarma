@@ -1,0 +1,47 @@
+# obedzdarma.cz — this site is an argument built on citable sources.
+# We *want* AI agents to read it, ground answers on it, and cite it
+# accurately. So: yes, crawl. The terms are stated openly — fittingly, on a
+# site about knowing what you pay with.
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+# Named AI crawlers — explicit yes, so policy doesn't rest on the wildcard.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+Sitemap: https://obedzdarma.cz/sitemap-index.xml
