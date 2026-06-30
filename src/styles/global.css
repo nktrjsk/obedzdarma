@@ -9,6 +9,14 @@
   --acid: #e8ff2a;         /* aggressive accent — the "price tag" */
   --line: #26262a;         /* hairline dividers */
 
+  /* Paper-surface ramp (ink-on-paper) — drawn on by the receipt + register
+     tape, the only places dark-on-paper text appears. Keeps those grays in
+     one place instead of scattered literals. */
+  --paper-meta: #646155;                 /* meta + close glyph — ≈5.5:1 on paper */
+  --paper-rule: #b9b4a6;                 /* dashed separators (decorative) */
+  --paper-dim: rgba(11, 11, 12, 0.6);    /* dormant line items — ≈5:1 */
+  --paper-faint: rgba(11, 11, 12, 0.14); /* progress-track tint */
+
   --font-display: 'Archivo Black', system-ui, sans-serif;
   --font-body: 'Archivo Variable', system-ui, sans-serif;
 
@@ -53,6 +61,14 @@ body {
 
 a {
   color: inherit;
+}
+
+/* Brand keyboard focus ring — acid on the ink page. Paper-surface controls
+   (receipt, reopen button, skip link) override to an ink ring in their own
+   styles, since acid-on-paper has almost no contrast. */
+:focus-visible {
+  outline: 2px solid var(--acid);
+  outline-offset: 2px;
 }
 
 /* Display type — oversized, tight, loud. */

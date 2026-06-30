@@ -71,6 +71,10 @@ const description =
     </script>
   </head>
   <body>
+    <!-- Skip past the wayfinding receipt (the first focusable region on wide
+         screens) straight to the reading experience. Visually hidden until
+         keyboard focus. -->
+    <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
     <!-- Ink→acid duotone filter for the origin photos: maps shadows to --ink
          (#0b0b0c) and highlights to --acid (#e8ff2a) via luminance, so the
          archival photos read in the brand's two colors, not as stray full-color
@@ -149,7 +153,7 @@ const description =
         <span class="tape-sum">∞</span>
       </div>
     </div>
-    <main>
+    <main id="obsah" tabindex="-1">
       <!-- 1. HERO -->
       <header class="hero">
         <div class="wrap">
@@ -398,6 +402,30 @@ const description =
     </footer>
 
     <style>
+      /* ---- SKIP LINK ---- */
+      /* Pinned above the fold, lifted out of view until it takes focus, then
+         slides down as a paper chip. Ink ring (not the page's acid one) since
+         it sits on acid. */
+      .skip-link {
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 40;
+        padding: 0.6rem 0.9rem;
+        background: var(--acid);
+        color: var(--ink);
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none;
+        transform: translateY(calc(-100% - 1rem));
+        transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .skip-link:focus { transform: translateY(0); }
+      .skip-link:focus-visible { outline-color: var(--ink); }
+      /* main is only programmatically focusable (skip-link target); never ring it. */
+      main:focus { outline: none; }
+
       /* ---- HERO ---- */
       /* Hero deliberately stops short of full height so the opening of the
          next section peeks above the fold — the layout itself invites the
@@ -763,7 +791,9 @@ const description =
         padding: 0;
         border: 0;
         background: none;
-        color: #b9b4a6;
+        /* Was #b9b4a6 ≈ 1.84:1 — invisible until hover, and hover isn't
+           available to keyboard/touch. --paper-meta ≈ 5.5:1 clears AA. */
+        color: var(--paper-meta);
         font-family: inherit;
         font-size: 1rem;
         line-height: 1;
@@ -803,14 +833,21 @@ const description =
         color: var(--ink);
       }
       .receipt-reopen:hover { transform: translateY(-2px); }
+      /* Paper-surface controls flip the page's acid focus ring to ink — acid
+         on paper is barely visible. */
+      .receipt a:focus-visible,
+      .r-close:focus-visible,
+      .receipt-reopen:focus-visible {
+        outline-color: var(--ink);
+      }
       .r-meta {
         margin: 0.5rem 0 1.05rem;
         padding-bottom: 1.05rem;
         text-align: center;
         font-size: 0.56rem;
         letter-spacing: 0.16em;
-        color: #6b685f;
-        border-bottom: 1px dashed #b9b4a6;
+        color: var(--paper-meta);
+        border-bottom: 1px dashed var(--paper-rule);
       }
       .receipt ol {
         list-style: none;
@@ -826,9 +863,9 @@ const description =
         padding: 0.22rem 0.3rem;
         margin: 0 -0.3rem;
         text-decoration: none;
-        /* 0.6 alpha on paper ≈ 5:1 — clears WCAG AA for this small mono text
-           (was 0.45 ≈ 3.1:1, which failed). */
-        color: rgba(11, 11, 12, 0.6);
+        /* --paper-dim is 0.6 alpha on paper ≈ 5:1 — clears WCAG AA for this
+           small mono text (was 0.45 ≈ 3.1:1, which failed). */
+        color: var(--paper-dim);
         transition: color 0.2s ease, background 0.2s ease;
       }
       .r-name { white-space: nowrap; }
@@ -854,7 +891,7 @@ const description =
         align-items: baseline;
         margin: 1.05rem 0 0;
         padding-top: 1rem;
-        border-top: 1px dashed #b9b4a6;
+        border-top: 1px dashed var(--paper-rule);
         font-weight: 700;
         letter-spacing: 0.08em;
       }
@@ -873,6 +910,7 @@ const description =
       @media (prefers-reduced-motion: reduce) {
         .r-item { transition: none; }
         .tape-fill { transition: none; }
+        .skip-link { transition: none; }
       }
 
       /* ---- BOTTOM REGISTER TAPE ---- */
@@ -903,7 +941,7 @@ const description =
       }
       .tape-track {
         height: 3px;
-        background: rgba(11, 11, 12, 0.14);
+        background: var(--paper-faint);
       }
       /* The "paid" portion of the bill, rung up left→right as you scroll. */
       .tape-fill {
