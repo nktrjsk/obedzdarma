@@ -1,5 +1,9 @@
-/* Fonts — bundled, no external requests (on-brand: no hidden costs). */
-@import '@fontsource-variable/archivo';
+/* Fonts — bundled, no external requests (on-brand: no hidden costs).
+   Variable Archivo: weight axis only — we vary weight (300/600/700), never
+   width, so the wght file skips the unused width-axis font. unicode-range in
+   both files means the browser fetches only the latin + latin-ext subsets the
+   Czech copy needs (the vietnamese subset is never downloaded). */
+@import '@fontsource-variable/archivo/wght.css';
 @import '@fontsource/archivo-black';
 
 :root {
@@ -16,6 +20,13 @@
   --paper-rule: #b9b4a6;                 /* dashed separators (decorative) */
   --paper-dim: rgba(11, 11, 12, 0.6);    /* dormant line items — ≈5:1 */
   --paper-faint: rgba(11, 11, 12, 0.14); /* progress-track tint */
+
+  /* The two named shadows (see DESIGN.md). pasted-print = hard zero-blur
+     offset on the collage; paper-lift = the only blurred shadow, lifting the
+     literal paper objects (receipt) off the dark page. Usable as both
+     box-shadow and the value inside filter: drop-shadow(). */
+  --shadow-pasted-print: 0.7rem 0.7rem 0 rgba(0, 0, 0, 0.6);
+  --shadow-paper-lift: 0 10px 22px rgba(0, 0, 0, 0.5);
 
   --font-display: 'Archivo Black', system-ui, sans-serif;
   --font-body: 'Archivo Variable', system-ui, sans-serif;

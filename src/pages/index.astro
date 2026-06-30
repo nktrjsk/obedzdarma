@@ -493,7 +493,7 @@ const description =
         position: absolute;
         background: var(--ink);
         border: 1px solid rgba(244, 241, 234, 0.16);
-        box-shadow: 0.7rem 0.7rem 0 rgba(0, 0, 0, 0.6);
+        box-shadow: var(--shadow-pasted-print);
       }
       .oc-card :global(img) {
         display: block;
@@ -769,7 +769,7 @@ const description =
         line-height: 1.6;
         letter-spacing: 0.02em;
         text-transform: uppercase;
-        filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(var(--shadow-paper-lift));
         /* Torn zigzag top & bottom edges. */
         -webkit-mask:
           conic-gradient(from -45deg at top, #0000 25%, #000 0) 0 0 / 16px var(--tooth) repeat-x,
@@ -943,13 +943,16 @@ const description =
         height: 3px;
         background: var(--paper-faint);
       }
-      /* The "paid" portion of the bill, rung up left→right as you scroll. */
+      /* The "paid" portion of the bill, rung up left→right as you scroll.
+         Driven by scaleX (compositor-only, no layout) rather than width. */
       .tape-fill {
         display: block;
         height: 100%;
-        width: 0;
+        width: 100%;
         background: var(--acid);
-        transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .tape-inner {
         display: flex;
@@ -1031,11 +1034,11 @@ const description =
           l.classList.toggle('is-past', lastIdx > -1 && i < lastIdx);
         });
         // Ring up the bottom tape: name the current line, fill the "paid"
-        // proportion. Before the first section, rest on the store name at 0%.
+        // proportion. Before the first section, rest on the store name at 0.
         if (tapeFill)
-          tapeFill.style.width = `${
-            lastIdx > -1 ? ((lastIdx + 1) / meta.length) * 100 : 0
-          }%`;
+          tapeFill.style.transform = `scaleX(${
+            lastIdx > -1 ? (lastIdx + 1) / meta.length : 0
+          })`;
         if (tapeName && lastIdx > -1) {
           const m = meta[lastIdx];
           tapeName.textContent = m.cost ? `${m.name} · ${m.cost}` : m.name;
