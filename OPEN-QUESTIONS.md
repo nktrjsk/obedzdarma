@@ -23,13 +23,19 @@ reconciliation airtight at the seams?"
    not conspiracy. The section closer ("oběd zdarma v ní nenajdeš") re-indicts.
    Sympathy = credibility, not softness.
 
-3. **Comparative advantage's distributional objection** → **Folded into the
-   guard.** Where the cost of a trade falls on someone who didn't consent, it's
-   not a free lunch — it's the four currencies again. Hooked to the consent
-   axis the prior sentence sets up: *"Jenže když na směnu doplatí někdo, kdo do
-   ní nešel — třeba člověk nahrazený levnějším dovozem — chybí právě ten
-   souhlas. A jsme zpátky u čtyř měn."* Absorbs the strongest objection into the
-   page's own logic; unifies rather than softens.
+3. **Comparative advantage's distributional objection** → **Left as-is (tried a
+   caveat, dropped it).** Added a guard sentence mapping trade displacement onto
+   the four currencies; removed it — the map doesn't hold. The four currencies
+   share one mechanism: a real cost *hidden / coerced / shifted* so the "free"
+   thing looks free (the price was always there, disguised). Trade displacement
+   is different: the cheaper import is *genuinely* cheaper (real efficiency,
+   nothing concealed); the displaced worker isn't paying a hidden price of that
+   good — their job lost the competition for voluntary custom they never had a
+   guaranteed claim to, and they re-enter the market. It's the reciprocal of
+   consumer freedom, not a covert bill — so it reinforces the twist rather than
+   qualifying it. The guardrail `dobrovolná a víš, do čeho jdeš` already scopes
+   the positive-sum claim to the parties who trade; the page never overclaimed
+   "everyone wins," so no caveat was needed.
 
 4. **Reused `.mechanisms` scaffold for Economics + Twist** → **Left as-is (tried
    arrows, dropped them).** Added an acid →/↓ connector on the twist beats to
