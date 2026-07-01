@@ -13,11 +13,10 @@ give up what they value less; the "free" part is the surplus, and it comes from
 difference in valuation, not from anyone's pocket. Each question was "is that
 reconciliation airtight at the seams?"
 
-1. **Flipping "zdarma" positive at the end** → **Light bridge.** Kept the flip
-   ("Oběd zdarma tedy nakonec existuje"); added a quiet coda naming the sense:
-   *"Není zdarma proto, že by nic nestál — ale proto, že hodnotu navíc nikdo
-   nezaplatil."* Closes the "so the app WAS free after all?" misread without
-   deflating the mic-drop.
+1. **Flipping "zdarma" positive at the end** → **Left as-is (tried a coda,
+   dropped it).** Briefly added a coda naming the sense of "zdarma"; removed it
+   — it over-explained, and the blockquote ("účet bez ptaní" vs "obě řekly ano")
+   already carries the disambiguation. The flip stands alone.
 
 2. **Economics "ne podvod, ale investice"** → **Kept, no change.** The
    sympathetic framing is load-bearing: it proves the page argues by mechanism,
@@ -25,13 +24,16 @@ reconciliation airtight at the seams?"
    Sympathy = credibility, not softness.
 
 3. **Comparative advantage's distributional objection** → **Folded into the
-   frame.** One sentence in the guard: where the cost of a trade falls on
-   someone who didn't consent (e.g. a worker displaced by cheaper imports),
-   that's not a free lunch — it's the four currencies again. Absorbs the
-   strongest objection into the page's own logic; unifies rather than softens.
+   guard.** Where the cost of a trade falls on someone who didn't consent, it's
+   not a free lunch — it's the four currencies again. Hooked to the consent
+   axis the prior sentence sets up: *"Jenže když na směnu doplatí někdo, kdo do
+   ní nešel — třeba člověk nahrazený levnějším dovozem — chybí právě ten
+   souhlas. A jsme zpátky u čtyř měn."* Absorbs the strongest objection into the
+   page's own logic; unifies rather than softens.
 
-4. **Reused `.mechanisms` scaffold for Economics + Twist** → **Kept the rhyme,
-   signalled the order.** Same grid (the visual rhyme between the machinery of
-   "free" and the one honest case), plus an acid connector arrow on the twist
-   beats only (→ across columns, ↓ stacked) so the progression (feel it → why →
-   scale) reads as a build, not a menu of peers.
+4. **Reused `.mechanisms` scaffold for Economics + Twist** → **Left as-is (tried
+   arrows, dropped them).** Added an acid →/↓ connector on the twist beats to
+   signal the progression; removed it — floating in the column gaps it read as a
+   bug, not a connector. The `01/02/03` numbering already implies the order, so
+   the beats aren't pure peers. If a progression cue is wanted later, it needs a
+   design that visually *connects* (a spanning rule), not an orphaned glyph.

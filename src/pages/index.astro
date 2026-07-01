@@ -448,10 +448,10 @@ const canonical = new URL('/', Astro.site).href;
             <span class="acid">víš, do čeho jdeš</span>. Přesně tím se liší od
             čtyř měn nahoře: těmi platíš, aniž bys o&nbsp;tom věděl — cena ti není
             na očích, je ti vnucená, nebo ji za tebe zaplatí někdo jiný. Tady
-            souhlasíš a&nbsp;víš, co dáváš i&nbsp;co dostáváš. A&nbsp;když směna
-            dopadne i&nbsp;na někoho, kdo k&nbsp;ní nekývl — třeba na člověka,
-            kterého nahradí levnější dovoz — je to pro něj zase jen jedna ze
-            čtyř měn.
+            souhlasíš a&nbsp;víš, co dáváš i&nbsp;co dostáváš. Jenže když na
+            směnu doplatí někdo, kdo do&nbsp;ní nešel — třeba člověk nahrazený
+            levnějším dovozem — chybí právě ten souhlas. A&nbsp;jsme zpátky
+            u&nbsp;čtyř měn.
           </p>
 
           <!-- The twist's climax: no prop, just the payoff. A dim setup line
@@ -465,10 +465,6 @@ const canonical = new URL('/', Astro.site).href;
           <p class="twist-final display">
             Oběd zdarma tedy nakonec existuje —<br />
             je to akt <span class="acid">dobrovolné výměny</span>.
-          </p>
-          <p class="twist-coda">
-            Není zdarma proto, že by nic nestál — ale proto, že hodnotu navíc
-            nikdo nezaplatil.
           </p>
         </div>
       </section>
@@ -944,44 +940,6 @@ const canonical = new URL('/', Astro.site).href;
         line-height: 1.2;
         text-wrap: balance;
       }
-      /* Coda under the flip: names the sense of "zdarma" so the positive
-         claim can't be misread as "so the app was free after all". */
-      .twist-coda {
-        margin: clamp(1.25rem, 3vw, 2rem) 0 0;
-        max-width: 40ch;
-        color: var(--muted);
-        font-weight: 300;
-        font-size: clamp(1rem, 1.6vw, 1.15rem);
-        line-height: 1.5;
-        text-wrap: pretty;
-      }
-
-      /* The twist's three beats are a progression (feel it → why → scale),
-         unlike Economics' parallel examples. Same grid (the rhyme), plus a
-         connective arrow so the build reads: ↓ stacked, → across columns. */
-      .twist-beats li { position: relative; }
-      .twist-beats li:not(:last-child)::after {
-        content: "↓";
-        position: absolute;
-        color: var(--acid);
-        font-size: 1.15rem;
-        line-height: 1;
-        left: 50%;
-        bottom: calc(clamp(2rem, 4vw, 2.75rem) / -2);
-        transform: translate(-50%, 50%);
-        pointer-events: none;
-      }
-      @media (min-width: 760px) {
-        .twist-beats li:not(:last-child)::after {
-          content: "→";
-          left: auto;
-          bottom: auto;
-          top: clamp(1.5rem, 3vw, 2rem);
-          right: calc(clamp(2rem, 4vw, 2.75rem) / -2);
-          transform: translateX(50%);
-        }
-      }
-
       /* ---- SOURCES ---- */
       .sources {
         border-top: 1px solid var(--line);
