@@ -1,8 +1,10 @@
 # obedzdarma.cz
 
-**Oběd zdarma neexistuje** — a single long-scroll argument that nothing is truly free. When you don't pay with money, you pay another way: with **privacy**, **efficiency**, the **environment**, or **inflation**.
+### → [obedzdarma.cz](https://obedzdarma.cz)
 
-Static [Astro](https://astro.build) site, deployed on Netlify.
+**Oběd zdarma neexistuje** — Czech for *"there's no such thing as a free lunch."* A single long-scroll argument that nothing is truly free: when you don't pay with money, you pay another way — with **privacy**, **efficiency**, the **environment**, or **inflation**. It closes on the one real exception: a **voluntary, informed exchange**, where both sides walk away richer.
+
+The site is in Czech. It's a static [Astro](https://astro.build) site deployed on Netlify, and everything — code and copy — is open here to read, verify, and reuse.
 
 ## Develop
 
