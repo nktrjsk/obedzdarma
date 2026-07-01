@@ -12,6 +12,12 @@ npm run dev      # local dev server
 npm run build    # build to dist/
 ```
 
+## Working with Claude Code
+
+Straightforward, well-specified coding tasks should be delegated to a Sonnet
+sub-agent. Design choices, copy/argument decisions, and verification stay with
+the main (heavier) model. See [CLAUDE.md](./CLAUDE.md).
+
 ## License
 
 - **Code** — [MIT](./LICENSE).
