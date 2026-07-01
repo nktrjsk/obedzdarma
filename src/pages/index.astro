@@ -20,11 +20,14 @@ const railMeta: Record<string, { label: string; cost?: string }> = {
   prostredi: { label: 'Prostředí', cost: 'CO₂' },
   inflace: { label: 'Inflace', cost: '%' },
   ekonomie: { label: 'Ekonomie' },
+  // The one line item that rings up a gain instead of a cost — the twist.
+  smena: { label: 'Směna', cost: 'zisk' },
 };
 const sections = [
   { id: 'setup', ...railMeta.setup },
   ...currencies.map((c) => ({ id: c.id, ...(railMeta[c.id] ?? { label: c.data.title }) })),
   { id: 'ekonomie', ...railMeta.ekonomie },
+  { id: 'smena', ...railMeta.smena },
 ];
 
 // Source numbering: currency anchor facts take [1..N], the hardcoded IBM
@@ -43,6 +46,10 @@ for (const c of currencies) {
     }
   }
 }
+// The twist section's anchor fact (Ricardo) takes the next free ref, after all
+// currency facts, the IBM citation, and any example-level sources — so adding
+// an example source later can't collide with it.
+const tradeRef = nextRef;
 
 const title = 'Oběd zdarma neexistuje';
 const description =
@@ -353,6 +360,104 @@ const canonical = new URL('/', Astro.site).href;
           </p>
         </div>
       </section>
+
+      <!-- 5b. THE TWIST — the one real "free lunch": voluntary, positive-sum
+           exchange. Comes after the acid closer on purpose: the bright
+           challenge ("čím platím?"), then the quiet answer. It doesn't undo the
+           thesis — it completes it. The four currencies are costs you never
+           agreed to; this is the case where the honest answer is "you both gain". -->
+      <section class="twist" id="smena" data-rail>
+        <div class="wrap">
+          <h2 class="section-head display">A přece jeden existuje</h2>
+          <p class="lead">
+            Celou dobu hledáme skrytou cenu. Teď obrať list. Je jediná situace,
+            kdy <span class="mark">„zdarma“</span> není past — a naopak z&nbsp;ní
+            odejdeš bohatší, než jsi přišel.
+          </p>
+
+          <ol class="mechanisms twist-beats">
+            <li>
+              <h3 class="mech-title display">Pocit</h3>
+              <p class="mech-body">
+                Mám doma hromadu čokolády, ale nejradši mám jablka. Ty máš plný
+                koš jablek a&nbsp;miluješ čokoládu. Vyměníme se. Nikdo nevyrobil
+                ani kousek navíc — a&nbsp;přesto jsme teď oba spokojenější.
+              </p>
+            </li>
+            <li>
+              <h3 class="mech-title display">Proč to funguje</h3>
+              <p class="mech-body">
+                Hodnota není napevno v&nbsp;té věci. Je v&nbsp;tom, jak moc ji
+                chce ten, kdo ji zrovna drží. Desátá čokoláda mě už skoro netěší,
+                tvoje desáté jablko netěší tebe. Vyměníme, čeho máme nazbyt, za
+                to, po čem toužíme — a&nbsp;hodnota se nepřesune. Vznikne.
+              </p>
+            </li>
+            <li>
+              <h3 class="mech-title display">Motor</h3>
+              <p class="mech-body">
+                Roztoč to přes celou ekonomiku a&nbsp;máš její pohon. Každý dělá
+                hlavně to, v&nbsp;čem je poměrně nejlepší, a&nbsp;o zbytek se
+                směňuje. Vydělá i&nbsp;ten, kdo je úplně ve všem horší — vyplatí
+                se mu dělat to, kde ztrácí nejmíň.
+              </p>
+            </li>
+          </ol>
+
+          <p class="currency-fact twist-fact">
+            I&nbsp;když jedna země zvládne vyrobit všechno levněji než druhá,
+            oběma se pořád vyplatí obchodovat a&nbsp;rozdělit si práci. Říká se
+            tomu komparativní výhoda a&nbsp;ekonom David Ricardo ji popsal už
+            roku 1817.
+            <a class="src-ref" href={`#zdroj-${tradeRef}`} aria-label={`Zdroj ${tradeRef}`}>[{tradeRef}]</a>
+          </p>
+
+          <p class="lead twist-guard">
+            Jeden háček to má. Platí to jen u&nbsp;směny, která je
+            <span class="acid">dobrovolná</span> a&nbsp;při níž
+            <span class="acid">víš, do čeho jdeš</span>. Přesně tím se liší od
+            čtyř měn nahoře: za ty platíš, aniž bys kývl — cena je schovaná,
+            vnucená, nebo hozená na někoho jiného. Tady souhlasíš a&nbsp;víš, co
+            dáváš i&nbsp;co dostáváš.
+          </p>
+
+          <!-- Inverted receipt: the page's motif turned on its head. Everywhere
+               else a slip rings up a hidden cost and totals ∞; this one rings up
+               a swap and both sides total a gain. No prices — the gain is
+               subjective, which is the whole point. -->
+          <figure class="trade" aria-label="Účtenka směny, kde vydělají oba">
+            <div class="trade-slip">
+              <p class="trade-head">Směna</p>
+              <p class="trade-meta">∗ dobrovolná ∗<br />oba vědí, do čeho jdou</p>
+              <div class="trade-cols">
+                <div class="trade-side">
+                  <p class="trade-who">Ty</p>
+                  <p class="trade-move"><span>dáš</span> čokoládu, které máš až moc</p>
+                  <p class="trade-move"><span>dostaneš</span> jablka, po kterých toužíš</p>
+                  <p class="trade-gain">bohatší než&nbsp;dřív</p>
+                </div>
+                <div class="trade-side">
+                  <p class="trade-who">Protějšek</p>
+                  <p class="trade-move"><span>dá</span> jablka, kterých má až moc</p>
+                  <p class="trade-move"><span>dostane</span> čokoládu, po které touží</p>
+                  <p class="trade-gain">bohatší než&nbsp;dřív</p>
+                </div>
+              </div>
+              <p class="trade-total"><span>Celkem</span><span class="trade-sum">oba víc</span></p>
+            </div>
+            <figcaption class="trade-cap">
+              Nikdo nepřidal ani kousek. Hodnota přesto vznikla — z&nbsp;rozdílu
+              v&nbsp;tom, co si kdo cení.
+            </figcaption>
+          </figure>
+
+          <p class="twist-final display">
+            Jeden oběd zdarma přece existuje —<br />
+            ten, na kterém <span class="acid">vyděláte oba</span>.
+          </p>
+        </div>
+      </section>
+
       <!-- 6. SOURCES (quiet, end of page) -->
       <section class="sources" id="zdroje">
         <div class="wrap">
@@ -393,6 +498,15 @@ const canonical = new URL('/', Astro.site).href;
                 </li>
               ))
             }
+            <li id={`zdroj-${tradeRef}`}>
+              <a
+                href="https://www.econlib.org/library/Ricardo/ricP.html"
+                target="_blank"
+                rel="noopener noreferrer">
+                David Ricardo — On the Principles of Political Economy and
+                Taxation (1817), kap. 7 „On Foreign Trade“
+              </a>
+            </li>
           </ol>
           <p class="image-credits">
             Obrázky:
@@ -759,6 +873,144 @@ const canonical = new URL('/', Astro.site).href;
         font-size: clamp(1.6rem, 5vw, 3.5rem);
         text-transform: none;
         line-height: 1.2;
+      }
+
+      /* ---- THE TWIST ---- */
+      .twist {
+        border-top: 1px solid var(--line);
+        padding-block: clamp(6rem, 18vw, 13rem);
+      }
+      .twist > .wrap > .lead { max-width: 40ch; }
+      .twist-beats { margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+      .twist-fact { margin-top: 0; }
+      .twist-guard { max-width: 42ch; }
+
+      /* Inverted trade receipt — same paper slip as the wayfinding "účtenka",
+         but it rings up a gain, not a cost. */
+      .trade {
+        margin: clamp(3rem, 7vw, 5rem) 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
+        text-align: center;
+      }
+      .trade-slip {
+        --tooth: 8px;
+        width: min(100%, 24rem);
+        padding: 1.9rem 1.6rem 1.7rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+        font-size: 0.72rem;
+        line-height: 1.55;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        text-align: left;
+        filter: drop-shadow(var(--shadow-paper-lift));
+        -webkit-mask:
+          conic-gradient(from -45deg at top, #0000 25%, #000 0) 0 0 / 16px var(--tooth) repeat-x,
+          conic-gradient(from 135deg at bottom, #0000 25%, #000 0) 0 100% / 16px var(--tooth) repeat-x,
+          linear-gradient(#000 0 0) 50% / 100% calc(100% - 2 * var(--tooth)) no-repeat;
+        mask:
+          conic-gradient(from -45deg at top, #0000 25%, #000 0) 0 0 / 16px var(--tooth) repeat-x,
+          conic-gradient(from 135deg at bottom, #0000 25%, #000 0) 0 100% / 16px var(--tooth) repeat-x,
+          linear-gradient(#000 0 0) 50% / 100% calc(100% - 2 * var(--tooth)) no-repeat;
+      }
+      .trade-head {
+        margin: 0;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.92rem;
+        letter-spacing: 0.12em;
+      }
+      .trade-meta {
+        margin: 0.5rem 0 1.1rem;
+        padding-bottom: 1.1rem;
+        text-align: center;
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        color: var(--paper-meta);
+        border-bottom: 1px dashed var(--paper-rule);
+      }
+      .trade-cols { display: grid; gap: 1.3rem; }
+      .trade-who {
+        margin: 0 0 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+      }
+      .trade-move {
+        margin: 0 0 0.4rem;
+        color: var(--paper-dim);
+        text-transform: none;
+      }
+      .trade-move span {
+        display: inline-block;
+        min-width: 5.2em;
+        color: var(--ink);
+        text-transform: uppercase;
+        font-size: 0.86em;
+        letter-spacing: 0.06em;
+      }
+      /* The gain — the page's "is-active" highlighter swipe, reused as the
+         positive line. Ink on acid keeps contrast on the paper surface. */
+      .trade-gain {
+        margin: 0.7rem 0 0;
+        padding: 0.15rem 0.4rem;
+        display: inline-block;
+        background: var(--acid);
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .trade-gain::before { content: '+ '; }
+      .trade-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin: 1.2rem 0 0;
+        padding-top: 1.1rem;
+        border-top: 1px dashed var(--paper-rule);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+      .trade-sum {
+        padding: 0.1rem 0.4rem;
+        background: var(--acid);
+        color: var(--ink);
+        font-size: 0.95rem;
+      }
+      .trade-cap {
+        max-width: 34ch;
+        font-size: 0.9rem;
+        font-weight: 300;
+        line-height: 1.55;
+        color: var(--muted);
+      }
+      @media (min-width: 560px) {
+        .trade-cols {
+          grid-template-columns: 1fr 1fr;
+          gap: 1.6rem;
+        }
+        /* One slip, two facing sides — a dashed seam, not two cards. Symmetric
+           padding keeps both content columns equal width, so the twin gain
+           swipes wrap identically instead of one splitting a line early. */
+        .trade-side:first-child {
+          padding-right: 1.4rem;
+          border-right: 1px dashed var(--paper-rule);
+        }
+        .trade-side:last-child { padding-left: 1.4rem; }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .trade-slip { transition: transform 0.25s ease; }
+        .trade:hover .trade-slip { transform: translateY(-0.2rem); }
+      }
+
+      .twist-final {
+        margin: clamp(3.5rem, 9vw, 6rem) 0 0;
+        font-size: clamp(1.6rem, 5vw, 3.5rem);
+        text-transform: none;
+        line-height: 1.2;
+        text-wrap: balance;
       }
 
       /* ---- SOURCES ---- */
