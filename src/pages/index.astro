@@ -204,7 +204,6 @@ const canonical = new URL('/', Astro.site).href;
       <!-- 1. HERO -->
       <header class="hero">
         <div class="wrap">
-          <p class="kicker">Bez práce nejsou koláče</p>
           <h1 class="display hero-title">
             Všechno má<br />svou cenu.
           </h1>
@@ -404,7 +403,7 @@ const canonical = new URL('/', Astro.site).href;
 
           <ol class="mechanisms twist-beats">
             <li>
-              <h3 class="mech-title display">Pocit</h3>
+              <h3 class="mech-title display"><span class="beat">Pocit</span></h3>
               <p class="mech-body">
                 Mám doma hromadu čokolády, ale už mi nechutná, radši si dám
                 jablka. Ty máš zase hromadu jablek a&nbsp;chceš už čokoládu.
@@ -413,7 +412,7 @@ const canonical = new URL('/', Astro.site).href;
               </p>
             </li>
             <li>
-              <h3 class="mech-title display">Proč to funguje</h3>
+              <h3 class="mech-title display"><span class="beat">Proč to funguje</span></h3>
               <p class="mech-body">
                 Hodnota není v&nbsp;té věci daná napevno — ani tím, kolik do
                 ní kdo vložil práce. Určuje si ji každý sám. A&nbsp;čím víc
@@ -423,7 +422,7 @@ const canonical = new URL('/', Astro.site).href;
               </p>
             </li>
             <li>
-              <h3 class="mech-title display">Motor</h3>
+              <h3 class="mech-title display"><span class="beat">Motor</span></h3>
               <p class="mech-body">
                 Rozšiř to na celou ekonomiku a&nbsp;máš svět, jaký známe dnes.
                 Většina lidí dělá hlavně to, v&nbsp;čem je nejužitečnější,
@@ -619,13 +618,6 @@ const canonical = new URL('/', Astro.site).href;
           align-items: flex-start;
           padding-top: clamp(3rem, 12svh, 6rem);
         }
-      }
-      .kicker {
-        font-size: 0.8rem;
-        letter-spacing: 0.3em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin: 0 0 2.5rem;
       }
       .hero-title {
         font-size: clamp(3rem, 12vw, 8rem);
@@ -915,6 +907,17 @@ const canonical = new URL('/', Astro.site).href;
          glyph. Mobile: a downward bridge in the vertical gap between stacked
          beats. */
       .twist-beats li { position: relative; }
+      /* The number moves onto the word span, so the word can be centred on the
+         column axis with the number hanging to its left (desktop). */
+      .twist-beats .mech-title::before { content: none; }
+      .twist-beats .beat::before {
+        content: "0" counter(mech);
+        color: var(--acid);
+        font-size: 0.7em;
+        margin-right: 0.6em;
+        vertical-align: 0.1em;
+      }
+      /* Mobile: a downward bridge in the vertical gap between stacked beats. */
       .twist-beats li:not(:last-child)::after {
         content: "";
         position: absolute;
@@ -930,20 +933,32 @@ const canonical = new URL('/', Astro.site).href;
       .twist-fact { margin-top: 0; }
       .twist-guard { max-width: 42ch; }
       @media (min-width: 760px) {
-        /* Desktop: the drop becomes a horizontal arrow at the title's eye-line,
-           reaching out of one beat and pointing into the next. Titles are given
-           equal height (2 lines) and their text vertically centred, so a 1-line
-           and a 2-line title share one centre line and the arrow hits both. */
+        /* Desktop: centre each title word (horizontally and vertically) in an
+           equal-height box, number hanging to its left, and run an acid arrow
+           out of the word's right edge toward the next beat. */
         .twist-beats li:not(:last-child)::after { display: none; }
-        .twist-beats .mech-title { display: flex; align-items: center; }
-        .twist-beats li:not(:last-child) .mech-title { position: relative; }
-        .twist-beats li:not(:last-child) .mech-title::after {
+        .twist-beats .mech-title {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+        /* Cap the title width so a long title wraps to two lines (matching the
+           short ones' reserved height) instead of running out as one wide line. */
+        .twist-beats .beat { position: relative; max-width: 6.5em; }
+        .twist-beats .beat::before {
+          position: absolute;
+          right: 100%;
+          margin-right: 0.5em;
+          top: 0.02em; /* sit the number by the first line */
+        }
+        .twist-beats li:not(:last-child) .beat::after {
           content: "";
           position: absolute;
-          top: 50%; /* centre of the (equal-height) title block */
-          left: calc(100% - clamp(2rem, 6vw, 4rem)); /* reach back into the beat */
-          /* stop short of the next number: overlap + li padding-right + gap − clearance */
-          width: calc(clamp(2rem, 6vw, 4rem) + clamp(0.5rem, 1.5vw, 1rem) + clamp(2rem, 4vw, 2.75rem) - 1.1rem);
+          top: 50%; /* the word is centred, so this is its middle */
+          left: 100%;
+          margin-left: clamp(1rem, 2.4vw, 1.75rem);
+          width: clamp(3rem, 7vw, 5.5rem);
           height: 16px;
           transform: translateY(-50%);
           pointer-events: none;
