@@ -428,35 +428,32 @@ const canonical = new URL('/', Astro.site).href;
             dáváš i&nbsp;co dostáváš.
           </p>
 
-          <!-- Inverted receipt: the page's motif turned on its head. Everywhere
-               else a slip rings up a hidden cost and totals ∞; this one rings up
-               a swap and both sides total a gain. No prices — the gain is
-               subjective, which is the whole point. -->
-          <figure class="trade" aria-label="Účtenka směny, kde vydělají oba">
-            <div class="trade-slip">
-              <p class="trade-head">Směna</p>
-              <p class="trade-meta">∗ dobrovolná ∗<br />oba vědí, do čeho jdou</p>
-              <div class="trade-cols">
-                <div class="trade-side">
-                  <p class="trade-who">Ty</p>
-                  <p class="trade-move"><span>dáš</span> čokoládu, které máš až moc</p>
-                  <p class="trade-move"><span>dostaneš</span> jablka, po kterých toužíš</p>
-                  <p class="trade-gain">bohatší než&nbsp;dřív</p>
-                </div>
-                <div class="trade-side">
-                  <p class="trade-who">Protějšek</p>
-                  <p class="trade-move"><span>dá</span> jablka, kterých má až moc</p>
-                  <p class="trade-move"><span>dostane</span> čokoládu, po které touží</p>
-                  <p class="trade-gain">bohatší než&nbsp;dřív</p>
-                </div>
-              </div>
-              <p class="trade-total"><span>Celkem</span><span class="trade-sum">oba víc</span></p>
+          <!-- A/B: two candidate climaxes replacing the old exchange receipt.
+               Delete the loser (and its CSS + the dead .trade CSS) once chosen. -->
+
+          <p class="ab-label">Varianta A — účetní obrat</p>
+          <div class="ledger" aria-label="Čtyři skryté účty proti jedné dobrovolné směně">
+            <div class="ledger-col ledger-hidden">
+              <p class="ledger-head">Čtyři účty nahoře</p>
+              <p class="ledger-sign" aria-hidden="true">−</p>
+              <p class="ledger-note">Platíš, aniž kývneš. Cena teče jedním směrem — pryč od&nbsp;tebe.</p>
             </div>
-            <figcaption class="trade-cap">
-              Nikdo nepřidal ani kousek. Hodnota přesto vznikla — z&nbsp;rozdílu
-              v&nbsp;tom, co si kdo cení.
-            </figcaption>
-          </figure>
+            <div class="ledger-col ledger-trade">
+              <p class="ledger-head">Jedna směna</p>
+              <p class="ledger-sign" aria-hidden="true">+&nbsp;+</p>
+              <p class="ledger-note">Kývnou oba. Hodnota roste — na&nbsp;obou stranách.</p>
+            </div>
+          </div>
+          <p class="ledger-resolve">
+            Rozdíl není v&nbsp;ceně. Je v&nbsp;tom, že jsi u&nbsp;toho řekl
+            <span class="acid">ano</span>.
+          </p>
+
+          <p class="ab-label">Varianta B — citát</p>
+          <blockquote class="twist-quote">
+            <p>Čtyři měny nahoře ti účet vystavily bez ptaní.</p>
+            <p>Tohle je jediná směna, kde obě strany řekly <span class="acid">ano</span> — a&nbsp;obě odešly <span class="acid">bohatší</span>.</p>
+          </blockquote>
 
           <p class="twist-final display">
             Oběd zdarma tedy nakonec existuje —<br />
@@ -1018,6 +1015,89 @@ const canonical = new URL('/', Astro.site).href;
         .trade-slip { transition: transform 0.25s ease; }
         .trade:hover .trade-slip { transform: translateY(-0.2rem); }
       }
+
+      /* Temporary A/B scaffolding label — removed once a variant is chosen. */
+      .ab-label {
+        margin: clamp(2.5rem, 6vw, 4rem) 0 1rem;
+        padding-top: 1rem;
+        border-top: 1px dashed var(--line);
+        font-size: 0.7rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--acid);
+        opacity: 0.75;
+      }
+
+      /* Variant A — ledger flip: the four one-way drains vs. the one two-way gain. */
+      .ledger {
+        margin: clamp(1.5rem, 4vw, 2.5rem) 0 0;
+        display: grid;
+        gap: 2.5rem;
+        text-align: center;
+      }
+      .ledger-col { margin: 0; }
+      .ledger-head {
+        margin: 0 0 1rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .ledger-sign {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 9vw, 5rem);
+        line-height: 1;
+        letter-spacing: 0.04em;
+      }
+      .ledger-hidden .ledger-sign { color: var(--muted); }
+      .ledger-trade .ledger-sign { color: var(--acid); }
+      .ledger-note {
+        margin: 1rem auto 0;
+        max-width: 26ch;
+        font-weight: 300;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--paper);
+      }
+      .ledger-resolve {
+        margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+        max-width: 30ch;
+        text-align: center;
+        font-weight: 300;
+        font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+        line-height: 1.4;
+      }
+      @media (min-width: 560px) {
+        .ledger {
+          grid-template-columns: 1fr 1fr;
+          gap: 0;
+          align-items: start;
+        }
+        .ledger-hidden {
+          padding-right: clamp(1.5rem, 4vw, 3rem);
+          border-right: 1px solid var(--line);
+        }
+        .ledger-trade { padding-left: clamp(1.5rem, 4vw, 3rem); }
+      }
+
+      /* Variant B — pull-quote: dim setup, bright payoff. */
+      .twist-quote {
+        margin: clamp(1.5rem, 4vw, 2.5rem) 0 0;
+        max-width: min(100%, 30rem);
+        padding: 0;
+        border: 0;
+      }
+      .twist-quote p {
+        margin: 0 0 0.9rem;
+        font-weight: 300;
+        font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+        line-height: 1.22;
+        letter-spacing: -0.01em;
+        text-wrap: balance;
+      }
+      .twist-quote p:first-child { color: var(--muted); }
+      .twist-quote p:last-child { margin-bottom: 0; color: var(--paper); }
 
       .twist-final {
         margin: clamp(3.5rem, 9vw, 6rem) 0 0;
