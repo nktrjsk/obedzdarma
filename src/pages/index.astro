@@ -893,9 +893,12 @@ const canonical = new URL('/', Astro.site).href;
           justify-content: center;
           text-align: center;
         }
-        /* Cap the title width so a long title wraps to two lines (matching the
-           short ones' reserved height) instead of running out as one wide line. */
-        .twist-beats .beat { position: relative; max-width: 6.5em; }
+        /* Size the title to its content so the hanging number and the arrow
+           hug the text. A fixed max-width leaves a narrower centred title
+           adrift inside a wider box (the number then floats far to its left);
+           min-content shrinks the box to the widest word, which keeps
+           "Proč to funguje" a tidy two lines. */
+        .twist-beats .beat { position: relative; width: min-content; }
         .twist-beats .beat::before {
           position: absolute;
           right: 100%;
