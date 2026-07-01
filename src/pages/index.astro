@@ -930,20 +930,22 @@ const canonical = new URL('/', Astro.site).href;
       .twist-fact { margin-top: 0; }
       .twist-guard { max-width: 42ch; }
       @media (min-width: 760px) {
-        /* Desktop: the drop becomes a horizontal arrow at the numbers' eye-line,
-           reaching out of one beat and pointing into the next beat's number —
-           not stranded up on the top rule. */
+        /* Desktop: the drop becomes a horizontal arrow at the title's eye-line,
+           reaching out of one beat and pointing into the next. Titles are given
+           equal height (2 lines) and their text vertically centred, so a 1-line
+           and a 2-line title share one centre line and the arrow hits both. */
         .twist-beats li:not(:last-child)::after { display: none; }
+        .twist-beats .mech-title { display: flex; align-items: center; }
         .twist-beats li:not(:last-child) .mech-title { position: relative; }
         .twist-beats li:not(:last-child) .mech-title::after {
           content: "";
           position: absolute;
-          top: 0.56em; /* centre of the first title line */
+          top: 50%; /* centre of the (equal-height) title block */
           left: calc(100% - clamp(2rem, 6vw, 4rem)); /* reach back into the beat */
           /* stop short of the next number: overlap + li padding-right + gap − clearance */
           width: calc(clamp(2rem, 6vw, 4rem) + clamp(0.5rem, 1.5vw, 1rem) + clamp(2rem, 4vw, 2.75rem) - 1.1rem);
           height: 16px;
-          transform: translateY(-8px);
+          transform: translateY(-50%);
           pointer-events: none;
           background:
             linear-gradient(var(--acid), var(--acid)) no-repeat left center / calc(100% - 10px) 2px,

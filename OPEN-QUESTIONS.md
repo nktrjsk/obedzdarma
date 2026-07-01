@@ -41,10 +41,12 @@ reconciliation airtight at the seams?"
    (v3, at the beats' eye-line).** v1 was an acid →/↓ glyph floating in the
    column gaps — read as a bug, dropped. v2 anchored it to the top rule and
    spanned the gap — better, but it stranded the arrow *above* the content,
-   nowhere near the beats it links. v3 (final): the arrow sits level with the
-   `01/02/03` numbers, reaches out of one beat and points into the next beat's
-   number (horizontal across columns on desktop; a downward drop in the vertical
-   gap between stacked beats on mobile). Desktop connector is anchored to
-   `.mech-title` so it tracks the first title line's centre; mobile drop is on
-   `.twist-beats li::after`. The beats are a genuine sequence
-   (feeling → theory → engine), so the cue is earned.
+   nowhere near the beats it links. v3: solid 2px shaft + filled
+   triangular head, with clearance so it doesn't jam the next number. v4
+   (final): titles given equal height and their text vertically centred (desktop
+   flex), and the arrow dropped to the title block's centre — so a 1-line and a
+   2-line title ("Proč to funguje") share one centre line and the arrow hits
+   both titles' middles instead of entering the 2-line title at its top.
+   Desktop connector is anchored to `.mech-title`; mobile is a downward drop on
+   `.twist-beats li::after` between stacked beats. The beats are a genuine
+   sequence (feeling → theory → engine), so the cue is earned.
