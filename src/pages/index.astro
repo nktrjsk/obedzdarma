@@ -844,6 +844,7 @@ const canonical = new URL('/', Astro.site).href;
       .mech-title {
         font-size: clamp(1.3rem, 3vw, 2rem);
         text-transform: none;
+        line-height: 1.12;
         margin: 0 0 0.85rem;
       }
       .mech-title::before {
@@ -869,6 +870,9 @@ const canonical = new URL('/', Astro.site).href;
       @media (min-width: 760px) {
         .mechanisms { grid-template-columns: repeat(3, 1fr); }
         .mechanisms li { padding-right: clamp(0.5rem, 1.5vw, 1rem); }
+        /* Reserve two lines for every title so single- and multi-line titles
+           in a row keep their bodies on one baseline (no "bleed"). */
+        .mechanisms .mech-title { min-height: 2.24em; }
       }
 
       /* ---- CLOSER ---- */
