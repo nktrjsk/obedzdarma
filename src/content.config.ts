@@ -10,6 +10,14 @@ const currencies = defineCollection({
     order: z.number(),
     icon: z.string(),
     title: z.string(),
+    // Wayfinding "receipt" line item for this currency. Kept separate from
+    // `title` because the titles are in the instrumental case ("Soukromím"),
+    // which reads oddly in a nav — `nav.label` is the clean nominative form,
+    // and `nav.cost` is the "currency" the section is paid in.
+    nav: z.object({
+      label: z.string(),
+      cost: z.string().optional(),
+    }),
     // Short, punchy claim shown large under the title.
     claim: z.string(),
     // One hard, verifiable anchor fact the block's argument rests on.

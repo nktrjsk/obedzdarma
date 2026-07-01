@@ -14,5 +14,10 @@
     "@fontsource-variable/archivo": "^5.1.0",
     "@fontsource/archivo-black": "^5.1.0",
     "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@netlify/edge-functions": "^3.0.8",
+    "typescript": "^5.9.3"
   }
 }

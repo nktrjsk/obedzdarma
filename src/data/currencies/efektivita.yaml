@@ -1,6 +1,9 @@
 order: 2
 icon: "⚙️"
 title: "Efektivitou"
+nav:
+  label: "Efektivita"
+  cost: "daně"
 claim: "Někdo to platí — a obvykle dráž, než kdyby to udělal trh."
 fact: "Veřejné výdaje v Česku se dlouhodobě pohybují kolem 45 % HDP."
 source:

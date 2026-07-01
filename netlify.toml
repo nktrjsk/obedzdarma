@@ -4,3 +4,16 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Vary: Accept on the homepage HTML path tells shared caches (CDNs, proxies)
+# that the representation can differ by Accept header — they must not serve a
+# cached Markdown response to a browser, or vice versa. We set this as a static
+# header rule rather than inside the edge function so that ordinary human
+# pageloads don't pay the edge-runtime round-trip just to stamp one header.
+# (Netlify's compression layer manages Accept-Encoding independently for static
+# assets, so a static Vary: Accept here doesn't interfere with encoding cache
+# keys on the HTML path.)
+[[headers]]
+  for = "/"
+  [headers.values]
+    Vary = "Accept"

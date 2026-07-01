@@ -1,4 +1,20 @@
-# Oběd zdarma neexistuje
+import type { APIRoute } from 'astro';
+import { getSortedCurrencies, RICARDO_SOURCE } from '../lib/sources';
+
+export const GET: APIRoute = async () => {
+  const currencies = await getSortedCurrencies();
+
+  const currencyBullets = currencies.map((currency) => {
+    const { nav, claim, fact } = currency.data;
+    return `- [${nav.label}](https://obedzdarma.cz/#${currency.id}): ${claim} ${fact}`;
+  }).join('\n');
+
+  const zdrojeBullets = [
+    ...currencies.map((c) => `- ${c.data.source.label}`),
+    `- ${RICARDO_SOURCE.label}`,
+  ].join('\n');
+
+  const body = `# Oběd zdarma neexistuje
 
 > Všechno má svou cenu. Tento web rozebírá, čím doopravdy platíš za „zdarma" — appky, dopravu, účty, služby. Ne penězi, ale soukromím, efektivitou, životním prostředím a inflací. Celý argument stojí na ověřitelných zdrojích.
 
@@ -6,18 +22,17 @@ Jedna stránka, dlouhý scroll. Teze je idiom „there's no such thing as a free
 
 ## Čtyři měny, kterými platíš místo peněz
 
-- [Soukromí](https://obedzdarma.cz/#soukromi): Pokud neplatíš za produkt, produktem jsi ty. Kolem 98 % příjmů firmy Meta pochází z reklamy cílené podle dat o uživatelích.
-- [Efektivita](https://obedzdarma.cz/#efektivita): Někdo to platí — a obvykle dráž, než kdyby to udělal trh. Veřejné výdaje v Česku se dlouhodobě pohybují kolem 45 % HDP.
-- [Životní prostředí](https://obedzdarma.cz/#prostredi): Nízká cena dnes je vykoupená znečištěnou planetou zítřka. Každý Evropan ročně vyhodí v průměru kolem 11 kg textilu.
-- [Inflace](https://obedzdarma.cz/#inflace): Peníze zdarma neexistují — prostě se vypaří. Když banka poskytne úvěr, nepůjčuje cizí vklady — vytváří nové peníze.
+${currencyBullets}
 
 ## A přece jeden „oběd zdarma" existuje
 
 - [Směna](https://obedzdarma.cz/#smena): Jediná výjimka z teze. Dobrovolná, informovaná směna je pozitivně-součtová — obě strany dají to, čeho si cení méně, za to, čeho si cení více, a odejdou bohatší, aniž kdokoli přišel o hodnotu. Hodnota nevzniká z věci samotné, ale z rozdílu v tom, jak moc ji kdo chce (mezní užitek). Přes celou ekonomiku to popisuje komparativní výhoda (David Ricardo, 1817). Rozdíl oproti čtyřem měnám: tam platíš cenu skrytou, vnucenou nebo přenesenou na jiné; tady souhlasíš a víš, co dáváš i dostáváš.
 
 ## Zdroje
-- Meta Platforms — výroční zpráva (Form 10-K), 2023
-- Eurostat — General government expenditure (% HDP)
-- Evropský parlament — Dopady výroby a odpadu z textilu na životní prostředí
-- Česká národní banka — Jak vznikají peníze v ekonomice
-- David Ricardo — On the Principles of Political Economy and Taxation (1817), kap. 7 „On Foreign Trade" (komparativní výhoda)
+${zdrojeBullets}
+`;
+
+  return new Response(body, {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  });
+};

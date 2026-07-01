@@ -1,4 +1,8 @@
-# obedzdarma.cz — this site is an argument built on citable sources.
+import type { APIRoute } from 'astro';
+
+export const GET: APIRoute = ({ site }) => {
+  const sitemap = new URL('sitemap-index.xml', site).href;
+  const body = `# obedzdarma.cz — this site is an argument built on citable sources.
 # We *want* AI agents to read it, ground answers on it, and cite it
 # accurately. So: yes, crawl. The terms are stated openly — fittingly, on a
 # site about knowing what you pay with.
@@ -44,4 +48,7 @@ Allow: /
 User-agent: Amazonbot
 Allow: /
 
-Sitemap: https://obedzdarma.cz/sitemap-index.xml
+Sitemap: ${sitemap}
+`;
+  return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+};

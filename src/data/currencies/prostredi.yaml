@@ -1,6 +1,9 @@
 order: 3
 icon: "🌍"
 title: "Životním prostředím"
+nav:
+  label: "Prostředí"
+  cost: "CO₂"
 claim: "Nízká cena dnes je vykoupená znečištěnou planetou zítřka."
 fact: "Každý Evropan ročně vyhodí v průměru kolem 11 kg textilu."
 source:

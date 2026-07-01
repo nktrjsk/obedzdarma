@@ -1,57 +1,37 @@
 ---
-import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import { buildSources, getSortedCurrencies } from '../lib/sources';
 import friedman from '../assets/origin/friedman.jpg';
 import heinlein from '../assets/origin/heinlein.jpg';
 import saloon from '../assets/origin/saloon.jpg';
 import '../styles/global.css';
 
-const currencies = (await getCollection('currencies')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const currencies = await getSortedCurrencies();
 
-// Wayfinding "receipt": the page spine as line items. Clean nominative labels
-// (the currency titles are in the instrumental case — "Soukromím" — which reads
-// oddly in a nav) plus the "currency" each section is paid in.
-const railMeta: Record<string, { label: string; cost?: string }> = {
-  setup: { label: 'Úvod' },
-  platis: { label: 'Platíš?' },
-  soukromi: { label: 'Soukromí', cost: 'data' },
-  efektivita: { label: 'Efektivita', cost: 'daně' },
-  prostredi: { label: 'Prostředí', cost: 'CO₂' },
-  inflace: { label: 'Inflace', cost: '%' },
-  ekonomie: { label: 'Ekonomie' },
+// Wayfinding "receipt": the page spine as line items. The currency lines pull
+// their label + cost from each currency's own `nav` field (single source of
+// truth — a new currency YAML is self-describing and can't fall back to its
+// instrumental-case title); the fixed sections around them are listed inline.
+const sections: { id: string; label: string; cost?: string }[] = [
+  { id: 'setup', label: 'Úvod' },
+  { id: 'platis', label: 'Platíš?' },
+  ...currencies.map((c) => ({ id: c.id, ...c.data.nav })),
+  { id: 'ekonomie', label: 'Ekonomie' },
   // The one line item that rings up a gain instead of a cost — the twist.
-  smena: { label: 'Směna', cost: 'zisk' },
-};
-const sections = [
-  { id: 'setup', ...railMeta.setup },
-  { id: 'platis', ...railMeta.platis },
-  ...currencies.map((c) => ({ id: c.id, ...(railMeta[c.id] ?? { label: c.data.title }) })),
-  { id: 'ekonomie', ...railMeta.ekonomie },
-  { id: 'smena', ...railMeta.smena },
+  { id: 'smena', label: 'Směna', cost: 'zisk' },
 ];
+// A section's tape label: "Label · cost" (or just the label). Formatted once
+// here and used both by the tape panel below and — via data-label on each
+// receipt link — by the scroll script, so the two can never drift apart.
+const sectionLabel = (s: { label: string; cost?: string }) =>
+  s.cost ? `${s.label} · ${s.cost}` : s.label;
 
-// Source numbering: currency anchor facts take [1..N], the hardcoded IBM
-// citation is [N+1], and any example-level sources follow as [N+2..]. We map
-// each example object to its ref number so the [n] and the "Zdroje" entry stay
-// in sync no matter how many examples carry a source.
-const exSourceRefs = new Map<unknown, number>();
-const exampleSources: { ref: number; label: string; url?: string }[] = [];
-let nextRef = currencies.length + 2;
-for (const c of currencies) {
-  for (const ex of c.data.examples) {
-    if (ex.source) {
-      exSourceRefs.set(ex, nextRef);
-      exampleSources.push({ ref: nextRef, ...ex.source });
-      nextRef += 1;
-    }
-  }
-}
-// The twist section's anchor fact (Ricardo) takes the next free ref, after all
-// currency facts, the IBM citation, and any example-level sources — so adding
-// an example source later can't collide with it.
-const tradeRef = nextRef;
+// Citation numbering — currency facts [1..N], IBM [N+1], example sources
+// [N+2..], Ricardo last — is computed in one shared module so the page and the
+// generated Markdown/LLM editions cite identical numbers. `sourceList` is the
+// full, ordered "Zdroje" list; exSourceRefs maps an example object to its ref.
+const { ibmRef, tradeRef, exSourceRefs, all: sourceList } =
+  buildSources(currencies);
 
 const title = 'Oběd zdarma neexistuje';
 const description =
@@ -139,6 +119,7 @@ const canonical = new URL('/', Astro.site).href;
                 <a
                   href={`#${s.id}`}
                   data-target={s.id}
+                  data-label={sectionLabel(s)}
                   class={s.cost ? 'r-item' : 'r-item r-item--note'}>
                   <span class="r-name">{s.label}</span>
                   {s.cost && (
@@ -193,7 +174,7 @@ const canonical = new URL('/', Astro.site).href;
           {sections.map((s) => (
             <li>
               <a href={`#${s.id}`} class="tape-panel-link">
-                {s.label}{s.cost ? ` · ${s.cost}` : ''}
+                {sectionLabel(s)}
               </a>
             </li>
           ))}
@@ -280,7 +261,7 @@ const canonical = new URL('/', Astro.site).href;
             <article class="currency" id={c.id} data-rail>
               <div class="wrap currency-inner">
                 <div class="currency-head">
-                  <span class="currency-no">0{i + 1}</span>
+                  <span class="currency-no">{String(i + 1).padStart(2, '0')}</span>
                   <span class="currency-icon" aria-hidden="true">
                     {c.data.icon}
                   </span>
@@ -362,7 +343,7 @@ const canonical = new URL('/', Astro.site).href;
             Red Hat postavil miliardový byznys na softwaru, který je zdarma
             a&nbsp;otevřený. V&nbsp;roce 2019 ho IBM koupilo za 34&nbsp;miliard
             dolarů.
-            <a class="src-ref" href="#zdroj-5" aria-label="Zdroj 5">[5]</a>
+            <a class="src-ref" href={`#zdroj-${ibmRef}`} aria-label={`Zdroj ${ibmRef}`}>[{ibmRef}]</a>
           </p>
 
           <p class="lead economics-closer">
@@ -471,29 +452,7 @@ const canonical = new URL('/', Astro.site).href;
           <h2 class="sources-head">Zdroje</h2>
           <ol class="sources-list">
             {
-              currencies.map((c, i) => (
-                <li id={`zdroj-${i + 1}`}>
-                  {c.data.source.url ? (
-                    <a href={c.data.source.url} target="_blank" rel="noopener noreferrer">
-                      {c.data.source.label}
-                    </a>
-                  ) : (
-                    c.data.source.label
-                  )}
-                </li>
-              ))
-            }
-            <li id="zdroj-5">
-              <a
-                href="https://newsroom.ibm.com/2019-07-09-IBM-Closes-Landmark-Acquisition-of-Red-Hat-for-34-Billion-Defines-Open-Hybrid-Cloud-Future"
-                target="_blank"
-                rel="noopener noreferrer">
-                IBM — IBM Closes Landmark Acquisition of Red Hat for $34 Billion
-                (2019)
-              </a>
-            </li>
-            {
-              exampleSources.map((s) => (
+              sourceList.map((s) => (
                 <li id={`zdroj-${s.ref}`}>
                   {s.url ? (
                     <a href={s.url} target="_blank" rel="noopener noreferrer">
@@ -505,15 +464,6 @@ const canonical = new URL('/', Astro.site).href;
                 </li>
               ))
             }
-            <li id={`zdroj-${tradeRef}`}>
-              <a
-                href="https://www.econlib.org/library/Ricardo/ricP.html"
-                target="_blank"
-                rel="noopener noreferrer">
-                David Ricardo — On the Principles of Political Economy and
-                Taxation (1817), kap. 7 „On Foreign Trade“
-              </a>
-            </li>
           </ol>
           <p class="image-credits">
             Obrázky:
@@ -1478,12 +1428,13 @@ const canonical = new URL('/', Astro.site).href;
         document.querySelectorAll<HTMLAnchorElement>('.receipt a'),
       );
       const order = links.map((l) => l.dataset.target);
-      // Section labels for the bottom tape, read straight from the receipt
-      // markup so the two affordances never drift out of sync.
-      const meta = links.map((l) => ({
-        name: l.querySelector('.r-name')?.textContent?.trim() ?? '',
-        cost: l.querySelector('.r-cost')?.textContent?.trim() ?? '',
-      }));
+      // The ordered section elements, so we can tell "scrolled above the first
+      // line" from "scrolled below the last" when nothing sits in the band.
+      const railEls = order.map((id) => (id ? document.getElementById(id) : null));
+      // Bottom-tape labels: the full "Label · cost" string is already stamped
+      // on each receipt link (data-label), so the tape and the receipt can't
+      // format it two different ways.
+      const meta = links.map((l) => l.dataset.label ?? '');
       const tapeName = document.querySelector<HTMLElement>('.tape-name');
       const tapeFill = document.querySelector<HTMLElement>('.tape-fill');
       const visible = new Set<string>();
@@ -1491,9 +1442,19 @@ const canonical = new URL('/', Astro.site).href;
 
       const setActive = () => {
         const idx = order.findIndex((id) => id && visible.has(id));
-        // Keep the last reached line lit when scrolled past the final section
-        // (into closer / sources), so the bill stays fully rung up.
-        if (idx !== -1) lastIdx = idx;
+        if (idx !== -1) {
+          lastIdx = idx;
+        } else if (
+          railEls[0] &&
+          railEls[0].getBoundingClientRect().top > window.innerHeight / 2
+        ) {
+          // The first section sits below the viewport centre: we've scrolled
+          // back up above everything, so reset the bill to 0.
+          lastIdx = -1;
+        }
+        // Otherwise nothing is in the band because we're past the final section
+        // (into closer / sources) — keep the last line lit so the bill stays
+        // fully rung up.
         links.forEach((l, i) => {
           l.classList.toggle('is-active', i === lastIdx);
           l.classList.toggle('is-past', lastIdx > -1 && i < lastIdx);
@@ -1505,8 +1466,7 @@ const canonical = new URL('/', Astro.site).href;
             lastIdx > -1 ? (lastIdx + 1) / meta.length : 0
           })`;
         if (tapeName && lastIdx > -1) {
-          const m = meta[lastIdx];
-          tapeName.textContent = m.cost ? `${m.name} · ${m.cost}` : m.name;
+          tapeName.textContent = meta[lastIdx];
         }
       };
 

@@ -1,6 +1,9 @@
 order: 1
 icon: "🔒"
 title: "Soukromím"
+nav:
+  label: "Soukromí"
+  cost: "data"
 claim: "Pokud neplatíš za produkt, produktem jsi ty."
 fact: "Kolem 98 % příjmů firmy Meta pochází z reklamy cílené podle dat o uživatelích."
 source:

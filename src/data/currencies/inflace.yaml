@@ -1,6 +1,9 @@
 order: 4
 icon: "💸"
 title: "Inflací"
+nav:
+  label: "Inflace"
+  cost: "%"
 claim: "Peníze zdarma neexistují — prostě se vypaří."
 fact: "Když banka poskytne úvěr, nepůjčuje cizí vklady — vytváří nové peníze."
 source:
