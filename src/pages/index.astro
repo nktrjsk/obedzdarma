@@ -368,7 +368,7 @@ const canonical = new URL('/', Astro.site).href;
            agreed to; this is the case where the honest answer is "you both gain". -->
       <section class="twist" id="smena" data-rail>
         <div class="wrap">
-          <h2 class="section-head display">A přece jeden existuje</h2>
+          <h2 class="section-head display">Ale přece jen jeden existuje</h2>
           <p class="lead">
             Celou dobu hledáme skrytou cenu. Teď obrať list. Je jediná situace,
             kdy <span class="mark">„zdarma“</span> není past — a naopak z&nbsp;ní
@@ -533,7 +533,7 @@ const canonical = new URL('/', Astro.site).href;
     <footer class="footer">
       <div class="wrap">
         <p class="footer-why">
-          Otevřený, neplacený web o tom, že nic není zadarmo. Kód i texty si
+          Open-source web o tom, že nic není zadarmo. Kód i texty si
           můžeš přečíst, ověřit a&nbsp;šířit dál.
         </p>
 
@@ -557,7 +557,10 @@ const canonical = new URL('/', Astro.site).href;
 
         <p class="footer-open">
           <a href="https://github.com/nktrjsk/obedzdarma" target="_blank" rel="noopener noreferrer">
-            Otevřený zdroj na GitHubu →
+            <svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+              <path fill="currentColor" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            <span class="footer-open-label">Otevřený zdroj na GitHubu →</span>
           </a>
         </p>
         <p class="footer-license">
@@ -1361,17 +1364,29 @@ const canonical = new URL('/', Astro.site).href;
         margin: 0;
       }
       .footer-open a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
         color: var(--paper);
         text-decoration: none;
+        transition: color 160ms ease;
+      }
+      .gh-mark {
+        width: 1.05em;
+        height: 1.05em;
+        flex: none;
+      }
+      .footer-open-label {
         border-bottom: 1px solid var(--muted);
         padding-bottom: 2px;
-        transition:
-          color 160ms ease,
-          border-color 160ms ease;
+        transition: border-color 160ms ease;
       }
       .footer-open a:hover,
       .footer-open a:focus-visible {
         color: var(--acid);
+      }
+      .footer-open a:hover .footer-open-label,
+      .footer-open a:focus-visible .footer-open-label {
         border-color: var(--acid);
       }
       .footer-license {
@@ -1385,7 +1400,8 @@ const canonical = new URL('/', Astro.site).href;
         text-transform: uppercase;
       }
       @media (prefers-reduced-motion: reduce) {
-        .footer-open a {
+        .footer-open a,
+        .footer-open-label {
           transition: none;
         }
       }
