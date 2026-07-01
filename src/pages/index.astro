@@ -15,6 +15,7 @@ const currencies = (await getCollection('currencies')).sort(
 // oddly in a nav) plus the "currency" each section is paid in.
 const railMeta: Record<string, { label: string; cost?: string }> = {
   setup: { label: 'Úvod' },
+  platis: { label: 'Platíš?' },
   soukromi: { label: 'Soukromí', cost: 'data' },
   efektivita: { label: 'Efektivita', cost: 'daně' },
   prostredi: { label: 'Prostředí', cost: 'CO₂' },
@@ -25,6 +26,7 @@ const railMeta: Record<string, { label: string; cost?: string }> = {
 };
 const sections = [
   { id: 'setup', ...railMeta.setup },
+  { id: 'platis', ...railMeta.platis },
   ...currencies.map((c) => ({ id: c.id, ...(railMeta[c.id] ?? { label: c.data.title }) })),
   { id: 'ekonomie', ...railMeta.ekonomie },
   { id: 'smena', ...railMeta.smena },
@@ -168,14 +170,35 @@ const canonical = new URL('/', Astro.site).href;
          scroll-hijack). aria-hidden — the heading structure already gives
          assistive tech the canonical wayfinding, so this stays a purely visual
          enhancement and never announces on every scroll. -->
-    <div class="tape" aria-hidden="true">
-      <div class="tape-track"><span class="tape-fill"></span></div>
-      <div class="tape-inner">
-        <span class="tape-mark">∗</span>
-        <span class="tape-name">Oběd zdarma</span>
-        <span class="tape-leader"></span>
-        <span class="tape-sum">∞</span>
-      </div>
+    <div class="tape">
+      <div class="tape-track" aria-hidden="true"><span class="tape-fill"></span></div>
+      <button
+        type="button"
+        class="tape-inner tape-toggle"
+        aria-label="Sekce stránky"
+        aria-expanded="false"
+        aria-controls="tape-panel"
+      >
+        <span class="tape-mark" aria-hidden="true">∗</span>
+        <span class="tape-name" aria-hidden="true">Oběd zdarma</span>
+        <span class="tape-leader" aria-hidden="true"></span>
+        <span class="tape-sum" aria-hidden="true">∞</span>
+        <span class="tape-chevron" aria-hidden="true">▲</span>
+      </button>
+      <!-- Panel comes after the toggle in DOM order so a forward Tab from the
+           opened toggle lands on the jump links (it renders above via CSS
+           bottom:100%, so source order and visual order can differ). -->
+      <nav class="tape-panel" id="tape-panel" aria-label="Sekce" hidden>
+        <ul>
+          {sections.map((s) => (
+            <li>
+              <a href={`#${s.id}`} class="tape-panel-link">
+                {s.label}{s.cost ? ` · ${s.cost}` : ''}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
     <main id="obsah" tabindex="-1">
       <!-- 1. HERO -->
@@ -250,7 +273,7 @@ const canonical = new URL('/', Astro.site).href;
 
       <!-- 3. THE CURRENCIES -->
       <section class="currencies">
-        <div class="wrap">
+        <div class="wrap" id="platis" data-rail>
           <h2 class="section-head display">Čím platíš?</h2>
         </div>
         {
@@ -371,7 +394,7 @@ const canonical = new URL('/', Astro.site).href;
           <h2 class="section-head display">Ale přece jen jeden existuje</h2>
           <p class="lead">
             Většina receptů na spravedlivější svět začíná stejnou otázkou:
-            <span class="mark">komu vzít?</span> Robin Hood bere bohatým
+            <span class="acid">komu vzít?</span> Robin Hood bere bohatým
             a&nbsp;dává chudým — pořád se jen jinak krájí jeden a&nbsp;týž koláč.
           </p>
           <p class="lead">
@@ -392,12 +415,11 @@ const canonical = new URL('/', Astro.site).href;
             <li>
               <h3 class="mech-title display">Proč to funguje</h3>
               <p class="mech-body">
-                Hodnota není v&nbsp;té věci daná napevno — třeba tím, kolik do
+                Hodnota není v&nbsp;té věci daná napevno — ani tím, kolik do
                 ní kdo vložil práce. Určuje si ji každý sám. A&nbsp;čím víc
-                něčeho máme, tím míň stojíme o&nbsp;další kousek: potřeba se
-                nasytí. Kde je ta hranice, se u&nbsp;každého liší — ale že tam
-                je, to platí vždy. Proto když vyměníme něco, čeho máme nazbyt, za
-                to, co nám chybí, hodnota se nepřesune. Vznikne.
+                něčeho máme, tím míň stojíme o&nbsp;další kousek: po desáté
+                čokoládě přijdou vhod spíš jablka. Proto když vyměníme to, čeho
+                máme nazbyt, za to, co nám chybí, hodnota se nepřesune. Vznikne.
               </p>
             </li>
             <li>
@@ -421,12 +443,12 @@ const canonical = new URL('/', Astro.site).href;
           </p>
 
           <p class="lead twist-guard">
-            Jeden háček to má. Platí to jen u&nbsp;směny, která je
-            <span class="acid">dobrovolná</span> a&nbsp;při níž
+            Má to ale jeden háček. Platí to jen u&nbsp;směny, která je
+            <span class="acid">dobrovolná</span> a&nbsp;u&nbsp;které
             <span class="acid">víš, do čeho jdeš</span>. Přesně tím se liší od
-            čtyř měn nahoře: za ty platíš, aniž bys kývl — cena je schovaná,
-            vnucená, nebo hozená na někoho jiného. Tady souhlasíš a&nbsp;víš, co
-            dáváš i&nbsp;co dostáváš.
+            čtyř měn nahoře: těmi platíš, aniž bys o&nbsp;tom věděl — cena ti není
+            na očích, je ti vnucená, nebo ji za tebe zaplatí někdo jiný. Tady
+            souhlasíš a&nbsp;víš, co dáváš i&nbsp;co dostáváš.
           </p>
 
           <!-- The twist's climax: no prop, just the payoff. A dim setup line
@@ -592,6 +614,12 @@ const canonical = new URL('/', Astro.site).href;
         align-items: center;
         border-bottom: 1px solid var(--line);
       }
+      @media (max-width: 639.98px) {
+        .hero {
+          align-items: flex-start;
+          padding-top: clamp(3rem, 12svh, 6rem);
+        }
+      }
       .kicker {
         font-size: 0.8rem;
         letter-spacing: 0.3em;
@@ -638,6 +666,7 @@ const canonical = new URL('/', Astro.site).href;
         line-height: 1.6;
         max-width: 26ch;
         margin: 0 0 2rem;
+        text-wrap: pretty;
       }
       .lead:last-child { margin-bottom: 0; }
       .lead strong { font-weight: 700; }
@@ -767,11 +796,15 @@ const canonical = new URL('/', Astro.site).href;
         color: var(--paper);
       }
       .src-ref {
+        display: inline-block;
         color: var(--acid);
         text-decoration: none;
         font-size: 0.75em;
         vertical-align: super;
         margin-left: 0.15em;
+        padding: 0.4em 0.2em;
+        margin-top: -0.4em;
+        margin-bottom: -0.4em;
       }
       .src-ref:hover { text-decoration: underline; }
       .examples {
@@ -840,6 +873,7 @@ const canonical = new URL('/', Astro.site).href;
         max-width: 42ch;
         margin: 0;
         color: var(--paper);
+        text-wrap: pretty;
       }
       .economics-fact { margin-top: 0; }
       .economics-closer {
@@ -993,11 +1027,11 @@ const canonical = new URL('/', Astro.site).href;
         position: absolute;
         top: 0.55rem;
         right: 0.55rem;
-        width: 1.2rem;
-        height: 1.2rem;
+        min-width: 1.5rem;
+        min-height: 1.5rem;
         display: grid;
         place-items: center;
-        padding: 0;
+        padding: 0.15rem;
         border: 0;
         background: none;
         /* Was #b9b4a6 ≈ 1.84:1 — invisible until hover, and hover isn't
@@ -1120,6 +1154,8 @@ const canonical = new URL('/', Astro.site).href;
         .r-item { transition: none; }
         .tape-fill { transition: none; }
         .skip-link { transition: none; }
+        .tape-panel { transition: none; }
+        .tape-chevron { transition: none; }
       }
 
       /* ---- BOTTOM REGISTER TAPE ---- */
@@ -1198,6 +1234,86 @@ const canonical = new URL('/', Astro.site).href;
         font-weight: 700;
         font-size: 0.95rem;
         letter-spacing: 0.04em;
+      }
+      /* Tape toggle button — same visual as the old tape-inner div */
+      .tape-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        width: 100%;
+        height: 2.4rem;
+        max-width: var(--maxw);
+        margin-inline: auto;
+        padding-inline: clamp(1rem, 4vw, 1.5rem);
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+        font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+        text-transform: uppercase;
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+      }
+      .tape-chevron {
+        color: var(--acid);
+        font-size: 0.6rem;
+        margin-left: auto;
+        flex-shrink: 0;
+        transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .tape-toggle[aria-expanded="true"] .tape-chevron {
+        transform: rotate(180deg);
+      }
+      /* Jump panel — expands upward from the tape */
+      .tape-panel {
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        right: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+        z-index: 21;
+        transform: translateY(0.5rem);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .tape-panel:not([hidden]) {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .tape-panel[hidden] {
+        display: block !important;
+      }
+      .tape-panel ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .tape-panel li {
+        border-top: 1px solid var(--paper-rule);
+      }
+      .tape-panel-link {
+        display: flex;
+        align-items: center;
+        padding: 0.65rem clamp(1rem, 4vw, 1.5rem);
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 700;
+        transition: background 0.15s ease;
+      }
+      .tape-panel-link:hover,
+      .tape-panel-link:focus-visible {
+        background: var(--paper-faint);
+      }
+      .tape-panel-link:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: -2px;
       }
       /* Keep the footer clear of the fixed tape (only while the tape is shown). */
       @media (max-width: 1399.98px) {
@@ -1292,6 +1408,10 @@ const canonical = new URL('/', Astro.site).href;
         .footer-open-label {
           transition: none;
         }
+        .tape-panel,
+        .tape-chevron {
+          transition: none;
+        }
       }
     </style>
 
@@ -1366,6 +1486,48 @@ const canonical = new URL('/', Astro.site).href;
       document
         .querySelector('.receipt-reopen')
         ?.addEventListener('click', () => setHidden(false));
+
+      // Tape jump panel toggle (< 1400px only; at ≥ 1400px the tape is display:none)
+      const tapeToggle = document.querySelector<HTMLButtonElement>('.tape-toggle');
+      const tapePanel = document.querySelector<HTMLElement>('#tape-panel');
+
+      const closePanel = (returnFocus = false) => {
+        if (!tapeToggle || !tapePanel) return;
+        tapePanel.hidden = true;
+        tapeToggle.setAttribute('aria-expanded', 'false');
+        if (returnFocus) tapeToggle.focus();
+      };
+
+      const openPanel = () => {
+        if (!tapeToggle || !tapePanel) return;
+        tapePanel.hidden = false;
+        tapeToggle.setAttribute('aria-expanded', 'true');
+      };
+
+      tapeToggle?.addEventListener('click', () => {
+        const isOpen = tapeToggle.getAttribute('aria-expanded') === 'true';
+        if (isOpen) closePanel();
+        else openPanel();
+      });
+
+      // Collapse panel on link click (native anchor jump handles navigation)
+      tapePanel?.querySelectorAll<HTMLAnchorElement>('.tape-panel-link').forEach((link) => {
+        link.addEventListener('click', () => closePanel());
+      });
+
+      // Dismiss on outside click
+      document.addEventListener('click', (e) => {
+        if (!tapePanel || tapePanel.hidden) return;
+        const tape = document.querySelector('.tape');
+        if (tape && !tape.contains(e.target as Node)) closePanel();
+      });
+
+      // Esc closes and returns focus
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && tapePanel && !tapePanel.hidden) {
+          closePanel(true);
+        }
+      });
     </script>
   </body>
 </html>
