@@ -900,7 +900,9 @@ const canonical = new URL('/', Astro.site).href;
           position: absolute;
           right: 100%;
           margin-right: 0.5em;
-          top: 0.02em; /* sit the number by the first line */
+          top: 50%; /* on the arrow axis (box centre), not the first line, so
+                       the number stays put when the title wraps to two lines */
+          transform: translateY(-50%);
         }
         .twist-beats li:not(:last-child) .beat::after {
           content: "";
