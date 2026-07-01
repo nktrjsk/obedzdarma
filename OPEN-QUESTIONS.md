@@ -37,9 +37,14 @@ reconciliation airtight at the seams?"
    the positive-sum claim to the parties who trade; the page never overclaimed
    "everyone wins," so no caveat was needed.
 
-4. **Reused `.mechanisms` scaffold for Economics + Twist** → **Left as-is (tried
-   arrows, dropped them).** Added an acid →/↓ connector on the twist beats to
-   signal the progression; removed it — floating in the column gaps it read as a
-   bug, not a connector. The `01/02/03` numbering already implies the order, so
-   the beats aren't pure peers. If a progression cue is wanted later, it needs a
-   design that visually *connects* (a spanning rule), not an orphaned glyph.
+4. **Reused `.mechanisms` scaffold for Economics + Twist** → **Connectors added
+   (v2, done right).** First attempt was an acid →/↓ glyph floating in the
+   column gaps — it read as a bug, so it was dropped. Re-done as a connector
+   that actually *bridges*: an acid line anchored to the beats' top-rule that
+   spans the gap and terminates in a chevron pointing into the next beat
+   (horizontal across columns on desktop, a downward drop in the vertical gap
+   on mobile). Dim rules = the beats, acid bridges = the flow. Because it's
+   collinear with the rules on both sides and touches the next beat, it reads as
+   a link, not an orphaned glyph. The beats are a genuine sequence
+   (feeling → theory → engine), so the cue is earned. CSS lives on
+   `.twist-beats li::after` (+ a `min-width:760px` override).
