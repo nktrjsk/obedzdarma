@@ -38,13 +38,13 @@ reconciliation airtight at the seams?"
    "everyone wins," so no caveat was needed.
 
 4. **Reused `.mechanisms` scaffold for Economics + Twist** → **Connectors added
-   (v2, done right).** First attempt was an acid →/↓ glyph floating in the
-   column gaps — it read as a bug, so it was dropped. Re-done as a connector
-   that actually *bridges*: an acid line anchored to the beats' top-rule that
-   spans the gap and terminates in a chevron pointing into the next beat
-   (horizontal across columns on desktop, a downward drop in the vertical gap
-   on mobile). Dim rules = the beats, acid bridges = the flow. Because it's
-   collinear with the rules on both sides and touches the next beat, it reads as
-   a link, not an orphaned glyph. The beats are a genuine sequence
-   (feeling → theory → engine), so the cue is earned. CSS lives on
-   `.twist-beats li::after` (+ a `min-width:760px` override).
+   (v3, at the beats' eye-line).** v1 was an acid →/↓ glyph floating in the
+   column gaps — read as a bug, dropped. v2 anchored it to the top rule and
+   spanned the gap — better, but it stranded the arrow *above* the content,
+   nowhere near the beats it links. v3 (final): the arrow sits level with the
+   `01/02/03` numbers, reaches out of one beat and points into the next beat's
+   number (horizontal across columns on desktop; a downward drop in the vertical
+   gap between stacked beats on mobile). Desktop connector is anchored to
+   `.mech-title` so it tracks the first title line's centre; mobile drop is on
+   `.twist-beats li::after`. The beats are a genuine sequence
+   (feeling → theory → engine), so the cue is earned.

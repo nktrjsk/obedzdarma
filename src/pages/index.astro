@@ -930,17 +930,24 @@ const canonical = new URL('/', Astro.site).href;
       .twist-fact { margin-top: 0; }
       .twist-guard { max-width: 42ch; }
       @media (min-width: 760px) {
-        /* Horizontal bridge: rides the top-rule line, spans the column gap,
-           chevron points into the next beat. */
-        .twist-beats li:not(:last-child)::after {
-          left: 100%;
-          top: -1px;
-          width: clamp(2rem, 4vw, 2.75rem); /* == the grid gap */
-          height: 10px;
-          transform: translateY(-4.5px);
+        /* Desktop: the drop becomes a horizontal arrow at the numbers' eye-line,
+           reaching out of one beat and pointing into the next beat's number —
+           not stranded up on the top rule. */
+        .twist-beats li:not(:last-child)::after { display: none; }
+        .twist-beats li:not(:last-child) .mech-title { position: relative; }
+        .twist-beats li:not(:last-child) .mech-title::after {
+          content: "";
+          position: absolute;
+          top: 0.56em; /* centre of the first title line */
+          left: calc(100% - clamp(2rem, 6vw, 4rem)); /* reach back into the beat */
+          /* land on the next beat's number: overlap + li padding-right + grid gap */
+          width: calc(clamp(2rem, 6vw, 4rem) + clamp(0.5rem, 1.5vw, 1rem) + clamp(2rem, 4vw, 2.75rem));
+          height: 14px;
+          transform: translateY(-7px);
+          pointer-events: none;
           background:
-            linear-gradient(var(--acid), var(--acid)) no-repeat left center / calc(100% - 6px) 1px,
-            url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2010%2010'%3E%3Cpath%20d='M4%201L8%205L4%209'%20fill='none'%20stroke='%23e8ff2a'%20stroke-width='1.6'%20stroke-linecap='square'/%3E%3C/svg%3E") no-repeat right center / 8px 10px;
+            linear-gradient(var(--acid), var(--acid)) no-repeat left center / calc(100% - 9px) 1.5px,
+            url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2010%2010'%3E%3Cpath%20d='M4%201L8%205L4%209'%20fill='none'%20stroke='%23e8ff2a'%20stroke-width='1.6'%20stroke-linecap='square'/%3E%3C/svg%3E") no-repeat right center / 9px 12px;
         }
       }
 
