@@ -121,6 +121,11 @@ const pageTitle = `${title} — Oběd zdarma neexistuje`;
       .a-title {
         font-size: clamp(2.75rem, 10vw, 6rem);
         margin-bottom: clamp(2.5rem, 6vw, 4rem);
+        /* A title word longer than a narrow column (e.g. "Komparativní")
+           wraps/hyphenates instead of overflowing — keeps the display size big
+           for short titles like "Rozbité okno" while never breaking the layout. */
+        overflow-wrap: break-word;
+        hyphens: auto;
       }
 
       /* ---- PROSE ----

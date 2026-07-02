@@ -31,9 +31,9 @@ export const READING_LIST: ReadingItem[] = [
   {
     title: 'Komparativní výhoda',
     kind: 'článek',
-    time: '6 min',
+    time: '4 min',
     note: 'proč na směně vydělají obě strany, i ten slabší',
-    url: 'https://cs.wikipedia.org/wiki/Komparativn%C3%AD_v%C3%BDhoda',
+    url: '/clanky/komparativni-vyhoda',
   },
   {
     title: 'Já, tužka',
