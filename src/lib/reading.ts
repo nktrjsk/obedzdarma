@@ -37,9 +37,9 @@ export const READING_LIST: ReadingItem[] = [
   },
   {
     title: 'Já, tužka',
-    kind: 'video, cz. titulky',
-    time: '5 min',
+    kind: 'článek',
+    time: '4 min',
     note: 'jak trh spojí tisíce cizinců, aniž to kdo řídí',
-    url: 'https://www.youtube.com/watch?v=oURskLWNUhQ',
+    url: '/clanky/ja-tuzka',
   },
 ];
