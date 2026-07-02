@@ -782,6 +782,7 @@ const canonical = new URL('/', Astro.site).href;
         padding: 0.4em 0.2em;
         margin-top: -0.4em;
         margin-bottom: -0.4em;
+        transition: color 0.18s ease;
       }
       .src-ref:hover { text-decoration: underline; }
       .examples {
@@ -801,12 +802,14 @@ const canonical = new URL('/', Astro.site).href;
       .ex-name {
         font-weight: 600;
         font-size: 1.1rem;
+        transition: color 0.18s ease;
       }
       .ex-note {
         color: var(--muted);
         font-size: 0.95rem;
         font-weight: 300;
         line-height: 1.6;
+        transition: color 0.18s ease;
       }
       @media (min-width: 640px) {
         .examples { grid-template-columns: repeat(2, 1fr); }
@@ -814,10 +817,10 @@ const canonical = new URL('/', Astro.site).href;
 
       /* ---- ITEM MINI-ARTICLE (inline disclosure, per example) ----
          An individual example row can carry a mini-article. Selecting it
-         inverts the two-color system *around that one item*: an acid frame
-         wraps the row, which flips to a black card, and a black panel spawns
-         directly beneath it, joined by an acid caret. The item stays in its
-         grid cell — only its own column grows to make room for the panel. */
+         inverts the two-color system *for that one item*: the block itself
+         goes acid (with ink text), and a black article panel spawns directly
+         beneath it, joined by an acid caret. The item stays in its grid
+         cell — only its own column grows to make room for the panel. */
       details.ex { display: block; }
       details.ex > summary {
         display: flex;
@@ -826,7 +829,11 @@ const canonical = new URL('/', Astro.site).href;
         cursor: pointer;
         list-style: none;
         position: relative;
-        transition: background-color 0.18s ease;
+        /* Padding lives here (not on the open state) so the block is
+           already inset when closed — opening only fills it with acid,
+           the box and its content never move. */
+        padding: clamp(1rem, 2.5vw, 1.5rem);
+        transition: background-color 0.18s ease, color 0.18s ease;
       }
       details.ex > summary::-webkit-details-marker { display: none; }
       details.ex > summary:focus-visible {
@@ -844,20 +851,23 @@ const canonical = new URL('/', Astro.site).href;
         letter-spacing: 0.02em;
         text-transform: uppercase;
         color: var(--acid);
+        transition: color 0.18s ease;
       }
       .ex-cue::before { content: '+ Rozbal'; }
       details.ex[open] .ex-cue::before { content: '\2212 Zavřít'; }
 
-      /* Selected (open) state — acid frame + black card + black panel.
-         The item keeps its place and width in the grid; the panel drops
-         directly beneath the box in the same column. */
-      details.ex[open] {
-        background: var(--acid);
-        padding: clamp(1rem, 2.5vw, 1.5rem);
-      }
+      /* Selected (open) state — the block itself goes acid with ink text,
+         and a black article panel drops directly beneath it in the same
+         column, joined by an acid caret. No frame around the item. */
       details.ex[open] > summary {
-        background: var(--ink);
-        padding: clamp(1rem, 2.5vw, 1.5rem);
+        background: var(--acid);
+        color: var(--ink);
+      }
+      details.ex[open] .ex-name,
+      details.ex[open] .ex-note,
+      details.ex[open] .ex-cue,
+      details.ex[open] .src-ref {
+        color: var(--ink);
       }
       .ex-mini { display: block; }
       details.ex[open] .ex-mini {
@@ -900,7 +910,11 @@ const canonical = new URL('/', Astro.site).href;
       .ex-more:hover { color: var(--paper); border-color: var(--paper); }
 
       @media (prefers-reduced-motion: reduce) {
-        details.ex > summary { transition: none; }
+        details.ex > summary,
+        .ex-name,
+        .ex-note,
+        .ex-cue,
+        .src-ref { transition: none; }
       }
 
       /* ---- ECONOMICS ---- */
