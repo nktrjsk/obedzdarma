@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { buildSources, getSortedCurrencies } from '../lib/sources';
+import { READING_LIST } from '../lib/reading';
 import friedman from '../assets/origin/friedman.jpg';
 import heinlein from '../assets/origin/heinlein.jpg';
 import saloon from '../assets/origin/saloon.jpg';
@@ -495,20 +496,26 @@ const canonical = new URL('/', Astro.site).href;
         </p>
 
         <div class="footer-read">
-          <p class="footer-lead">Čti dál</p>
+          <p class="footer-lead">Za pár minut</p>
           <ul>
-            <li>
-              <span class="fr-author">Adam Smith</span> — Bohatství národů
-              <span class="fr-note">dělba práce: společně vyrobíme víc než každý sám</span>
-            </li>
-            <li>
-              <span class="fr-author">Frédéric Bastiat</span> — Co je vidět a co není vidět
-              <span class="fr-note">skrytá cena: i to, co nevidíš, platíš</span>
-            </li>
-            <li>
-              <span class="fr-author">Milton Friedman</span> — Svoboda volby
-              <span class="fr-note">dobrovolná směna: obchod s&nbsp;kladným součtem</span>
-            </li>
+            {
+              READING_LIST.map((item) => {
+                const external = !item.url.startsWith('/');
+                return (
+                  <li>
+                    <a
+                      href={item.url}
+                      {...(external
+                        ? { target: '_blank', rel: 'noopener noreferrer' }
+                        : {})}>
+                      {item.title}
+                    </a>
+                    <span class="fr-kind">{item.kind} · {item.time}</span>
+                    <span class="fr-note">{item.note}</span>
+                  </li>
+                );
+              })
+            }
           </ul>
         </div>
 
@@ -1365,8 +1372,27 @@ const canonical = new URL('/', Astro.site).href;
       .footer-read li {
         color: var(--paper);
       }
-      .fr-author {
+      .footer-read a {
         font-weight: 600;
+        color: var(--paper);
+        text-decoration: none;
+        border-bottom: 1px solid var(--muted);
+        padding-bottom: 1px;
+        transition: color 160ms ease, border-color 160ms ease;
+      }
+      .footer-read a:hover,
+      .footer-read a:focus-visible {
+        color: var(--acid);
+        border-color: var(--acid);
+      }
+      .fr-kind {
+        margin-left: 0.55em;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        white-space: nowrap;
       }
       .fr-note {
         display: block;
@@ -1414,6 +1440,7 @@ const canonical = new URL('/', Astro.site).href;
         text-transform: uppercase;
       }
       @media (prefers-reduced-motion: reduce) {
+        .footer-read a,
         .footer-open a,
         .footer-open-label {
           transition: none;

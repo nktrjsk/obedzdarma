@@ -1,7 +1,8 @@
 import type { APIRoute } from 'astro';
 import { getSortedCurrencies, buildSources } from '../lib/sources';
+import { READING_LIST } from '../lib/reading';
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ site }) => {
   const currencies = await getSortedCurrencies();
   const { ibmRef, tradeRef, exSourceRefs, all } = buildSources(currencies);
 
@@ -24,6 +25,15 @@ export const GET: APIRoute = async () => {
   const zdrojeList = all.map((s) =>
     s.url ? `${s.ref}. [${s.label}](${s.url})` : `${s.ref}. ${s.label}`
   ).join('\n');
+
+  // Generate the "Za pár minut" reading list from the shared source of truth.
+  // Root-relative URLs point at our own articles; absolutize them against the
+  // site origin so the Markdown stays portable when copied or quoted.
+  const readingList = READING_LIST.map((item) => {
+    const href =
+      item.url.startsWith('/') && site ? new URL(item.url, site).href : item.url;
+    return `- **[${item.title}](${href})** — ${item.note} *(${item.kind} · ${item.time})*`;
+  }).join('\n');
 
   const body = `# Oběd zdarma neexistuje
 
@@ -101,11 +111,9 @@ ${zdrojeList}
 
 ---
 
-## Čti dál
+## Za pár minut
 
-- **Adam Smith** — *Bohatství národů* — dělba práce: společně vyrobíme víc než každý sám
-- **Frédéric Bastiat** — *Co je vidět a co není vidět* — skrytá cena: i to, co nevidíš, platíš
-- **Milton Friedman** — *Svoboda volby* — dobrovolná směna: obchod s kladným součtem
+${readingList}
 
 ---
 

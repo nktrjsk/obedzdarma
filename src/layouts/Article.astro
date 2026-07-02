@@ -1,0 +1,252 @@
+---
+// Shared layout for the "Za pár minut" articles — the short explainers that the
+// footer reading list links to. One idea each, a few minutes to read, in the
+// same voice as the main argument. Keeping the chrome (head, back-links, footer,
+// prose styles) here means a new article is just its copy plus front-matter, and
+// the three can't drift apart the way hand-built pages would.
+import '../styles/global.css';
+
+interface Props {
+  /** Article title — the concept name. */
+  title: string;
+  /** Meta description + OG description. */
+  description: string;
+  /** URL slug under /clanky/ (no slashes), e.g. "rozbite-okno". */
+  slug: string;
+  /** Medium badge, e.g. "článek". */
+  kind: string;
+  /** Read time, e.g. "3 min". */
+  readTime: string;
+}
+
+const { title, description, slug, kind, readTime } = Astro.props;
+
+const canonical = new URL(`/clanky/${slug}`, Astro.site).href;
+// Reuse the site's static share card for now (see og-image-static-for-now).
+const ogImage = new URL('/og.png', Astro.site).href;
+const pageTitle = `${title} — Oběd zdarma neexistuje`;
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="text/markdown" href={`${canonical}.md`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:site_name" content="Oběd zdarma neexistuje" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+  </head>
+  <body>
+    <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
+    <main id="obsah" tabindex="-1">
+      <article class="article">
+        <div class="wrap">
+          <a class="a-back" href="/">
+            <span aria-hidden="true">←</span> Oběd zdarma neexistuje
+          </a>
+          <p class="a-kicker">
+            Za pár minut
+            <span class="a-kind">{kind} · {readTime}</span>
+          </p>
+          <h1 class="a-title display">{title}</h1>
+          <div class="prose">
+            <slot />
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer class="a-footer">
+      <div class="wrap">
+        <a class="a-return" href="/">
+          <span aria-hidden="true">←</span> Zpět na argument
+        </a>
+        <p class="a-license">
+          Text: CC&nbsp;BY&nbsp;4.0 — šiř dál, jen uveď zdroj. ·
+          <a href="https://github.com/nktrjsk/obedzdarma" target="_blank" rel="noopener noreferrer">Otevřený zdroj</a>
+        </p>
+        <p class="a-mark">obedzdarma.cz</p>
+      </div>
+    </footer>
+
+    <style>
+      .article {
+        padding-top: clamp(2.5rem, 7vw, 5rem);
+        padding-bottom: clamp(4rem, 12vw, 8rem);
+      }
+      main:focus { outline: none; }
+
+      /* Back to the argument — quiet at the top, sits above the title. */
+      .a-back {
+        display: inline-block;
+        margin-bottom: clamp(2.5rem, 6vw, 4rem);
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        letter-spacing: 0.02em;
+        border-bottom: 1px solid transparent;
+        transition: color 160ms ease, border-color 160ms ease;
+      }
+      .a-back:hover,
+      .a-back:focus-visible {
+        color: var(--acid);
+        border-color: var(--acid);
+      }
+
+      .a-kicker {
+        margin: 0 0 1.25rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .a-kind {
+        margin-left: 0.55em;
+        color: var(--acid);
+        white-space: nowrap;
+      }
+
+      .a-title {
+        font-size: clamp(2.75rem, 10vw, 6rem);
+        margin-bottom: clamp(2.5rem, 6vw, 4rem);
+      }
+
+      /* ---- PROSE ----
+         The article body is <slot> content authored in the child page, so it
+         carries the child's style scope, not this layout's. Astro scoped rules
+         therefore never reach it — hence :global() on every descendant, anchored
+         to this layout's own .prose wrapper so nothing leaks page-wide. */
+      .prose {
+        max-width: 46ch;
+      }
+      .prose > :global(:first-child) { margin-top: 0; }
+      .prose :global(p) {
+        font-size: clamp(1.1rem, 1.9vw, 1.4rem);
+        font-weight: 300;
+        line-height: 1.65;
+        margin: 0 0 1.6rem;
+        text-wrap: pretty;
+      }
+      /* Opening paragraph — a touch larger, sets the scene. */
+      .prose :global(.a-lead) {
+        font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+        line-height: 1.4;
+        margin-bottom: 2rem;
+      }
+      .prose :global(strong) { font-weight: 700; }
+      .prose :global(em) { font-style: italic; }
+
+      /* Beat headings inside the article. */
+      .prose :global(h2) {
+        font-family: var(--font-display);
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        line-height: 1.08;
+        font-size: clamp(1.4rem, 3.5vw, 2.1rem);
+        margin: clamp(3rem, 7vw, 4.5rem) 0 1.25rem;
+      }
+      /* Line-icon cue before a beat heading — acid, sized to the cap height and
+         set slightly below the baseline so it reads as a marginal glyph. */
+      .prose :global(h2 .h-ico) {
+        width: 0.8em;
+        height: 0.8em;
+        margin-right: 0.45em;
+        color: var(--acid);
+        vertical-align: -0.04em;
+      }
+
+      /* The verifiable source note — same acid rule as the page's currency
+         facts, so an article's attribution reads as "here's the evidence". */
+      .prose :global(.a-note) {
+        font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+        line-height: 1.55;
+        max-width: 52ch;
+        margin: clamp(3rem, 7vw, 4.5rem) 0 0;
+        padding-left: 1rem;
+        border-left: 2px solid var(--acid);
+        color: var(--muted);
+      }
+      .prose :global(.a-note a) {
+        color: var(--paper);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .prose :global(.a-note a:hover),
+      .prose :global(.a-note a:focus-visible) { color: var(--acid); }
+
+      /* Pull-quote — the article's turn, matching the page's twist-quote. */
+      .prose :global(.a-quote) {
+        margin: clamp(2.5rem, 6vw, 4rem) 0;
+        padding: 0;
+        border: 0;
+        max-width: 34ch;
+      }
+      .prose :global(.a-quote p) {
+        font-size: clamp(1.4rem, 4vw, 2.2rem);
+        line-height: 1.22;
+        letter-spacing: -0.01em;
+        font-weight: 300;
+        color: var(--paper);
+        text-wrap: balance;
+        margin: 0;
+      }
+
+      /* ---- FOOTER ---- */
+      .a-footer {
+        border-top: 1px solid var(--line);
+        padding-block: clamp(2.5rem, 5vw, 4rem);
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+      .a-return {
+        display: inline-block;
+        color: var(--paper);
+        text-decoration: none;
+        font-weight: 600;
+        border-bottom: 1px solid var(--muted);
+        padding-bottom: 1px;
+        transition: color 160ms ease, border-color 160ms ease;
+      }
+      .a-return:hover,
+      .a-return:focus-visible {
+        color: var(--acid);
+        border-color: var(--acid);
+      }
+      .a-license {
+        margin: 1.5rem 0 0;
+        font-size: 0.85rem;
+      }
+      .a-license a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .a-license a:hover,
+      .a-license a:focus-visible { color: var(--acid); }
+      .a-mark {
+        margin: clamp(2rem, 4vw, 3rem) 0 0;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .a-back,
+        .a-return { transition: none; }
+      }
+    </style>
+  </body>
+</html>
