@@ -12,9 +12,24 @@ source:
 examples:
   - name: "Fast fashion"
     note: "Tvoje levné tričko platí někdo jiný — řeky v Bangladéši plné barvicích chemikálií a půda pohřbená pod skládkami textilu."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak nízká cena trička přenáší účet na životní prostředí."
+      - "[PLACEHOLDER] Druhý odstavec: proč se ekologické náklady neobjeví na cenovce a kdo je nakonec zaplatí."
+    readMore:
+      label: "Rozbité okno"
+      url: "/clanky/rozbite-okno"
   - name: "Fosilní paliva"
     note: "Laciná energie, která otepluje klima a způsobuje ostatní nežádoucí jevy."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u fosilních paliv platíš klimatickými dopady a externalizovanými náklady, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak jsou fosilní paliva dotovaná a kdo za jejich skutečné náklady nakonec zaplatí."
   - name: "Levné maso"
     note: "U pokladny stojí pár korun. Vodu, emise a vyčerpanou půdu za něj zaplatí všichni ostatní — a později."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u levného masa platíš spotřebou vody, emisemi a degradací půdy, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak průmyslový chov externalizuje environmentální náklady a kdo za levné maso nakonec zaplatí."
   - name: "Doručení „zdarma“"
     note: "Doprava ani vrácení tě nestojí nic. Uhlík každého balíku a hory vráceného zboží, které často skončí rovnou v koši, jsou ten skutečný účet."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u doručení zdarma platíš uhlíkovou stopou každého balíku a odpadem z vrácených zásilek, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak e-shopy skrývají náklady dopravy v cenách zboží a kdo za bezplatné doručení nakonec zaplatí."

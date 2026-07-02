@@ -278,24 +278,52 @@ const canonical = new URL('/', Astro.site).href;
                   >
                 </p>
                 <ul class="examples">
-                  {c.data.examples.map((ex) => (
-                    <li>
-                      <span class="ex-name">{ex.name}</span>
-                      {ex.note && (
-                        <span class="ex-note">
-                          {ex.note}
-                          {ex.source && (
-                            <a
-                              class="src-ref"
-                              href={`#zdroj-${exSourceRefs.get(ex)}`}
-                              aria-label={`Zdroj ${exSourceRefs.get(ex)}`}>
-                              [{exSourceRefs.get(ex)}]
-                            </a>
-                          )}
-                        </span>
-                      )}
-                    </li>
-                  ))}
+                  {c.data.examples.map((ex) => {
+                    const ref = ex.source ? exSourceRefs.get(ex) : undefined;
+                    // The name + note that always shows for this item. When the
+                    // item carries a mini-article it becomes the clickable
+                    // <summary>; otherwise it's static row content.
+                    const row = (
+                      <>
+                        <span class="ex-name">{ex.name}</span>
+                        {ex.note && (
+                          <span class="ex-note">
+                            {ex.note}
+                            {ref && (
+                              <a
+                                class="src-ref"
+                                href={`#zdroj-${ref}`}
+                                aria-label={`Zdroj ${ref}`}>
+                                [{ref}]
+                              </a>
+                            )}
+                          </span>
+                        )}
+                      </>
+                    );
+                    return ex.article?.length ? (
+                      <li class="ex-item">
+                        <details class="ex">
+                          <summary class="ex-summary">
+                            {row}
+                            <span class="ex-cue" aria-hidden="true" />
+                          </summary>
+                          <div class="ex-mini">
+                            {ex.article.map((p) => (
+                              <p>{p}</p>
+                            ))}
+                            {ex.readMore && (
+                              <a class="ex-more" href={ex.readMore.url}>
+                                {ex.readMore.label} →
+                              </a>
+                            )}
+                          </div>
+                        </details>
+                      </li>
+                    ) : (
+                      <li class="ex-item">{row}</li>
+                    );
+                  })}
                 </ul>
               </div>
             </article>
@@ -782,6 +810,97 @@ const canonical = new URL('/', Astro.site).href;
       }
       @media (min-width: 640px) {
         .examples { grid-template-columns: repeat(2, 1fr); }
+      }
+
+      /* ---- ITEM MINI-ARTICLE (inline disclosure, per example) ----
+         An individual example row can carry a mini-article. Selecting it
+         inverts the two-color system *around that one item*: an acid frame
+         wraps the row, which flips to a black card, and a black panel spawns
+         directly beneath it, joined by an acid caret. The item stays in its
+         grid cell — only its own column grows to make room for the panel. */
+      details.ex { display: block; }
+      details.ex > summary {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        cursor: pointer;
+        list-style: none;
+        position: relative;
+        transition: background-color 0.18s ease;
+      }
+      details.ex > summary::-webkit-details-marker { display: none; }
+      details.ex > summary:focus-visible {
+        outline: 2px solid var(--acid);
+        outline-offset: 4px;
+      }
+
+      /* Discoverability cue. Decorative — <summary> already exposes the
+         expanded/collapsed state to assistive tech, so it's aria-hidden and its
+         label lives in CSS. */
+      .ex-cue {
+        margin-top: 0.35rem;
+        font-family: var(--font-display);
+        font-size: 0.7rem;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--acid);
+      }
+      .ex-cue::before { content: '+ Rozbal'; }
+      details.ex[open] .ex-cue::before { content: '\2212 Zavřít'; }
+
+      /* Selected (open) state — acid frame + black card + black panel.
+         The item keeps its place and width in the grid; the panel drops
+         directly beneath the box in the same column. */
+      details.ex[open] {
+        background: var(--acid);
+        padding: clamp(1rem, 2.5vw, 1.5rem);
+      }
+      details.ex[open] > summary {
+        background: var(--ink);
+        padding: clamp(1rem, 2.5vw, 1.5rem);
+      }
+      .ex-mini { display: block; }
+      details.ex[open] .ex-mini {
+        position: relative;
+        background: var(--ink);
+        margin-top: clamp(0.9rem, 2vw, 1.25rem);
+        padding: clamp(1rem, 2.5vw, 1.5rem);
+      }
+      /* Acid caret leaking from the frame down into the panel. */
+      details.ex[open] .ex-mini::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 13px solid transparent;
+        border-right: 13px solid transparent;
+        border-top: 13px solid var(--acid);
+      }
+      .ex-mini p {
+        margin: 0 0 0.85rem;
+        max-width: 62ch;
+        font-weight: 300;
+        line-height: 1.65;
+        font-size: 0.98rem;
+      }
+      .ex-mini p:last-child { margin-bottom: 0; }
+      .ex-more {
+        display: inline-block;
+        margin-top: clamp(1rem, 2vw, 1.5rem);
+        font-family: var(--font-display);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+        color: var(--acid);
+        text-decoration: none;
+        border-bottom: 2px solid var(--acid);
+        padding-bottom: 0.1em;
+      }
+      .ex-more:hover { color: var(--paper); border-color: var(--paper); }
+
+      @media (prefers-reduced-motion: reduce) {
+        details.ex > summary { transition: none; }
       }
 
       /* ---- ECONOMICS ---- */
@@ -1574,6 +1693,37 @@ const canonical = new URL('/', Astro.site).href;
         if (e.key === 'Escape' && tapePanel && !tapePanel.hidden) {
           closePanel(true);
         }
+      });
+
+      // Item mini-articles: exclusive accordion. Opening one closes the others
+      // so there's only ever one "selected" (acid) item — keeps the
+      // black-on-acid metaphor honest. Works as a plain <details> with JS off;
+      // this only enforces the single-open rule.
+      const exDetails = Array.from(
+        document.querySelectorAll<HTMLDetailsElement>('details.ex'),
+      );
+      exDetails.forEach((d) => {
+        d.addEventListener('toggle', () => {
+          if (!d.open) return;
+          exDetails.forEach((other) => {
+            if (other !== d) other.open = false;
+          });
+        });
+
+        // An item's <summary> can hold a citation link ([1]). Let it navigate
+        // to the source without toggling the disclosure. (No-JS baseline:
+        // clicking a citation both jumps and toggles — acceptable degradation.)
+        d.querySelector('summary')?.addEventListener('click', (e) => {
+          const a = (e.target as HTMLElement).closest('a');
+          if (!a) return;
+          e.preventDefault();
+          const href = a.getAttribute('href') ?? '';
+          if (href.startsWith('#')) {
+            window.location.hash = href.slice(1);
+          } else if (href) {
+            window.location.href = href;
+          }
+        });
       });
     </script>
   </body>

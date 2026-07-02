@@ -12,11 +12,26 @@ export const GET: APIRoute = async ({ site }) => {
     const nn = String(ref).padStart(2, '0');
     const { title, icon, claim, fact, examples } = currency.data;
 
+    // Each example is one list item. An item that carries a mini-article gets
+    // its paragraphs (and optional "číst dál →" link) nested underneath as
+    // indented block content — mirrors the inline per-item disclosure on the
+    // HTML page so the agent-facing edition keeps parity.
     const exampleLines = examples.map((ex) => {
       const exRef = exSourceRefs.get(ex);
       const refSuffix = exRef ? ` [\\[${exRef}\\]](#zdroje)` : '';
-      return `- **${ex.name}** — ${ex.note}${refSuffix}`;
-    }).join('\n');
+      let item = `- **${ex.name}** — ${ex.note}${refSuffix}`;
+      if (ex.article?.length) {
+        item += `\n\n${ex.article.map((p) => `  ${p}`).join('\n\n')}`;
+      }
+      if (ex.readMore) {
+        const href =
+          ex.readMore.url.startsWith('/') && site
+            ? new URL(ex.readMore.url, site).href
+            : ex.readMore.url;
+        item += `\n\n  [${ex.readMore.label} →](${href})`;
+      }
+      return item;
+    }).join('\n\n');
 
     return `### ${nn} · ${title} ${icon}\n\n**${claim}**\n\n${fact} [\\[${ref}\\]](#zdroje)\n\n${exampleLines}`;
   }).join('\n\n');

@@ -12,14 +12,29 @@ source:
 examples:
   - name: "Dotace"
     note: "Dotace sice pomáhají zavedeným podnikům, aby nezkrachovaly, ale zároveň berou místo těm, kteří by stejnou věc uměli dělat lépe."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, proč dotace obvykle vyjdou dráž, než kdyby tutéž věc zařídil trh."
+      - "[PLACEHOLDER] Druhý odstavec: kudy vede účet přes daně a kdo nese náklady neefektivity."
   - name: "Cla"
     note: "Chrání sice domácí výrobce, zato zvyšují ceny všem ostatním a způsobují plýtvání zdroji."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak cla přenášejí účet na spotřebitele, aniž bys ho viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak se díky clům plýtvá zdroji a kdo za ochranu domácích výrobců nakonec zaplatí."
   - name: "Bezplatné zdravotnictví"
     note: "Je zadarmo jen zdánlivě. A i když je zadarmo, čím dál tím víc lidí raději jde k soukromým klinikám. Efektivně tak platí dvakrát."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u bezplatného zdravotnictví platíš daněmi a čekacími dobami, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: proč rostoucí podíl lidí platí za zdravotnictví dvakrát a kdo za systémovou neefektivitu nakonec zaplatí."
   - name: "Důchod"
     note: "Všichni mladí už zhruba tuší, že důchod mít nebudou. A to není náhoda, tento systém byl odsouzený ke zkáze už dávno."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak průběžný důchodový systém přenáší účet na budoucí generace, aniž bys to viděl na výplatní pásce."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: proč je průběžný důchod strukturálně neudržitelný a kdo za sliby dnešního systému nakonec zaplatí."
   - name: "Bezplatné školství"
     note: "Nejen, že není zdarma — chodit do školy doopravdy baví jen 9 % českých dětí."
     source:
       label: "Zdravá generace — Školní klima (2023)"
       url: "https://zdravagenerace.cz/report/skolni-klima/"
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u bezplatného školství platíš daněmi a demotivací dětí, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak centralizovaný systém školství potlačuje zájem o učení a kdo za státní vzdělávání nakonec zaplatí."

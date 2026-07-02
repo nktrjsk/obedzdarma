@@ -12,9 +12,21 @@ source:
 examples:
   - name: "Levné peníze"
     note: "Každá půjčka vytváří nové peníze, splátky je zase pálí a odstraňují z koloběhu. A pokud se za rok vytvoří více peněz, než se spálí, peníze všech ostatních se znehodnotí."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak se skrytá cena „levných peněz“ rozpustí v inflaci."
+      - "[PLACEHOLDER] Druhý odstavec: kdo novou emisi peněz zaplatí a proč to na cenovce nikdy neuvidíš."
   - name: "Inflační daň"
     note: "Inflace neokrádá jen někoho, okrádá všechny, kteří mají úspory v korunách."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak inflační daň tiše znehodnocuje úspory každého, kdo drží korunu, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak stát emisí peněz efektivně zdaňuje úspory a kdo za inflační daň nakonec zaplatí."
   - name: "Helicopter money"
     note: "Podpory a „vrtulníkové“ peníze jsou vidět hned. Že za ně zaplatí každý, komu se znehodnotí úspory, vidět není."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak helicopter money přenášejí účet státních podpor na všechny držitele úspor skrze inflaci, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: proč jsou vrtulníkové peníze jen přerozdělením skrze inflaci a kdo za tyto přímé podpory nakonec zaplatí."
   - name: "Shrinkflace"
     note: "Cena zůstane, obsah balení se scvrkne. Zdražení, které není vidět — zaplatíš ho, aniž bys ho našel na cenovce."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak shrinkflace schovává zdražení do menšího balení, aniž bys to viděl na cenovce."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: proč výrobci volí shrinkflaci místo otevřeného zdražení a kdo za zmenšená balení nakonec zaplatí."

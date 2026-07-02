@@ -12,11 +12,26 @@ source:
 examples:
   - name: "Sociální sítě"
     note: "Tvoje pozornost a data se prodávají inzerentům, a jejich vlastní zájem se nemusí shodovat s tím tvým."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců, které rozvíjejí, jak přesně u sociálních sítí platíš svým soukromím."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: co se s daty děje a proč je to cena, kterou nevidíš na účtence."
   - name: "Věrnostní kluby"
     note: "Slevu můžeš dostat jen proto, že obchodu přenecháváš svou historii nákupů."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u věrnostních klubů platíš svou historií nákupů, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: co obchod s tvými daty udělá a kdo za to nakonec zaplatí."
   - name: "Proprietární software"
     note: "„Bezplatné“ programy odesílají telemetrii a často slouží jako lákadlo do uzavřeného ekosystému."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u proprietárního softwaru platíš telemetrií a uzamčením do ekosystému, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak vendor lock-in funguje a kdo za proprietární software nakonec zaplatí."
   - name: "Free-to-play hry"
     note: "Návykové smyčky navržené tak, aby z tebe nakonec peníze dostaly."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u free-to-play her platíš pozorností a závislostí na návykových smyčkách, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak herní design cílí na impulzivní nákupy a kdo za „zdarma“ nakonec zaplatí."
   - name: "AI chatbot zdarma"
     note: "Neplatíš penězi, ale tím, co do něj napíšeš — každý dotaz se ukládá a učí model, na kterém pak vydělává někdo jiný."
+    article:
+      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u AI chatbotů zdarma platíš svými dotazy a daty, aniž bys to viděl na účtence."
+      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak se z tvých konverzací trénovají modely a kdo za bezplatný chatbot nakonec zaplatí."

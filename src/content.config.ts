@@ -40,6 +40,20 @@ const currencies = defineCollection({
             url: z.string().url().optional(),
           })
           .optional(),
+        // Optional inline "mini-article" revealed under *this item's row* on
+        // the landing page (a <details> disclosure). Only items that carry an
+        // article become clickable; the rest stay as plain rows. Modeled as an
+        // array of plain paragraph strings so both the HTML page and the
+        // Markdown edition can render it without a markup parser.
+        article: z.array(z.string()).optional(),
+        // Optional "číst dál →" link at the foot of this item's mini-article,
+        // pointing at a related /clanky/ piece where one fits.
+        readMore: z
+          .object({
+            label: z.string(),
+            url: z.string(),
+          })
+          .optional(),
       }),
     ),
   }),
