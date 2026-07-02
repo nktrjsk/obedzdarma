@@ -18,3 +18,5 @@ examples:
     note: "„Bezplatné“ programy odesílají telemetrii a často slouží jako lákadlo do uzavřeného ekosystému."
   - name: "Free-to-play hry"
     note: "Návykové smyčky navržené tak, aby z tebe nakonec peníze dostaly."
+  - name: "AI chatbot zdarma"
+    note: "Neplatíš penězi, ale tím, co do něj napíšeš — každý dotaz se ukládá a učí model, na kterém pak vydělává někdo jiný."

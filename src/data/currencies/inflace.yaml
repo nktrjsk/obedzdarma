@@ -14,3 +14,7 @@ examples:
     note: "Každá půjčka vytváří nové peníze, splátky je zase pálí a odstraňují z koloběhu. A pokud se za rok vytvoří více peněz, než se spálí, peníze všech ostatních se znehodnotí."
   - name: "Inflační daň"
     note: "Inflace neokrádá jen někoho, okrádá všechny, kteří mají úspory v korunách."
+  - name: "Helicopter money"
+    note: "Podpory a „vrtulníkové“ peníze jsou vidět hned. Že za ně zaplatí každý, komu se znehodnotí úspory, vidět není."
+  - name: "Shrinkflace"
+    note: "Cena zůstane, obsah balení se scvrkne. Zdražení, které není vidět — zaplatíš ho, aniž bys ho našel na cenovce."
