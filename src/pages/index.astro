@@ -869,15 +869,15 @@ const canonical = new URL('/', Astro.site).href;
       details.ex[open] .src-ref {
         color: var(--ink);
       }
-      .ex-mini { display: block; }
-      details.ex[open] .ex-mini {
+      .ex-mini {
+        display: block;
         position: relative;
         background: var(--ink);
         margin-top: clamp(0.9rem, 2vw, 1.25rem);
         padding: clamp(1rem, 2.5vw, 1.5rem);
       }
-      /* Acid caret leaking from the frame down into the panel. */
-      details.ex[open] .ex-mini::before {
+      /* Acid caret leaking from the acid block down into the panel. */
+      .ex-mini::before {
         content: '';
         position: absolute;
         top: 0;
@@ -886,6 +886,22 @@ const canonical = new URL('/', Astro.site).href;
         border-left: 13px solid transparent;
         border-right: 13px solid transparent;
         border-top: 13px solid var(--acid);
+      }
+      /* Smooth reveal — the panel slides open instead of popping in.
+         Progressive enhancement: browsers without ::details-content /
+         interpolate-size just show it instantly (the prior behavior). */
+      details.ex {
+        interpolate-size: allow-keywords;
+      }
+      details.ex::details-content {
+        block-size: 0;
+        overflow: hidden;
+        transition:
+          block-size 0.28s ease,
+          content-visibility 0.28s allow-discrete;
+      }
+      details.ex[open]::details-content {
+        block-size: auto;
       }
       .ex-mini p {
         margin: 0 0 0.85rem;
@@ -914,7 +930,8 @@ const canonical = new URL('/', Astro.site).href;
         .ex-name,
         .ex-note,
         .ex-cue,
-        .src-ref { transition: none; }
+        .src-ref,
+        details.ex::details-content { transition: none; }
       }
 
       /* ---- ECONOMICS ---- */
