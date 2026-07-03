@@ -44,6 +44,12 @@ const ogImage = new URL('/og.png', Astro.site).href;
 const ogImageAlt =
   'Účtenka „Oběd zdarma neexistuje“ — za „zdarma“ platíš soukromím (data), efektivitou (daně), životním prostředím (CO₂) a inflací (%).';
 const canonical = new URL('/', Astro.site).href;
+
+// The "Dej to dál" share payload — same title as the page, plus a two-line
+// summary of the thesis. Handed to the Web Share API / clipboard as one
+// object below, so title/text/url can never drift from each other.
+const shareText =
+  'Oběd zdarma neexistuje.\nZa každé „zdarma“ platíš — jen jinou měnou.';
 ---
 
 <!doctype html>
@@ -472,6 +478,28 @@ const canonical = new URL('/', Astro.site).href;
             Oběd zdarma tedy nakonec existuje —<br />
             je to akt <span class="acid">dobrovolné výměny</span>.
           </p>
+        </div>
+      </section>
+
+      <!-- 5c. SHARE — the CTA. The twist just named the one honest "free
+           lunch" (voluntary exchange); passing the page on is another one —
+           it costs the reader a click and asks nothing back. Real visual
+           weight (more than the quiet footer mark below), but still
+           two-color only: no share-network icons, no third-party widgets. -->
+      <section class="share" data-title={title} data-text={shareText} data-url={canonical}>
+        <div class="wrap">
+          <h2 class="share-head display">Dej to dál.</h2>
+          <div class="share-actions">
+            <button type="button" class="share-btn share-btn--primary" data-share-action="share">
+              Sdílet
+            </button>
+            <button type="button" class="share-btn share-btn--secondary" data-share-action="copy">
+              Zkopírovat odkaz
+            </button>
+          </div>
+          <!-- No-JS baseline: plain, selectable text under the buttons. -->
+          <p class="share-url">obedzdarma.cz</p>
+          <p class="share-status" aria-live="polite"></p>
         </div>
       </section>
 
@@ -1105,6 +1133,81 @@ const canonical = new URL('/', Astro.site).href;
         line-height: 1.2;
         text-wrap: balance;
       }
+
+      /* ---- SHARE ---- */
+      /* Smaller than the twist's section-head (this isn't a new argument
+         beat, just the ask) but sized well past the quiet sources/footer —
+         it's the one section on the page that wants a reader to act. */
+      .share {
+        border-top: 1px solid var(--line);
+        padding-block: clamp(4.5rem, 11vw, 7.5rem);
+        text-align: center;
+      }
+      .share-head {
+        font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+        margin-bottom: clamp(2rem, 5vw, 3rem);
+      }
+      .share-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: clamp(0.75rem, 2vw, 1rem);
+        margin-bottom: clamp(1.5rem, 3vw, 2rem);
+      }
+      .share-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.9rem 2rem;
+        border: 2px solid var(--acid);
+        font-family: var(--font-display);
+        font-size: 0.85rem;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.18s ease, color 0.18s ease;
+      }
+      /* Primary starts filled, secondary starts outlined — each inverts to
+         the other's resting look on hover, so the pair reads as one system. */
+      .share-btn--primary {
+        background: var(--acid);
+        color: var(--ink);
+      }
+      .share-btn--primary:hover { background: transparent; color: var(--acid); }
+      /* Resting on its own acid fill, the page's default acid focus ring
+         (see :focus-visible in global.css) would vanish into it — flip to
+         ink, same override the paper-surface controls use for the same reason. */
+      .share-btn--primary:focus-visible { outline-color: var(--ink); }
+      .share-btn--secondary {
+        background: transparent;
+        color: var(--acid);
+      }
+      .share-btn--secondary:hover { background: var(--acid); color: var(--ink); }
+      .share-url {
+        margin: 0;
+        font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        letter-spacing: 0.02em;
+        color: var(--muted);
+      }
+      /* Confirmation copy, not color, carries the meaning (aria-live handles
+         assistive tech; this fade is a sighted-user bonus on top of it).
+         Height reserved up front so the appearing line never shifts layout. */
+      .share-status {
+        min-height: 1.5em;
+        margin: 0.75rem 0 0;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--acid);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+      .share-status.is-visible { opacity: 1; }
+      @media (prefers-reduced-motion: reduce) {
+        .share-btn,
+        .share-status { transition: none; }
+      }
+
       /* ---- SOURCES ---- */
       .sources {
         border-top: 1px solid var(--line);
@@ -1756,6 +1859,60 @@ const canonical = new URL('/', Astro.site).href;
           }
         });
       });
+
+      // Share CTA. The static markup (buttons + plain URL text) is the
+      // no-JS baseline; this only layers behaviour on top. Payload lives on
+      // the section as data attributes so the script never hardcodes a URL.
+      const shareSection = document.querySelector<HTMLElement>('.share');
+      const shareStatus = document.querySelector<HTMLElement>('.share-status');
+      let statusTimer: ReturnType<typeof setTimeout> | undefined;
+
+      const announce = (message: string) => {
+        if (!shareStatus) return;
+        clearTimeout(statusTimer);
+        shareStatus.textContent = message;
+        shareStatus.classList.add('is-visible');
+        statusTimer = setTimeout(() => {
+          shareStatus.classList.remove('is-visible');
+          shareStatus.textContent = '';
+        }, 2000);
+      };
+
+      const copyPayload = async (text: string, url: string) => {
+        try {
+          if (!navigator.clipboard) return false;
+          await navigator.clipboard.writeText(`${text}\n${url}`);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      };
+
+      if (shareSection) {
+        const { title, text, url } = shareSection.dataset;
+        shareSection
+          .querySelector<HTMLButtonElement>('[data-share-action="share"]')
+          ?.addEventListener('click', async () => {
+            if (navigator.share) {
+              try {
+                await navigator.share({ title, text, url });
+                return;
+              } catch (e) {
+                // User cancelled the share sheet — not an error, do nothing.
+                if ((e as Error)?.name === 'AbortError') return;
+              }
+            }
+            // No Web Share API (or it failed for a reason other than a
+            // cancel): fall back to copying the same payload.
+            if (await copyPayload(text ?? '', url ?? '')) announce('Zkopírováno ✓');
+          });
+
+        shareSection
+          .querySelector<HTMLButtonElement>('[data-share-action="copy"]')
+          ?.addEventListener('click', async () => {
+            if (await copyPayload(text ?? '', url ?? '')) announce('Zkopírováno ✓');
+          });
+      }
     </script>
   </body>
 </html>
