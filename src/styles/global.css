@@ -82,6 +82,32 @@ a {
   outline-offset: 2px;
 }
 
+/* Skip link — first focusable element on every page, lets keyboard and
+   screen-reader users jump past the chrome to <main>. Parked off-screen until
+   focused. Shared here because both the home page and the article layout emit
+   it; a page-scoped copy would leave the other page's link visibly stranded. */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 40;
+  padding: 0.6rem 0.9rem;
+  background: var(--acid);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(calc(-100% - 1rem));
+  transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.skip-link:focus { transform: translateY(0); }
+.skip-link:focus-visible { outline-color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link { transition: none; }
+}
+
 /* Display type — oversized, tight, loud. */
 .display {
   font-family: var(--font-display);
