@@ -133,6 +133,8 @@ ${readingList}
 ---
 
 Open-source: [github.com/nktrjsk/obedzdarma](https://github.com/nktrjsk/obedzdarma) · Kód: MIT · Texty: CC BY 4.0 — šiř dál, jen uveď zdroj.
+
+Napsala [Nikita](https://nktrjsk.cz/). Snažím se vyvolat diskuzi, protože jen tak se můžeme posouvat dál.
 `;
 
   return new Response(body, {

@@ -587,6 +587,11 @@ const shareText =
           Kód: MIT · Texty: CC&nbsp;BY&nbsp;4.0 — šiř dál, jen uveď zdroj.
         </p>
 
+        <p class="footer-byline">
+          Napsala <a href="https://nktrjsk.cz/" target="_blank" rel="noopener noreferrer">Nikita</a>.
+          Snažím se vyvolat diskuzi, protože jen tak se&nbsp;můžeme posouvat dál.
+        </p>
+
         <p class="footer-mark">obedzdarma.cz</p>
       </div>
     </footer>
@@ -1665,6 +1670,28 @@ const shareText =
         margin: 0.75rem 0 0;
         font-size: 0.85rem;
       }
+      /* Colophon byline — the quietest line in the footer. The name doubles as
+         the contact path (links to the personal site); no address sits on the
+         page. Muted like the license, name links in paper with an acid hover,
+         matching the GitHub link's treatment above. */
+      .footer-byline {
+        max-width: 46ch;
+        margin: 0.75rem 0 0;
+        font-size: 0.85rem;
+        text-wrap: pretty;
+      }
+      .footer-byline a {
+        color: var(--paper);
+        text-decoration: none;
+        border-bottom: 1px solid var(--muted);
+        padding-bottom: 1px;
+        transition: color 160ms ease, border-color 160ms ease;
+      }
+      .footer-byline a:hover,
+      .footer-byline a:focus-visible {
+        color: var(--acid);
+        border-color: var(--acid);
+      }
       .footer-mark {
         margin: clamp(2.5rem, 5vw, 4rem) 0 0;
         font-size: 0.8rem;
@@ -1674,7 +1701,8 @@ const shareText =
       @media (prefers-reduced-motion: reduce) {
         .footer-read a,
         .footer-open a,
-        .footer-open-label {
+        .footer-open-label,
+        .footer-byline a {
           transition: none;
         }
         .tape-panel,
