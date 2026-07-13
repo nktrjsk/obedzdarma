@@ -13,20 +13,20 @@ examples:
   - name: "Levné peníze"
     note: "Každá půjčka vytváří nové peníze, splátky je zase pálí a odstraňují z koloběhu. A pokud se za rok vytvoří více peněz, než se spálí, peníze všech ostatních se znehodnotí."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak se skrytá cena „levných peněz“ rozpustí v inflaci."
-      - "[PLACEHOLDER] Druhý odstavec: kdo novou emisi peněz zaplatí a proč to na cenovce nikdy neuvidíš."
+      - "Levné peníze zní jako výhra, úrok skoro nula a půjčka snadno. Háček je v tom, že každá nová půjčka peníze nevytáhne z něčí kapsy, ale vyrobí je z ničeho. A když jich takhle přibývá rychleji, než je splátky zase umažou, je najednou v oběhu víc korun na stejné množství zboží."
+      - "A víc korun na totéž zboží znamená jediné, každá koruna má menší hodnotu. Tu půjčku sis vzal ty, ale cenu za to nafouknutí zaplatí každý, kdo drží úspory v korunách, protože se mu tiše ztenčí. Proto to na žádné cenovce nenajdeš, rozpustí se to rovnoměrně ve všem, co stojí peníze."
   - name: "Inflační daň"
     note: "Inflace neokrádá jen někoho, okrádá všechny, kteří mají úspory v korunách."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak inflační daň tiše znehodnocuje úspory každého, kdo drží korunu, aniž bys to viděl na účtence."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak stát emisí peněz efektivně zdaňuje úspory a kdo za inflační daň nakonec zaplatí."
+      - "Říká se tomu daň, i když ti ji nikdo nevyměří ani nepošle složenku. Když peníze ztrácejí hodnotu, tvoje úspory se v číslech na účtu nezmenší, pořád tam je stejná částka, ale koupíš si za ni míň. Rozdíl, který takhle zmizí, je přesně ta daň, jen vybraná potichu."
+      - "A vybírá ji ten, kdo nové peníze pouští do oběhu, tedy stát skrze centrální banku. A není to náhodný výkyv, peníze, které jde libovolně natisknout, ztrácejí hodnotu ze své podstaty. Zaplatí to každý, kdo drží úspory v korunách, a čím poctivěji spoříš, tím víc tě to stojí."
   - name: "Helicopter money"
     note: "Podpory a „vrtulníkové“ peníze jsou vidět hned. Že za ně zaplatí každý, komu se znehodnotí úspory, vidět není."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak helicopter money přenášejí účet státních podpor na všechny držitele úspor skrze inflaci, aniž bys to viděl na účtence."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: proč jsou vrtulníkové peníze jen přerozdělením skrze inflaci a kdo za tyto přímé podpory nakonec zaplatí."
+      - "Rozdat lidem peníze vypadá jako dárek bez oběti, stát pošle podporu a všichni jsou spokojení. Jenže ty peníze nemá stát odkud vzít jinak než že si je půjčí nebo natiskne. Nic se nevytvořilo, jen přibylo korun, za které je pořád stejně zboží jako předtím."
+      - "A víc peněz na totéž zboží znamená, že každá koruna zhubne. Podpora je vidět hned a dorazí jmenovitě na tvůj účet, kdežto účet za ni je neviditelný a rozpočítaný mezi všechny, kdo drží úspory. Dostaneš tisícovku jednou rukou a druhou ji spolu se všemi ostatními splácíš přes znehodnocené peníze."
   - name: "Shrinkflace"
     note: "Cena zůstane, obsah balení se scvrkne. Zdražení, které není vidět — zaplatíš ho, aniž bys ho našel na cenovce."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak shrinkflace schovává zdražení do menšího balení, aniž bys to viděl na cenovce."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: proč výrobci volí shrinkflaci místo otevřeného zdražení a kdo za zmenšená balení nakonec zaplatí."
+      - "Zdražit se dá dvěma způsoby. Buď zvedneš cenu a toho si každý všimne, nebo cenu necháš být a ubereš z balení, čehož si nevšimne skoro nikdo. Tomu druhému se říká shrinkflace, česky smrskflace, a to jméno sedí. Sto gramů čokolády se smrskne na devadesát, litr džusu na devět deci, a číslo na cenovce zůstane stejné."
+      - "Účet ti přijde tak jako tak, jen ho nevidíš. Za stejnou korunu dostaneš míň, takže reálně platíš víc, výrobce to zdražení jen schoval tam, kam se nedíváš. Sází na to, že si hlídáš cenu, ne gramáž, a většinou má pravdu."

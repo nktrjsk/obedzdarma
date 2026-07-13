@@ -13,23 +13,23 @@ examples:
   - name: "Fast fashion"
     note: "Tvoje levné tričko platí někdo jiný — řeky v Bangladéši plné barvicích chemikálií a půda pohřbená pod skládkami textilu."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak nízká cena trička přenáší účet na životní prostředí."
-      - "[PLACEHOLDER] Druhý odstavec: proč se ekologické náklady neobjeví na cenovce a kdo je nakonec zaplatí."
+      - "Tričko za dvě stovky někdo vyrobil, dopravil přes půl světa a ještě na něm vydělal, a to prostě za dvě stovky nejde. Ten rozdíl někde je, jen ho neplatíš ty a nenajdeš ho na cenovce. Platí ho řeky obarvené načerno v Bangladéši a krajina, kterou pohltí skládky nedonošeného textilu."
+      - "Levná móda funguje tak, že skutečné náklady odsune jinam, do zemí s volnějšími pravidly a do budoucna, které to zaplatí za nás. Ty si odneseš tričko na pár praní a účet za znečištění a odpad se rozpustí mezi všechny ostatní."
     readMore:
       label: "Rozbité okno"
       url: "/clanky/rozbite-okno"
   - name: "Fosilní paliva"
     note: "Laciná energie, která otepluje klima a způsobuje ostatní nežádoucí jevy."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u fosilních paliv platíš klimatickými dopady a externalizovanými náklady, aniž bys to viděl na účtence."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak jsou fosilní paliva dotovaná a kdo za jejich skutečné náklady nakonec zaplatí."
+      - "Fosilní energie je levná hlavně proto, že do její ceny se nepočítá, co po sobě nechá. Když spálíš uhlí nebo naftu, dostaneš teplo a pohyb hned, ale emise, které oteplují klima, a špatný vzduch, který dýcháme, na účtu za palivo nenajdeš. Ta část ceny se rozpustí ve světě kolem."
+      - "A často je ta energie levná ještě uměle, protože státy fosilní paliva dotují, takže část jejich ceny za tebe zaplatí daně. Skutečný účet tak přijde oklikou dvakrát: jednou přes daně dnes a podruhé přes škody, které ponese kdekdo a hlavně později. Na pumpě z toho neuvidíš nic."
   - name: "Levné maso"
     note: "U pokladny stojí pár korun. Vodu, emise a vyčerpanou půdu za něj zaplatí všichni ostatní — a později."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u levného masa platíš spotřebou vody, emisemi a degradací půdy, aniž bys to viděl na účtence."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak průmyslový chov externalizuje environmentální náklady a kdo za levné maso nakonec zaplatí."
+      - "Pár korun u pokladny je jen ta část ceny, která se vešla na cenovku. Kilo levného masa spolklo ohromné množství vody a krmiva, vypustilo emise a nechalo za sebou vyčerpanou půdu, a nic z toho ti řezník neúčtuje. Vypadá to lacino, protože většina účtu leží mimo obchod."
+      - "Zlevnit maso takhle jde jen tím, že se náklady přesunou jinam, na spotřebu vody, na krajinu a na vzduch, tedy na věci, které nikomu konkrétně nepatří, takže je nikdo nevymáhá. Zaplatí je všichni dohromady a hlavně později."
   - name: "Doručení „zdarma“"
     note: "Doprava ani vrácení tě nestojí nic. Uhlík každého balíku a hory vráceného zboží, které často skončí rovnou v koši, jsou ten skutečný účet."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u doručení zdarma platíš uhlíkovou stopou každého balíku a odpadem z vrácených zásilek, aniž bys to viděl na účtence."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak e-shopy skrývají náklady dopravy v cenách zboží a kdo za bezplatné doručení nakonec zaplatí."
+      - "Doprava zdarma neznamená bez nákladů, znamená jen, že je někdo zaplatil za tebe. E-shop cenu dopravy schová do ceny zboží nebo do marže, takže ji zaplatíš tak jako tak, jen ji neuvidíš vyčíslenou. „Zdarma“ je tady spíš kouzelné slovo než skutek."
+      - "A pak je tu účet, který neplatí nikdo přímo. Uhlík každého balíku, co se veze přes celou zemi, a hory vráceného zboží, které se často nevyplatí ani zkontrolovat, tak jde rovnou do koše. Čím snadnější je objednávat a vracet, tím víc se toho vyrobí a zlikviduje nazmar, a ten účet je rozprostřený do prostředí kolem."

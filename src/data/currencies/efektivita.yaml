@@ -13,28 +13,28 @@ examples:
   - name: "Dotace"
     note: "Dotace sice pomáhají zavedeným podnikům, aby nezkrachovaly, ale zároveň berou místo těm, kteří by stejnou věc uměli dělat lépe."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, proč dotace obvykle vyjdou dráž, než kdyby tutéž věc zařídil trh."
-      - "[PLACEHOLDER] Druhý odstavec: kudy vede účet přes daně a kdo nese náklady neefektivity."
+      - "Dotace nevypadají jako tvůj účet, ale platíš je z daní. Stát vezme peníze všem a pošle je vybraným firmám, těm, které to samy neutáhnou. Vypadá to jako záchrana pracovních míst, jenže ta místa jen drží při životě něco, co by jinak trh dávno nahradil něčím lepším."
+      - "Skutečná cena vidět není. Za dotované peníze nevznikne konkurent, který by tutéž věc zvládl líp a levněji. Ten se totiž nenarodí, protože dotovanému rivalovi nemá jak konkurovat. Zaplatíš tak dvakrát: jednou v daních a podruhé tím, že máš dražší a horší službu, než jsi mohl mít."
   - name: "Cla"
     note: "Chrání sice domácí výrobce, zato zvyšují ceny všem ostatním a způsobují plýtvání zdroji."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak cla přenášejí účet na spotřebitele, aniž bys ho viděl na účtence."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak se díky clům plýtvá zdroji a kdo za ochranu domácích výrobců nakonec zaplatí."
+      - "Clo se tváří, že ho platí cizí výrobce, ale u pokladny ho zaplatíš ty. Stát navýší cenu dovozu, aby domácí zboží vypadalo lacině, a ten rozdíl doskládáš z vlastní kapsy pokaždé, když si koupíš cokoliv dovezeného nebo z dovozu vyrobeného."
+      - "A tím to nekončí. Chráněný výrobce nemá důvod se zlepšovat, protože konkurenci mu srazilo clo, ne trh. Zdroje, které by jinde vytvořily víc hodnoty, tak zůstanou zabetonované v něčem, co by bez ochrany neobstálo. A účet za tu neefektivitu platíš zase ty."
   - name: "Bezplatné zdravotnictví"
     note: "Je zadarmo jen zdánlivě. A i když je zadarmo, čím dál tím víc lidí raději jde k soukromým klinikám. Efektivně tak platí dvakrát."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u bezplatného zdravotnictví platíš daněmi a čekacími dobami, aniž bys to viděl na účtence."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: proč rostoucí podíl lidí platí za zdravotnictví dvakrát a kdo za systémovou neefektivitu nakonec zaplatí."
+      - "Zadarmo je jen cedule na dveřích. Zaplatil jsi dopředu v daních a odvodech, jen ti to nikdo nedal na účtenku. A čím víc vyděláváš, tím víc do systému sypeš, ať k doktorovi jdeš, nebo ne. Cena tam je, jen ji máš strženou dřív, než vůbec vejdeš."
+      - "A když pak nechceš čekat měsíce na termín, připlatíš si u soukromé kliniky ještě jednou. Platíš tak dvakrát: jednou za veřejný systém, který ti nestačí, a podruhé za ten soukromý, kterým si ho musíš dohnat. Čekací doba není chyba, je to skrytá cena schovaná za slovem zadarmo."
   - name: "Důchod"
     note: "Všichni mladí už zhruba tuší, že důchod mít nebudou. A to není náhoda, tento systém byl odsouzený ke zkáze už dávno."
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak průběžný důchodový systém přenáší účet na budoucí generace, aniž bys to viděl na výplatní pásce."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: proč je průběžný důchod strukturálně neudržitelný a kdo za sliby dnešního systému nakonec zaplatí."
+      - "Za průběžný důchod platíš právě teď, každou výplatou. Tvoje odvody nejdou na tvůj účet, ale rovnou dnešním důchodcům, a na ten svůj budeš jednou spoléhat na peníze těch, co přijdou po tobě. Není to spoření, je to řetěz, který drží jen tak dlouho, dokud plátců přibývá."
+      - "A přesně to přestává platit. Lidí v produktivním věku ubývá, důchodců přibývá, takže na jednoho penzistu se skládá čím dál míň pracujících. Účet za sliby, které dnešní systém rozdává, tak zaplatí mladí, buď vyššími odvody, nebo tím, že jim samotným už nezbude skoro nic."
   - name: "Bezplatné školství"
     note: "Nejen, že není zdarma — chodit do školy doopravdy baví jen 9 % českých dětí."
     source:
       label: "Zdravá generace — Školní klima (2023)"
       url: "https://zdravagenerace.cz/report/skolni-klima/"
     article:
-      - "[PLACEHOLDER] Mini-článek k tomuto bodu — pár odstavců o tom, jak u bezplatného školství platíš daněmi a demotivací dětí, aniž bys to viděl na účtence."
-      - "[PLACEHOLDER] Druhý odstavec doplní mechanismus: jak centralizovaný systém školství potlačuje zájem o učení a kdo za státní vzdělávání nakonec zaplatí."
+      - "I škola zdarma se platí z daní, a to je ta menší část účtu. Ta větší je skrytá a nesou ji děti. Školu doopravdy baví jen devět dětí ze sta a přirozenou zvědavost, se kterou do první třídy přišly, jim jednotný systém většinou odnaučí dřív, než ji stačí využít."
+      - "Centrálně řízené školství cílí na průměr a měří výkon známkou, ne zájmem. Kdo je jinde než většina, se nudí nebo nestíhá, a naučí se hlavně jednu věc. Projít testem. Tuhle cenu nenajdeš na cenovce, zaplatí ji děti ztrátou chuti se učit a ponesou si ji dál do života."
