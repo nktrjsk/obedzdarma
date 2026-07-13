@@ -13,7 +13,7 @@ examples:
   - name: "Sociální sítě"
     note: "Tvoje pozornost a data se prodávají inzerentům, a jejich vlastní zájem se nemusí shodovat s tím tvým."
     article:
-      - "Účet ti nepřijde v penězích, ale v pozornosti. Každý scroll, každé zastavení u příspěvku, každý lajk se měří a skládá do profilu, který o tobě ví víc, než si přiznáváš. Ten profil je zboží — a kupují ho inzerenti, kterým jde o tvůj čas a tvá rozhodnutí."
+      - "Účet ti nepřijde v penězích, ale v pozornosti. Každý scroll, každé zastavení u příspěvku, každý lajk se měří a skládá do profilu, který o tobě ví víc, než si přiznáváš. Ten profil je zboží. A kupují ho inzerenti, kterým jde o tvůj čas a tvá rozhodnutí."
       - "Háček je, že zájmem sítě není tvůj klid, ale tvá pozornost: čím déle tě udrží, tím víc vydělá. Feed proto není naladěný na to, co ti prospívá, ale na to, co tě nepustí. Zaplatíš tím, že u obrazovky zůstaneš déle, než jsi chtěl."
   - name: "Věrnostní kluby"
     note: "Slevu můžeš dostat jen proto, že obchodu přenecháváš svou historii nákupů."
@@ -23,7 +23,7 @@ examples:
   - name: "Proprietární software"
     note: "„Bezplatné“ programy odesílají telemetrii a často slouží jako lákadlo do uzavřeného ekosystému."
     article:
-      - "Program zdarma bývá vstupenka, ne dárek. Nainstaluješ ho, protože nic nestojí, a on přitom na pozadí odesílá telemetrii — co spouštíš, jak dlouho, s čím. Ta data mají cenu i tam, kde za samotný software nezaplatíš ani korunu."
+      - "Program zdarma bývá vstupenka, ne dárek. Nainstaluješ ho, protože nic nestojí, a on přitom na pozadí odesílá telemetrii, co spouštíš, jak dlouho, s čím. Ta data mají cenu i tam, kde za samotný software nezaplatíš ani korunu."
       - "A pak je tu druhá, dražší položka: uzamčení. Formáty, návyky i soubory se ti pomalu přesunou do jednoho uzavřeného ekosystému a odejít z něj později bolí. To, co bylo zdarma na začátku, ti účtuje závislost na konci."
   - name: "Free-to-play hry"
     note: "Návykové smyčky navržené tak, aby z tebe nakonec peníze dostaly."
@@ -33,5 +33,5 @@ examples:
   - name: "AI chatbot zdarma"
     note: "Neplatíš penězi, ale tím, co do něj napíšeš — každý dotaz se ukládá a učí model, na kterém pak vydělává někdo jiný."
     article:
-      - "Neúčtují ti peníze, ale text. Každý dotaz, který napíšeš, se dá uložit a použít k trénování modelu — včetně věcí, které bys nahlas nikde neřekl. Tvoje otázky jsou surovina, ze které se staví další verze produktu."
-      - "A ten produkt pak vydělává někomu jinému. Model vycvičený i na tvých datech se prodává dál — firmám, inzerentům, předplatitelům. Zadarmo dostáváš odpovědi; zaplatíš tím, cos do něj vložil, a zisk si rozdělí ten, komu patří."
+      - "Neúčtují ti peníze, ale text. Každý dotaz, který napíšeš, se dá uložit a použít k trénování modelu, včetně věcí, které bys nahlas nikde neřekl. Tvoje otázky jsou surovina, ze které se staví další verze produktu."
+      - "A ten produkt pak vydělává někomu jinému. Model vycvičený i na tvých datech se prodává dál, firmám, inzerentům, předplatitelům. Zadarmo dostáváš odpovědi; zaplatíš tím, cos do něj vložil, a zisk si rozdělí ten, komu patří."
