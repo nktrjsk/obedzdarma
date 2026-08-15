@@ -1,0 +1,70 @@
+---
+// Site-wide top bar — the one piece of shared chrome. Quiet by design: mono
+// machine-print type on a hairline rule, so it reads as part of the receipt
+// system, not SaaS chrome. Decided in issue #8 (navbar prototype, variant 2).
+---
+
+<header class="sitenav">
+  <div class="wrap sitenav-in">
+    <a class="sitenav-mark" href="/">Oběd zdarma <span aria-hidden="true">∗</span></a>
+    <nav class="sitenav-links" aria-label="Web">
+      <a href="/#cteni">Články</a>
+      <a
+        href="https://github.com/nktrjsk/obedzdarma"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .sitenav {
+    border-bottom: 1px solid var(--line);
+  }
+  .sitenav-in {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.85rem;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .sitenav-mark {
+    color: var(--paper);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .sitenav-mark span {
+    color: var(--acid);
+  }
+  .sitenav-mark:hover,
+  .sitenav-mark:focus-visible {
+    color: var(--acid);
+  }
+  .sitenav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .sitenav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .sitenav-links a:hover,
+  .sitenav-links a:focus-visible {
+    color: var(--acid);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sitenav-mark,
+    .sitenav-links a {
+      transition: none;
+    }
+  }
+</style>

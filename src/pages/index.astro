@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { buildSources, getSortedCurrencies } from '../lib/sources';
 import { READING_LIST } from '../lib/reading';
+import SiteNav from '../components/SiteNav.astro';
 import friedman from '../assets/origin/friedman.jpg';
 import heinlein from '../assets/origin/heinlein.jpg';
 import saloon from '../assets/origin/saloon.jpg';
@@ -88,6 +89,7 @@ const shareText =
          screens) straight to the reading experience. Visually hidden until
          keyboard focus. -->
     <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
+    <SiteNav />
     <!-- Ink→acid duotone filter for the origin photos: maps shadows to --ink
          (#0b0b0c) and highlights to --acid (#e8ff2a) via luminance, so the
          archival photos read in the brand's two colors, not as stray full-color
@@ -551,7 +553,7 @@ const shareText =
           můžeš přečíst, ověřit a&nbsp;šířit dál.
         </p>
 
-        <div class="footer-read">
+        <div class="footer-read" id="cteni">
           <p class="footer-lead">Za pár minut</p>
           <ul>
             {

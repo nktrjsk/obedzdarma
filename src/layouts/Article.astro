@@ -5,6 +5,7 @@
 // prose styles) here means a new article is just its copy plus front-matter, and
 // the three can't drift apart the way hand-built pages would.
 import '../styles/global.css';
+import SiteNav from '../components/SiteNav.astro';
 
 interface Props {
   /** Article title — the concept name. */
@@ -49,12 +50,10 @@ const pageTitle = `${title} — Oběd zdarma neexistuje`;
   </head>
   <body>
     <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
+    <SiteNav />
     <main id="obsah" tabindex="-1">
       <article class="article">
         <div class="wrap">
-          <a class="a-back" href="/">
-            <span aria-hidden="true">←</span> Oběd zdarma neexistuje
-          </a>
           <p class="a-kicker">
             Za pár minut
             <span class="a-kind">{kind} · {readTime}</span>
@@ -86,23 +85,6 @@ const pageTitle = `${title} — Oběd zdarma neexistuje`;
         padding-bottom: clamp(4rem, 12vw, 8rem);
       }
       main:focus { outline: none; }
-
-      /* Back to the argument — quiet at the top, sits above the title. */
-      .a-back {
-        display: inline-block;
-        margin-bottom: clamp(2.5rem, 6vw, 4rem);
-        color: var(--muted);
-        text-decoration: none;
-        font-size: 0.9rem;
-        letter-spacing: 0.02em;
-        border-bottom: 1px solid transparent;
-        transition: color 160ms ease, border-color 160ms ease;
-      }
-      .a-back:hover,
-      .a-back:focus-visible {
-        color: var(--acid);
-        border-color: var(--acid);
-      }
 
       .a-kicker {
         margin: 0 0 1.25rem;
@@ -249,7 +231,6 @@ const pageTitle = `${title} — Oběd zdarma neexistuje`;
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .a-back,
         .a-return { transition: none; }
       }
     </style>
