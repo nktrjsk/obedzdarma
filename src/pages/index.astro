@@ -1579,7 +1579,9 @@ const shareText =
       /* ---- FOOTER ---- */
       .footer {
         margin-top: clamp(4rem, 10vw, 7rem);
-        padding-block: clamp(2.5rem, 5vw, 4rem);
+        /* Deep bottom padding: the fixed register tape overlays the page's
+           last ~3rem, so the closing mark needs that much extra to breathe. */
+        padding-block: clamp(2.5rem, 5vw, 4rem) clamp(5.5rem, 10vw, 8rem);
         border-top: 1px solid var(--line);
         color: var(--muted);
         font-size: 0.95rem;
